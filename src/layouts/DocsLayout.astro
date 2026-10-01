@@ -1,6 +1,9 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import type { MarkdownHeading } from 'astro';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/inter/wght-italic.css';
+import interFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import '../styles/docs.css';
 
 interface Props {
@@ -18,13 +21,13 @@ const canonical = new URL(url(entry.id), Astro.site);
 const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 3);
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={entry.data.description} />
     {entry.id === '404' && <meta name="robots" content="noindex" />}
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#111111" />
     <title>{entry.data.title} | AxoSim documentation</title>
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={`${entry.data.title} | AxoSim`} />
@@ -33,13 +36,13 @@ const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://axo.axym.org/figures/central-comparison.png" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="/fonts/P052-Roman.otf" as="font" type="font/otf" crossorigin />
+    <link rel="preload" href={interFont} as="font" type="font/woff2" crossorigin />
     <script is:inline>
       (() => {
         let theme;
         try { theme = localStorage.getItem('axo-theme'); } catch {}
         if (theme !== 'light' && theme !== 'dark') {
-          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          theme = 'dark';
         }
         document.documentElement.dataset.theme = theme;
         document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#111111' : '#ffffff');
@@ -53,7 +56,7 @@ const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 
         <div class="brand-row">
           <a class="wordmark" href="/" aria-label="AxoSim overview">Axo<span>Sim</span></a>
           <span class="docs-label">Docs</span>
-          <button class="icon-button theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch color theme">
+          <button class="icon-button theme-toggle" type="button" aria-label="Switch to light mode" title="Switch color theme">
             <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
             <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 15.4A8.8 8.8 0 0 1 8.6 4a9 9 0 1 0 11.4 11.4Z"/></svg>
           </button>

@@ -1,8 +1,10 @@
 # AxoSim documentation
 
 Documentation for AxoSim at **https://axo.axym.org**. The site uses Astro,
-static Markdown pages, Shiki highlighting, and Pagefind search. P052 fonts and
-Axym purple preserve the report and Axym website typography and branding.
+static Markdown pages, Shiki highlighting, and Pagefind search. Self-hosted Inter
+and Axym purple match the Axym website. Dark mode is the default; explicit theme
+choices persist. Subtle hover transitions follow the reference documentation
+and respect reduced-motion preferences.
 
 The documentation order follows installation, model selection, inference and
 training, population construction, inference-time adaptation, evaluation and

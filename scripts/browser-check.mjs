@@ -18,13 +18,42 @@ const results = [];
 try {
   await page.goto(base+'/',{waitUntil:'networkidle'});
   await page.evaluate(()=>document.fonts.ready);
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'dark','New visitors should see dark mode even with a light system preference');
+  assert.equal(await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(17, 17, 17)');
   assert.equal(await page.locator('h1').innerText(),'Overview');
   assert.equal(await page.locator('.nav-group a[aria-current="page"]').innerText(),'Overview');
   assert(await page.locator('.table-of-contents').isVisible());
   assert((await page.locator('.overview-figure img').evaluate(img=>img.naturalWidth))>0);
-  assert((await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily)).startsWith('P052'));
+  assert(/^['"]?Inter/.test(await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily)));
+  assert(await page.evaluate(()=>[...document.fonts].some(font=>font.family.includes('Inter') && font.status==='loaded')),'The self-hosted Inter font must actually load');
+  await page.screenshot({path:join(artifacts,'overview-desktop-dark.png'),fullPage:true});
+
+  const navLink=page.locator('.nav-group a[href="/installation/"]');
+  const idle=await navLink.evaluate(el=>{const css=getComputedStyle(el);const rect=el.getBoundingClientRect();return {background:css.backgroundColor,x:rect.x,y:rect.y,width:rect.width,height:rect.height};});
+  await navLink.hover();
+  await page.waitForTimeout(200);
+  const hovered=await navLink.evaluate(el=>{const css=getComputedStyle(el);const rect=el.getBoundingClientRect();return {background:css.backgroundColor,x:rect.x,y:rect.y,width:rect.width,height:rect.height,duration:css.transitionDuration};});
+  assert.notEqual(hovered.background,idle.background,'Navigation hover should give visible feedback');
+  for(const key of ['x','y','width','height']) assert.equal(hovered[key],idle[key],`Hover should not shift ${key}`);
+  assert(hovered.duration.split(',').every(value=>parseFloat(value)>0 && parseFloat(value)<=0.2),'Hover feedback should use short reference-style transitions');
+  await page.emulateMedia({reducedMotion:'reduce'});
+  assert((await navLink.evaluate(el=>getComputedStyle(el).transitionDuration)).split(',').every(value=>parseFloat(value)===0),'Reduced-motion preference should disable hover animation');
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  results.push('Interactions: subtle reference-style hover feedback, no geometry shifts, reduced-motion support.');
+
+  await page.locator('.theme-toggle').click();
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+  await page.emulateMedia({colorScheme:'dark'});
+  await page.reload({waitUntil:'networkidle'});
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'light','Saved light choice should override a dark system preference');
   await page.screenshot({path:join(artifacts,'overview-desktop-light.png'),fullPage:true});
-  results.push('Overview: central figure, P052 font, active navigation, right contents rail.');
+  results.push('Overview: dark default, self-hosted Inter, persistent light override, central figure, active navigation, right contents rail.');
+
+  const noJsContext=await browser.newContext({javaScriptEnabled:false,colorScheme:'light'});
+  const noJsPage=await noJsContext.newPage();
+  await noJsPage.goto(base+'/',{waitUntil:'load'});
+  assert.equal(await noJsPage.locator('html').getAttribute('data-theme'),'dark','Dark default should also work without JavaScript');
+  await noJsContext.close();
 
   await page.goto(base+'/inference/',{waitUntil:'networkidle'});
   const colors = await page.locator('.prose pre').first().evaluate(pre=>[...new Set([...pre.querySelectorAll('span[style]')].map(span=>getComputedStyle(span).color))]);

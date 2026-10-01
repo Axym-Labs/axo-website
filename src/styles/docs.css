@@ -1,17 +1,16 @@
-@font-face { font-family: P052; src: url('/fonts/P052-Roman.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: P052; src: url('/fonts/P052-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: P052; src: url('/fonts/P052-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: P052; src: url('/fonts/P052-BoldItalic.otf') format('opentype'); font-weight: 700; font-style: italic; font-display: swap; }
-
 :root { color-scheme: light; --canvas: #fff; --text: #171717; --muted: #646464; --border: #e9e9e9; --soft: #f7f7f8; --primary: #3f21b6; --active: #f1edf9; --code: #f7f7f8; --focus: #3f21b6; --sidebar-width: 258px; }
 :root[data-theme='dark'] { color-scheme: dark; --canvas: #111; --text: #eee; --muted: #a1a1a1; --border: #2d2d2d; --soft: #1b1b1d; --primary: #b3a0ff; --active: #282137; --code: #191a1c; --focus: #b3a0ff; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 28px; }
-body { margin: 0; background: var(--canvas); color: var(--text); font-family: P052, 'Palatino Linotype', Palatino, Georgia, serif; font-size: 17px; line-height: 1.65; }
+body { margin: 0; background: var(--canvas); color: var(--text); font-family: 'Inter Variable', Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.65; }
 button, input { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; }
+/* The reference uses short color transitions, with no scaling or movement. */
+.icon-button, .search-trigger, .nav-group a, .sidebar-footer a, .prose a, .resource-links a, .toc-link, .page-navigation a, .page-navigation strong, .page-footer a, .copy-button, .search-result {
+  transition: color 150ms cubic-bezier(.4,0,.2,1), background-color 150ms cubic-bezier(.4,0,.2,1), border-color 150ms cubic-bezier(.4,0,.2,1), text-decoration-color 150ms cubic-bezier(.4,0,.2,1);
+}
 button:focus-visible, a:focus-visible, input:focus-visible, pre:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .skip-link { position: fixed; z-index: 100; left: 16px; top: -70px; padding: 10px 18px; background: var(--canvas); border: 1px solid var(--primary); border-radius: 8px; }
 .skip-link:focus { top: 12px; }
@@ -113,7 +112,7 @@ h1 { font-size: 36px; line-height: 1.18; letter-spacing: -.7px; margin: 0 0 15px
 @media (max-width: 900px) {
   :root { --sidebar-width: 268px; }
   html { scroll-padding-top: 90px; }
-  .sidebar { transform: translateX(-100%); transition: transform 160ms ease; }
+  .sidebar { transform: translateX(-100%); transition: transform 150ms cubic-bezier(.4,0,.2,1); }
   .menu-open .sidebar { transform: translateX(0); box-shadow: 0 0 0 1px var(--border); }
   .menu-open { overflow: hidden; }
   .mobile-header { display: flex; position: sticky; top: 0; z-index: 10; align-items: center; justify-content: space-between; background: var(--canvas); border-bottom: 1px solid var(--border); padding: 13px max(18px,env(safe-area-inset-right)) 13px max(18px,env(safe-area-inset-left)); }
@@ -124,7 +123,7 @@ h1 { font-size: 36px; line-height: 1.18; letter-spacing: -.7px; margin: 0 0 15px
   .menu-open .sidebar-scrim { display: block; position: fixed; inset: 0; z-index: 15; border: 0; background: #0006; }
 }
 @media (max-width: 520px) {
-  body { font-size: 16.5px; }
+  body { font-size: 16px; }
   .reading-layout { padding: 28px 20px; }
   h1 { font-size: 31px; }
   .page-description { font-size: 18px; }
@@ -134,5 +133,5 @@ h1 { font-size: 36px; line-height: 1.18; letter-spacing: -.7px; margin: 0 0 15px
   .search-footer { gap: 12px; flex-wrap: wrap; }
   #search-dialog { margin-top: 5vh; }
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .sidebar { transition: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
 @media print { .sidebar,.mobile-header,.table-of-contents,.page-navigation,.page-footer,.code-header { display:none; } .reading-layout { display:block; margin:0; padding:0; } :root { --canvas:#fff; --text:#000; } }
