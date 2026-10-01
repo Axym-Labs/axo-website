@@ -120,10 +120,17 @@ try {
   await page.locator('#menu-toggle').click();
   assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'true');
   assert(!(await page.locator('#site-sidebar').evaluate(el=>el.inert)));
+  await page.waitForTimeout(200);
+  assert.equal((await page.locator('#site-sidebar').boundingBox()).x,0,'Open navigation must finish on screen');
   await page.screenshot({path:join(artifacts,'navigation-mobile.png')});
+  await page.locator('.theme-toggle').click();
+  await page.waitForTimeout(200);
+  await page.screenshot({path:join(artifacts,'navigation-mobile-dark.png')});
   await page.keyboard.press('Escape');
   assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'false');
   assert(await page.locator('#site-sidebar').evaluate(el=>el.inert));
+  await page.waitForTimeout(200);
+  await page.screenshot({path:join(artifacts,'population-mobile-dark.png'),fullPage:true});
   results.push('Mobile navigation: drawer, inert hidden links, Escape close, and usable code scrolling.');
   assert.equal(errors.length,0,errors.join('\n'));
   writeFileSync(join(artifacts,'browser-verification.json'),JSON.stringify({base,results,errors},null,2)+'\n');
