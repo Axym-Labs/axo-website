@@ -29,6 +29,9 @@ try {
   await page.screenshot({path:join(artifacts,'overview-desktop-dark.png'),fullPage:true});
 
   const navLink=page.locator('.nav-group a[href="/installation/"]');
+  await page.keyboard.press('Tab');
+  await navLink.focus();
+  assert(await navLink.evaluate(el=>{const css=getComputedStyle(el);return css.outlineStyle!=='none' && parseFloat(css.outlineWidth)>=2;}),'Keyboard navigation needs a visible focus indicator');
   const idle=await navLink.evaluate(el=>{const css=getComputedStyle(el);const rect=el.getBoundingClientRect();return {background:css.backgroundColor,x:rect.x,y:rect.y,width:rect.width,height:rect.height};});
   await navLink.hover();
   await page.waitForTimeout(200);
@@ -53,6 +56,7 @@ try {
   const noJsPage=await noJsContext.newPage();
   await noJsPage.goto(base+'/',{waitUntil:'load'});
   assert.equal(await noJsPage.locator('html').getAttribute('data-theme'),'dark','Dark default should also work without JavaScript');
+  assert.equal(await noJsPage.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(17, 17, 17)');
   await noJsContext.close();
 
   await page.goto(base+'/inference/',{waitUntil:'networkidle'});
@@ -64,6 +68,7 @@ try {
   await page.screenshot({path:join(artifacts,'inference-desktop-light.png'),fullPage:true});
   await page.locator('.theme-toggle').click();
   assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+  await page.waitForTimeout(200);
   const darkColors = await page.locator('.prose pre').first().evaluate(pre=>[...new Set([...pre.querySelectorAll('span[style]')].map(span=>getComputedStyle(span).color))]);
   assert(darkColors.length>=4);
   assert.notDeepEqual(colors,darkColors);
