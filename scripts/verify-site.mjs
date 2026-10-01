@@ -27,6 +27,13 @@ const { createHash } = await import('node:crypto');
 const digest = file => createHash('sha256').update(readFileSync(file)).digest('hex');
 assert.equal(digest(join(dist,'report/main.pdf')),provenance.report_sha256,'Report provenance mismatch');
 assert.equal(digest(join(dist,'figures/central-comparison.svg')),provenance.svg_sha256,'Figure provenance mismatch');
+assert.equal(digest(join(dist,'figures/central-comparison-dark.svg')),provenance.svg_dark_sha256,'Dark figure provenance mismatch');
+assert.equal(digest(join(dist,'report/central-figure-values.json')),provenance.figure_values_sha256,'Figure measurement manifest mismatch');
+for (const variant of Object.values(provenance.variants)) {
+  assert.equal(digest(join(dist,variant.png)),variant.png_sha256,'Figure PNG provenance mismatch');
+}
+assert.equal(digest(join(dist,'favicon.svg')),digest(join(dist,'brand/axym-logo.svg')),'Navbar and favicon must use the same mark');
+assert(existsSync(join(dist,'favicon.ico')), 'Multi-size favicon missing');
 let codeBlocks = 0;
 const errors = [];
 for (const file of pages) {

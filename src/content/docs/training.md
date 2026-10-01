@@ -1,8 +1,8 @@
 ---
 title: Train a model
 description: Train from trace shards, select a development recipe, and save model weights and metadata.
-section: Inference and training
-order: 40
+section: Training and adaptation
+order: 60
 ---
 
 ## Prepare training and validation data
@@ -33,7 +33,7 @@ axosim train \
   --metrics runs/axosim-mamba-training.json
 ```
 
-The example retains the report's named research preset and explicitly selects CUDA for its fused Mamba backend. The parser default is CPU. Presets resolve architecture and training options, while explicitly supplied command-line options take precedence. Inspect the available recipes with `axosim list-presets` and record the resolved configuration in the output metrics.
+The example retains the report's named research preset and explicitly selects CUDA for its fused Mamba backend. `--epoch-samples` controls the number of training presentations per epoch, while `--epochs` controls how often that presentation budget is repeated. Change those values deliberately when comparing recipes so a longer run is not mistaken for an architectural improvement. Presets resolve architecture and training options, while explicitly supplied command-line options take precedence; the resolved configuration is recorded in the output metrics.
 
 ## Training artifacts
 

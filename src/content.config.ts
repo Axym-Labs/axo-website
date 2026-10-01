@@ -10,6 +10,7 @@ export const collections = {
       description: z.string(),
       section: z.string(),
       order: z.number(),
+      apiGroup: z.string().optional(),
     }),
   }),
 };

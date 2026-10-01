@@ -13,6 +13,8 @@ interface Props {
 }
 const { entry, entries, headings } = Astro.props;
 const groups = [...new Set(entries.map(item => item.data.section))];
+const apiGroups = ['Models', 'Populations', 'Training and evaluation', 'Data', 'Compatibility', 'CLI'];
+const demoUrl = 'https://axym.org/work/axosim-fly-geometry/';
 const url = (id: string) => id === 'overview' ? '/' : id === 'api/index' ? '/api/' : `/${id}/`;
 const index = entries.findIndex(item => item.id === entry.id);
 const previous = entries[index - 1];
@@ -36,6 +38,8 @@ const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://axo.axym.org/figures/central-comparison.png" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="apple-touch-icon" href="/brand/axym-logo-192.png" />
     <link rel="preload" href={interFont} as="font" type="font/woff2" crossorigin />
     <script is:inline>
       (() => {
@@ -51,37 +55,47 @@ const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-navbar">
+      <div class="navbar-brand">
+        <button id="menu-toggle" class="icon-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-sidebar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <a class="brand-link" href="/" aria-label="AxoSim overview"><img class="axym-logo" src="/brand/axym-logo.svg" width="30" height="30" alt="" /><span class="wordmark">Axo<span>Sim</span></span></a>
+        <span class="docs-label">Docs</span>
+      </div>
+      <nav class="navbar-actions" aria-label="Project links and appearance">
+        <a class="labs-link" href="https://axym.org" aria-label="Axym Labs">Axym<span class="labs-word"> Labs <span aria-hidden="true">↗</span></span></a>
+        <a class="source-code" href="https://github.com/Axym-Labs/axosim"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 4l-4 16"/></svg><span>Source Code</span></a>
+        <button class="mobile-search icon-button search-trigger" type="button" aria-label="Search documentation" aria-haspopup="dialog"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
+        <button class="icon-button theme-toggle" type="button" aria-label="Switch to light mode" title="Switch color theme">
+          <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+          <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 15.4A8.8 8.8 0 0 1 8.6 4a9 9 0 1 0 11.4 11.4Z"/></svg>
+        </button>
+      </nav>
+    </header>
     <aside class="sidebar" id="site-sidebar" aria-label="Documentation navigation">
       <div class="sidebar-head">
-        <div class="brand-row">
-          <a class="wordmark" href="/" aria-label="AxoSim overview">Axo<span>Sim</span></a>
-          <span class="docs-label">Docs</span>
-          <button class="icon-button theme-toggle" type="button" aria-label="Switch to light mode" title="Switch color theme">
-            <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
-            <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 15.4A8.8 8.8 0 0 1 8.6 4a9 9 0 1 0 11.4 11.4Z"/></svg>
-          </button>
-        </div>
         <button class="search-trigger" type="button" aria-haspopup="dialog">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
           <span>Search docs</span><kbd>Ctrl K</kbd>
         </button>
       </div>
       <nav class="navigation">
-        {groups.map(group => <section class="nav-group">
-          <h2>{group}</h2>
-          {entries.filter(item => item.data.section === group).map(item => (
-            <a href={url(item.id)} aria-current={item.id === entry.id ? 'page' : undefined}>{item.data.title}</a>
-          ))}
+        {groups.map(group => <section class="nav-group" aria-label={group}>
+          {group !== 'Get started' && <h2>{group}</h2>}
+          {group === 'API reference' ? <>
+            <a href="/api/" aria-current={entry.id === 'api/index' ? 'page' : undefined}>Overview</a>
+            {apiGroups.map(apiGroup => <details class="api-group" open={entry.data.apiGroup === apiGroup}>
+              <summary><span>{apiGroup}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></summary>
+              <div class="api-children">
+                {entries.filter(item => item.data.apiGroup === apiGroup).map(item => <a href={url(item.id)} aria-current={item.id === entry.id ? 'page' : undefined}>{item.data.title}</a>)}
+              </div>
+            </details>)}
+          </> : entries.filter(item => item.data.section === group).map(item => (
+              <a href={url(item.id)} aria-current={item.id === entry.id ? 'page' : undefined}>{item.data.title}</a>
+            ))}
+          {group === 'Get started' && <a class="demo-link" href={demoUrl}>Connectome demo <span aria-hidden="true">↗</span></a>}
         </section>)}
       </nav>
-      <div class="sidebar-footer"><a href="https://axym.org">Axym Labs <span aria-hidden="true">↗</span></a><a href="https://github.com/Axym-Labs/axo-website">GitHub <span aria-hidden="true">↗</span></a></div>
     </aside>
-
-    <header class="mobile-header">
-      <button id="menu-toggle" class="icon-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-sidebar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-      <a href="/" class="wordmark">Axo<span>Sim</span></a>
-      <button class="mobile-search icon-button search-trigger" type="button" aria-label="Search documentation" aria-haspopup="dialog"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
-    </header>
     <button class="sidebar-scrim" type="button" aria-label="Close navigation" tabindex="-1"></button>
 
     <div class="reading-layout">

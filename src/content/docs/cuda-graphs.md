@@ -1,7 +1,7 @@
 ---
 title: Capture CUDA updates
 description: Capture forward, loss, backward, clipping, and optimization for fixed-shape adaptation.
-section: Inference-time adaptation
+section: Training and adaptation
 order: 80
 ---
 
@@ -27,7 +27,9 @@ def causal_mse(prediction, target):
 
 population = build_population("cuda")
 contacts = torch.randn(3, 12, 4, device="cuda")
-target = torch.randn(3, 12, 2, device="cuda")
+with torch.no_grad():
+    target = population(contacts).detach().clone()
+    target[..., 1] += 0.1
 population.enable_adaptation_training(
     behavior=True,
     morphology=True,
@@ -56,6 +58,8 @@ print(loss.shape)
 ```text
 torch.Size([])
 ```
+
+The target introduces a controlled `0.1` offset in the soma target coordinate, so the update has a defined calibration task rather than arbitrary random labels. Replace it with measured targets for an application. `capturable=True` keeps Adam's update compatible with CUDA Graph execution; changing the parameter groups afterward requires recapture.
 
 Each call copies the supplied inputs and targets into captured static buffers, replays the update, and returns a detached cloned loss tensor. New input tensors may have different addresses because they are copied; the graph's internal static buffers and parameter allocations must remain valid.
 

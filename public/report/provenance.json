@@ -1,6 +1,50 @@
 {
-  "report_sha256": "42bcc62d6e07eb3c9bd5e0efd752ab9ec282009a7734085b96bca73844361462",
-  "central_figure_source_sha256": "e15fcc693464132eacbcd43c9335c63d6840b548867fd6572f8e172bcfed20ce",
-  "svg_sha256": "2bd79ca709bd0fda1ad7e9d121ff6300fa76867e94797a68e81560d336990b37",
+  "report_sha256": "ce6c0db9a2b2a37f19547b10111575128a9681b5dd43f5b4b032dd532ec4cc30",
+  "report_source_sha256": "099c3d20959dbf2187433d18a99f4a6a7e8e4b8ed6ebd20fb23c32e4e5b1c998",
+  "central_figure_source_sha256": "ef2d75cf42a5e247aeb124c4dbaeed137dde6a904de469494bff9d5c900cc472",
+  "svg_sha256": "e8bdc5fc973997c261d22316809818fa298b1683fbb7adc7f8bcca851cb50195",
+  "svg_dark_sha256": "64004bcd01c55d29ee0cf65267c41d6f7e5e807748fba970017641530e6abdcf",
+  "variants": {
+    "light": {
+      "svg": "/figures/central-comparison.svg",
+      "png": "/figures/central-comparison.png",
+      "svg_sha256": "e8bdc5fc973997c261d22316809818fa298b1683fbb7adc7f8bcca851cb50195",
+      "png_sha256": "f42146cfe6c6b34baf244ccade0b49dd39200d7d4a294d701408b1ffc7061daf",
+      "viewBox": [
+        0,
+        0,
+        320.77,
+        179.71
+      ]
+    },
+    "dark": {
+      "svg": "/figures/central-comparison-dark.svg",
+      "png": "/figures/central-comparison-dark.png",
+      "svg_sha256": "64004bcd01c55d29ee0cf65267c41d6f7e5e807748fba970017641530e6abdcf",
+      "png_sha256": "ab8e8b64bdeaddd757ee80a012e946a45d19f70434589644440c62d3e29903b8",
+      "viewBox": [
+        0,
+        0,
+        320.77,
+        179.71
+      ]
+    }
+  },
+  "figure_values_sha256": "13c288cdc179cb49cefc9a020b645cb715de13b669e3e3eecb2f85c6869d995b",
+  "font": {
+    "family": "Inter",
+    "source": "@fontsource-variable/inter 5.3.0 (latin wght normal)",
+    "weights": [
+      400,
+      600
+    ],
+    "regular_sha256": "19b2e364a739f0a493415b5185f1323f4994fcf451d24ab314cb7ff0504ccd39",
+    "semibold_sha256": "bec5d982df3acdc7edbd7d99458e397285dd2d206058a1cfcdf77f55c7ac6c44",
+    "license": "SIL Open Font License 1.1"
+  },
+  "report_authors": [
+    "Davide Wiest",
+    "Jonathan Schäfer"
+  ],
   "report_repository": "https://github.com/Axym-Labs/AxoSim-paper"
 }

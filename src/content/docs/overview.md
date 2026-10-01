@@ -8,15 +8,17 @@ order: 0
 AxoSim approximates the response of detailed biological neurons to synaptic input histories. You can load trained GRU and Mamba models, construct populations with explicit dendritic contacts, and adapt neuronal and synaptic parameters through a complete temporal sequence.
 
 <figure class="overview-figure">
-  <img src="/figures/central-comparison.svg" width="30238" height="19241" alt="The report's central comparison: GRU Small and Mamba Medium shown in color, with Branch-ELM and CoreNEURON references in gray, across inference throughput, voltage and dynamics fidelity, and spike F1." fetchpriority="high" />
-  <figcaption>The central figure from the technical report. Higher values point outward; the report appendix gives the absolute measurements, mappings, and timing contracts. CoreNEURON's self-comparison defines perfect fidelity.</figcaption>
+  <img class="figure-light" src="/figures/central-comparison.svg" width="32077" height="17971" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM models and the CoreNEURON reference in gray, compared on inference throughput, voltage and dynamics fidelity, and spike F1." fetchpriority="high" />
+  <img class="figure-dark" src="/figures/central-comparison-dark.svg" width="32077" height="17971" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM models and the CoreNEURON reference in gray, compared on inference throughput, voltage and dynamics fidelity, and spike F1." fetchpriority="high" />
 </figure>
+
+<p class="figure-caption">A comparison between AxoSim models and baselines; more details are available in the <a href="/report/main.pdf">technical report</a>.</p>
 
 <div class="resource-links">
   <a href="/installation/">Get started →</a>
   <a href="/report/main.pdf">Technical report</a>
   <a href="https://github.com/Axym-Labs/axosim">Code ↗</a>
-  <a href="https://github.com/Axym-Labs/axosim-demo">Demo ↗</a>
+  <a href="https://axym.org/work/axosim-fly-geometry/">Demo ↗</a>
   <a href="https://huggingface.co/datasets/Axym-Labs/axobench-population">Population data ↗</a>
   <a href="https://huggingface.co/datasets/Axym-Labs/axobench-interventions">Interventions ↗</a>
 </div>
@@ -44,13 +46,13 @@ The optimized runtime evaluated in the report simulates **65,536 neurons with 4,
 
 ## Cite AxoSim
 
-The technical report is by Davide Wiest, Axym Labs. AxoBench introduces the core metric set used throughout the report: spike Mean F1, Voltage SERA, and Dynamics SERA. SERA denotes the squared error metric; Root-SERA is its square root.
+The technical report is by Davide Wiest and Jonathan Schäfer, Axym Labs. AxoBench introduces the core metric set used throughout the report: spike Mean F1, Voltage SERA, and Dynamics SERA. SERA denotes the squared error metric; Root-SERA is its square root.
 
 ```bibtex
 @techreport{wiest2026axosim,
   title = {AxoSim: Learned Neuron Models for Fast Population Simulation
            and Inference-Time Adaptation},
-  author = {Wiest, Davide},
+  author = {Wiest, Davide and Schäfer, Jonathan},
   institution = {Axym Labs},
   year = {2026},
   url = {https://axo.axym.org/report/main.pdf}

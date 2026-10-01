@@ -20,9 +20,9 @@ python -m pip install -e .
 
 The base installation includes PyTorch, NumPy, and the tools for GRU models, Lite populations, data conversion, and evaluation. CUDA execution requires a compatible GPU and PyTorch installation; a CPU environment is sufficient for the small population examples.
 
-## Install the Mamba backend
+## Match the backend to the checkpoint
 
-Official Mamba checkpoints require the fused `mamba-ssm` and `causal-conv1d` backend. From the source checkout, run:
+Official Mamba checkpoints require the fused `mamba-ssm` and `causal-conv1d` backend. Install these extras when you intend to load such a checkpoint; base GRU and Lite work does not require them. From the source checkout, run:
 
 ```bash
 python -m pip install -e '.[mamba]'
@@ -30,7 +30,7 @@ axosim-setup
 axosim list-presets
 ```
 
-The setup command creates local project directories and installs the package unless you pass `--skip-install`. Large datasets are downloaded only when you request `--download-data`. The preset command prints a JSON object containing the available training and evaluation recipes.
+The setup command creates local project directories and installs the package unless you pass `--skip-install`. Large datasets are downloaded only when you request `--download-data`, so this sequence prepares an environment without initiating a multi-gigabyte transfer. `list-presets` prints the training and evaluation recipe names you will pass to later commands.
 
 The PyTorch Mamba fallback is useful for tests and smoke runs. Its state-dictionary format differs from the fused backend, so load a checkpoint with its recorded backend rather than substituting the fallback. The [model guide](/models/) explains the available profiles and implementation aliases.
 

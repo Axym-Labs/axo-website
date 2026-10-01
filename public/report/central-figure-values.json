@@ -1,0 +1,110 @@
+{
+  "axis_order": [
+    "Inference throughput",
+    "Voltage fidelity",
+    "Dynamics fidelity",
+    "Mean F1 0–5 ms",
+    "F1 @ 5 ms"
+  ],
+  "mappings": [
+    "1-exp(-rate/10000000)",
+    "exp(-Voltage SERA/350)",
+    "exp(-Dynamics SERA/450)",
+    "identity",
+    "identity"
+  ],
+  "plotted_series": [
+    "axosim-gru-small",
+    "axosim-mamba-medium",
+    "branch-elm-memory-1",
+    "branch-elm-memory-100",
+    "branch-elm-memory-30",
+    "coreneuron"
+  ],
+  "raw_values": {
+    "axosim-gru-small": {
+      "inference_neuron_steps_per_second": 21786018.38070186,
+      "voltage_sera_mv2": 243.91649056238518,
+      "dynamics_sera_mv2_per_ms2": 429.12023099573895,
+      "mean_f1_0_5ms": 0.48566264070331117,
+      "f1_5ms": 0.6043874784323391
+    },
+    "axosim-gru-medium": {
+      "inference_neuron_steps_per_second": 16809548.115202837,
+      "voltage_sera_mv2": 241.61011504637912,
+      "dynamics_sera_mv2_per_ms2": 429.1291077489296,
+      "mean_f1_0_5ms": 0.5218307006885379,
+      "f1_5ms": 0.6405832320777642
+    },
+    "axosim-mamba-small": {
+      "inference_neuron_steps_per_second": 18859383.924793877,
+      "voltage_sera_mv2": 244.29470849594742,
+      "dynamics_sera_mv2_per_ms2": 428.7244101065912,
+      "mean_f1_0_5ms": 0.4535833333333334,
+      "f1_5ms": 0.5569999999999999
+    },
+    "axosim-mamba-medium": {
+      "inference_neuron_steps_per_second": 4396416.038103703,
+      "voltage_sera_mv2": 244.46237165362885,
+      "dynamics_sera_mv2_per_ms2": 439.001436750375,
+      "mean_f1_0_5ms": 0.5201904276120038,
+      "f1_5ms": 0.6406528946697272
+    },
+    "branch-elm-memory-1": {
+      "inference_neuron_steps_per_second": 788195.9579227073,
+      "voltage_sera_mv2": 312.2595432096951,
+      "dynamics_sera_mv2_per_ms2": 448.63824067746987,
+      "mean_f1_0_5ms": 0.053354804079441764,
+      "f1_5ms": 0.07020933977455716
+    },
+    "branch-elm-memory-10": {
+      "inference_neuron_steps_per_second": 716868.9828880873,
+      "voltage_sera_mv2": 309.7612353822578,
+      "dynamics_sera_mv2_per_ms2": 448.60434838482246,
+      "mean_f1_0_5ms": 0.06551901336073997,
+      "f1_5ms": 0.08838643371017471
+    },
+    "branch-elm-memory-30": {
+      "inference_neuron_steps_per_second": 741780.8604078535,
+      "voltage_sera_mv2": 307.41245780155975,
+      "dynamics_sera_mv2_per_ms2": 448.5676333969412,
+      "mean_f1_0_5ms": 0.07691124442393478,
+      "f1_5ms": 0.10198431010613752
+    },
+    "branch-elm-memory-50": {
+      "inference_neuron_steps_per_second": 734514.2382812842,
+      "voltage_sera_mv2": 307.1812130903738,
+      "dynamics_sera_mv2_per_ms2": 448.5791357759131,
+      "mean_f1_0_5ms": 0.0760653126244524,
+      "f1_5ms": 0.10083632019115889
+    },
+    "branch-elm-memory-100": {
+      "inference_neuron_steps_per_second": 711974.8494525923,
+      "voltage_sera_mv2": 307.3371177073618,
+      "dynamics_sera_mv2_per_ms2": 448.5598508059241,
+      "mean_f1_0_5ms": 0.07323292692644832,
+      "f1_5ms": 0.09753765240258189
+    },
+    "coreneuron": {
+      "inference_neuron_steps_per_second": 851.6951032305248,
+      "voltage_sera_mv2": 0,
+      "dynamics_sera_mv2_per_ms2": 0,
+      "mean_f1_0_5ms": 1,
+      "f1_5ms": 1
+    }
+  },
+  "evidence": [
+    {
+      "path": "reproducibility/evidence/population-platform-publication/runs/iteration-1283-1287-five-model-training/summary.json",
+      "sha256": "b2eb2bfbb16adf45f024d54abe7cb1ef183c2bc5b75de8631e395a25c887c4ab"
+    },
+    {
+      "path": "reproducibility/evidence/population-platform-publication/runs/iteration-1324-published-branch-elm-final-panel/summary.json",
+      "sha256": "919e877ced5a83de1413596da778372e95fc3704f1b52aa38b277f2aa2bf0710"
+    },
+    {
+      "path": "data/central-comparison.csv",
+      "sha256": "3c15b6040d3571b5eacb30080bdb8fa163f89b855977b684e5d48a2888ae49da"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 ---
 title: Run inference
 description: Load a checkpoint, submit native input traces, and interpret spike and voltage outputs.
-section: Inference and training
+section: Simulation
 order: 30
 ---
 
@@ -42,7 +42,7 @@ For a checkpoint with two output channels, the shapes are:
 torch.Size([8, 500, 2]) torch.Size([8, 500]) torch.Size([8, 500])
 ```
 
-The zeros demonstrate the tensor contract, and the example selects the checkpoint's first declared morphology for every batch item. For measured traces, map each trace's actual morphology ID to the index in `model.config.morphology_ids`, and load inputs in the channel order, sign convention, sampling cadence, and normalization used during training. Morphology-conditioned synaptic gains require these indices.
+Start with this zero-input trace to check device placement, checkpoint reconstruction, and output channels before introducing data preprocessing. The example selects the checkpoint's first declared morphology for every batch item. For measured traces, map each trace's actual morphology ID to the index in `model.config.morphology_ids`, and load inputs in the channel order, sign convention, sampling cadence, and normalization used during training. Morphology-conditioned synaptic gains require these indices.
 
 ## Input and output contract
 
@@ -85,9 +85,10 @@ with torch.inference_mode():
         dim=1,
     )
 print(streamed.shape)
+max_difference = (streamed - prediction).abs().max().item()
 ```
 
-The resulting sequence has the same batch and time dimensions. Streaming signatures and supported options differ by implementation; consult [Mamba](/api/mamba/), [GRU temporal models](/api/temporal-core/), or [block forecasts](/api/block-forecast/). Population forward methods initialize the Lite hidden state for each supplied sequence, as described in [build populations](/populations/).
+The resulting sequence has the same batch and time dimensions. Inspect `max_difference` to compare streaming with the full-sequence prediction under the same dtype and initial state; the appropriate numerical tolerance depends on the backend and precision. This check is useful before replacing sequence execution with streaming in a service. Streaming signatures and supported options differ by implementation; consult [Mamba](/api/mamba/), [GRU temporal models](/api/temporal-core/), or [block forecasts](/api/block-forecast/). Population forward methods initialize the Lite hidden state for each supplied sequence, as described in [build populations](/populations/).
 
 ## Next steps
 

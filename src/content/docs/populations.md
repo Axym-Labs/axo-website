@@ -1,8 +1,8 @@
 ---
 title: Build populations
 description: Construct persistent Lite populations with morphology identities and mutable contact efficacies.
-section: Build populations
-order: 50
+section: Simulation
+order: 40
 ---
 
 ## Construct a Lite population
@@ -75,6 +75,28 @@ Lite predicts each four-step block from preceding inputs. The first four output 
 
 Contact count affects memory and execution cost. Include `N`, `T`, and `K` when reporting a population measurement. The [population interface reference](/api/interfaces/) provides complete signatures and checks.
 
+## Change one contact without changing its role
+
+A positive efficacy scales a contact's signed amplitude. Doubling one contact therefore preserves excitation or inhibition and leaves other contacts' parameters unchanged:
+
+```python
+import torch
+from population_example import build_population
+
+population = build_population()
+with torch.no_grad():
+    population.synaptic_log_efficacy[0, 1] = torch.log(torch.tensor(2.0))
+
+efficacies = population.synaptic_efficacies()
+print(efficacies[0].tolist())
+```
+
+```text
+[1.0, 2.0, 1.0, 1.0]
+```
+
+The stored value is a log efficacy, so assign `log(2)` rather than `2` when requesting a multiplier of two. In an adaptation study, optimize these values from data rather than setting them manually.
+
 ## Batch independent examples through shared neurons
 
 Independent examples can share one population's neuron identities and adaptation banks:
@@ -94,7 +116,7 @@ print(prediction.shape)
 torch.Size([2, 3, 12, 2])
 ```
 
-The batch axis represents independent examples rather than newly created neurons. `forward_tokens` and `forward_token_batch` expose pre-encoded four-step tokens when your input encoder already satisfies the Lite token contract.
+Use the batch axis when several input trials should update the same neurons. Each trial starts its own temporal state, while its gradients contribute to the shared persistent adaptation banks. `forward_tokens` and `forward_token_batch` expose pre-encoded four-step tokens when your input encoder already satisfies the Lite token contract.
 
 ## Next steps
 

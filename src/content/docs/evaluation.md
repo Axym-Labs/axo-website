@@ -1,7 +1,7 @@
 ---
 title: Evaluate models
 description: Compute AxoBench core metrics and make paired comparisons on identical traces.
-section: Evaluate and deploy
+section: Evaluation and deployment
 order: 90
 ---
 
@@ -37,7 +37,7 @@ axosim-evaluate-model runs/candidate.pt \
   --output runs/candidate-vs-baseline.json
 ```
 
-A paired comparison requires matching target hashes and ordered trace identities, along with the same calibration and metric configuration. Matching only the dataset directory or sample count does not establish pairing. Alternatively, supply `--baseline-checkpoint` to construct the baseline predictions during the comparison.
+A saved baseline cache fixes the reference predictions and avoids rerunning that model for every candidate. Pairing still requires matching target hashes and ordered trace identities, along with the same calibration and metric configuration. Matching only the dataset directory or sample count does not establish pairing. Alternatively, supply `--baseline-checkpoint` to construct the baseline predictions during the comparison.
 
 ## Calibration and interventions
 

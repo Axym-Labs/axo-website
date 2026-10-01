@@ -2,98 +2,177 @@
 title: Branch-ELM compatibility
 description: Signatures, parameters, return contracts, and source for branch-elm compatibility.
 section: API reference
+apiGroup: Compatibility
 order: 207
 ---
 
-## Module contract
+## Overview
 
 BranchELM and BranchELMConfig provide the baseline and checkpoint-compatible branched neuron implementation. Inputs use (batch, time, input_channels); the standard two-channel readout contains a spike logit and a soma target coordinate.
 
 Source revision: `306a51ed950b`. [Public export index](/api/).
 
+<section class="api-symbol" id="model-branchelmconfig">
+
 ## BranchELMConfig
+
+<div class="api-signature">
+
+```python
+axosim.model.BranchELMConfig(input_dim: int = 1278, memory_units: int = 30, num_branches: int = 32, hidden_units: int = 64, synapse_decay: float = 0.85, memory_decay: float = 0.9)
+```
 
 [Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L10-L20)
 
-```python
-BranchELMConfig(input_dim: int = 1278, memory_units: int = 30, num_branches: int = 32, hidden_units: int = 64, synapse_decay: float = 0.85, memory_decay: float = 0.9) -> None
-```
+</div>
 
-### Fields
+Dimensions and decay constants for the branched recurrent neuron.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `input_dim` | `int` | `1278` |
-| `memory_units` | `int` | `30` |
-| `num_branches` | `int` | `32` |
-| `hidden_units` | `int` | `64` |
-| `synapse_decay` | `float` | `0.85` |
-| `memory_decay` | `float` | `0.9` |
+<p class="api-label">Parameters</p>
 
-`input_dim`: Native input-channel count.
+<dl class="api-parameters">
+<dt><code>input_dim</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">default=1278.</span> Native input-channel count.</dd>
+<dt><code>memory_units</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">default=30.</span> Width of the recurrent memory state.</dd>
+<dt><code>num_branches</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">default=32.</span> Number of branched input features.</dd>
+<dt><code>hidden_units</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">default=64.</span> Width of the hidden feature layer.</dd>
+<dt><code>synapse_decay</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">default=0.85.</span> Decay coefficient of the synaptic trace.</dd>
+<dt><code>memory_decay</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">default=0.9.</span> Decay coefficient of recurrent memory.</dd>
+</dl>
+
+<p class="api-label">Attributes</p>
+
+Constructor fields are retained as read-only attributes.
+
+<p class="api-label">Methods</p>
+
+<ul class="api-method-list">
+<li><a href="#model-branchelmconfig-branch-elm-30"><code>BranchELMConfig.branch_elm_30()</code></a></li>
+</ul>
+
+<section class="api-method" id="model-branchelmconfig-branch-elm-30">
 
 ### BranchELMConfig.branch_elm_30
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L19-L20)
+<div class="api-signature">
 
 ```python
 @classmethod
-branch_elm_30(cls, *, input_dim: int=1278, num_branches: int=32) -> 'BranchELMConfig'
+axosim.model.BranchELMConfig.branch_elm_30(*, input_dim: int=1278, num_branches: int=32) -> 'BranchELMConfig'
 ```
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `input_dim` | `int` | `1278` |
-| `num_branches` | `int` | `32` |
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L19-L20)
 
-`input_dim`: Native input-channel count.
+</div>
 
-Returns `'BranchELMConfig'`.
+<p class="api-label">Parameters</p>
+
+<dl class="api-parameters">
+<dt><code>input_dim</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=1278.</span> Native input-channel count.</dd>
+<dt><code>num_branches</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=32.</span> Number of branched input features.</dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`'BranchELMConfig'`
+
+</section>
+
+</section>
+
+<section class="api-symbol" id="model-branchelm">
 
 ## BranchELM
 
+<div class="api-signature">
+
+```python
+axosim.model.BranchELM(config: BranchELMConfig)
+```
+
 [Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L23-L74)
+
+</div>
 
 Branch-factorized recurrent surrogate with spike and soma outputs.
 
 Bases: `nn.Module`.
 
-### BranchELM.__init__
+<p class="api-label">Parameters</p>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L26-L46)
+<dl class="api-parameters">
+<dt><code>config</code> <span class="api-type">BranchELMConfig</span></dt>
+<dd><span class="api-default">required.</span> Model configuration; use the defaults and constraints documented for its configuration class.</dd>
+</dl>
 
-```python
-__init__(self, config: BranchELMConfig) -> None
-```
+<p class="api-label">Methods</p>
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `config` | `BranchELMConfig` | required |
+<ul class="api-method-list">
+<li><a href="#model-branchelm-forward"><code>BranchELM.forward()</code></a></li>
+<li><a href="#model-branchelm-parameter-count"><code>BranchELM.parameter_count()</code></a></li>
+</ul>
 
-Returns `None`.
+<section class="api-method" id="model-branchelm-forward">
 
 ### BranchELM.forward
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L48-L71)
+<div class="api-signature">
 
 ```python
-forward(self, x: torch.Tensor) -> torch.Tensor
+axosim.model.BranchELM.forward(x: torch.Tensor) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L48-L71)
+
+</div>
+
+Predict native spike and soma outputs for the supplied sequence.
 
 x must be (B,T,config.input_dim). Returns (B,T,2), with one spike logit and one soma target coordinate per step. Synaptic and memory states start at zero for each call.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `x` | `torch.Tensor` | required |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>x</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span> Input tensor for the full-sequence or streaming operation.</dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+<dl class="api-parameters">
+<dt><code>prediction</code> <span class="api-type">torch.Tensor</span></dt>
+<dd>Spike-logit and soma-target channels in the tensor shape specified above.</dd>
+</dl>
+
+</section>
+
+<section class="api-method" id="model-branchelm-parameter-count">
 
 ### BranchELM.parameter_count
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L73-L74)
+<div class="api-signature">
 
 ```python
-parameter_count(self) -> int
+axosim.model.BranchELM.parameter_count() -> int
 ```
 
-Returns `int`.
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L73-L74)
+
+</div>
+
+Return the count of trainable parameters.
+
+<p class="api-label">Returns</p>
+
+`int`
+
+</section>
+
+</section>

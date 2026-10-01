@@ -40,7 +40,7 @@ document.addEventListener('keydown', event => {
     menuButton.focus();
   }
   if (event.key === 'Tab' && root.classList.contains('menu-open')) {
-    const controls = [...sidebar.querySelectorAll<HTMLElement>('a,button')];
+    const controls = [...sidebar.querySelectorAll<HTMLElement>('a,button,summary')].filter(element => element.getClientRects().length > 0);
     const first = controls[0];
     const last = controls.at(-1)!;
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }

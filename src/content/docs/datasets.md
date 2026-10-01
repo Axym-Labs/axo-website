@@ -1,7 +1,7 @@
 ---
 title: Datasets
 description: Download population and intervention releases and preserve the input and target contracts.
-section: Evaluate and deploy
+section: Evaluation and deployment
 order: 100
 ---
 
@@ -29,7 +29,7 @@ hf download Axym-Labs/axobench-interventions \
   --local-dir data/axobench-interventions
 ```
 
-The commands preserve each repository's file structure under the local directory. Consult the dataset card and manifest before feeding arrays into a model; a Hugging Face checkout is not automatically a NeuronIO shard directory accepted by every trainer.
+Download the population release when fitting responses under population context, and the intervention release when comparing a response before and after a defined intervention. Keeping those directories separate makes the data domain explicit in subsequent commands. Consult each card and manifest before feeding arrays into a model; a Hugging Face checkout is not automatically a NeuronIO shard directory accepted by every trainer.
 
 ## Preserve the tensor conventions
 

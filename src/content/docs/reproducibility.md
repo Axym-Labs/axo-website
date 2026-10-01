@@ -1,7 +1,7 @@
 ---
 title: Reproduce results
 description: Preserve model, data, timing, and evidence identities and regenerate the report's frozen numerical bundle.
-section: Evaluate and deploy
+section: Evaluation and deployment
 order: 110
 ---
 
@@ -22,7 +22,7 @@ python reproducibility/reproduce_publication.py \
   --output-dir build/publication
 ```
 
-The scripts regenerate claim tables and publication assets from frozen evidence. They do not repeat model training or GPU benchmarks. Inspect the source hashes, hardware contracts, evidence domain, and availability fields associated with each generated row.
+Use these commands to check that the report's tables and figures follow from the distributed evidence bundle. They regenerate publication assets without repeating training or GPU benchmarks. To investigate a numerical discrepancy, begin with the source hash and measurement contract of the affected row; a fresh hardware run answers a different question from regenerating a frozen figure.
 
 ## Recompute a result
 

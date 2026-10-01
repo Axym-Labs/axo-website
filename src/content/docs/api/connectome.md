@@ -2,493 +2,802 @@
 title: Connectome routing
 description: Signatures, parameters, return contracts, and source for connectome routing.
 section: API reference
+apiGroup: Populations
 order: 213
 ---
 
-## Module contract
+## Overview
 
 The routing modules construct procedural contact identities and delayed event delivery. ProceduralMorphologyConnectomeRouter retains morphology-conditioned branch targeting. Population IDs, local/long-range source identities, delay slots, and route topology must agree with the declared workload; procedural routing does not imply an empirical connectome.
 
 Source revision: `306a51ed950b`. [Public export index](/api/).
 
+<section class="api-symbol" id="connectome-delaybucket">
+
 ## DelayBucket
+
+<div class="api-signature">
+
+```python
+axosim.connectome.DelayBucket(delay_steps: int, first_fanout_offset: int, event_count_per_source: int, local_targets: bool)
+```
 
 [Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L24-L35)
 
-```python
-DelayBucket(delay_steps: int, first_fanout_offset: int, event_count_per_source: int, local_targets: bool) -> None
-```
+</div>
 
-### Fields
+Routing metadata for contacts with one delivery delay.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `delay_steps` | `int` | required |
-| `first_fanout_offset` | `int` | required |
-| `event_count_per_source` | `int` | required |
-| `local_targets` | `bool` | required |
+<p class="api-label">Parameters</p>
 
-### DelayBucket.fanout_offsets
+<dl class="api-parameters">
+<dt><code>delay_steps</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>first_fanout_offset</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>event_count_per_source</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>local_targets</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">required.</span></dd>
+</dl>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L31-L35)
+<p class="api-label">Attributes</p>
 
-```python
-DelayBucket.fanout_offsets: tuple[int, ...]
-```
+Constructor fields are retained as read-only attributes.
 
-Read-only property. Access as `instance.fanout_offsets`; do not call it as a function.
+<p class="api-label">Read-only attributes</p>
 
-Returns `tuple[int, ...]`.
+<dl class="api-attributes">
+<dt id="connectome-delaybucket-fanout-offsets"><code>DelayBucket.fanout_offsets: tuple[int, ...]</code></dt>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L31-L35">Source</a></dd>
+</dl>
+
+</section>
+
+<section class="api-symbol" id="connectome-procedural-delay-buckets">
 
 ## procedural_delay_buckets
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L38-L71)
+<div class="api-signature">
 
 ```python
-procedural_delay_buckets(*, fanout: int, local_fanout: int, minimum_delay_steps: int=1) -> tuple[DelayBucket, ...]
+axosim.connectome.procedural_delay_buckets(*, fanout: int, local_fanout: int, minimum_delay_steps: int=1) -> tuple[DelayBucket, ...]
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L38-L71)
+
+</div>
 
 Partition fanout offsets into local/long-range delay classes.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `fanout` | `int` | required |
-| `local_fanout` | `int` | required |
-| `minimum_delay_steps` | `int` | `1` |
+<p class="api-label">Parameters</p>
 
-Returns `tuple[DelayBucket, ...]`.
+<dl class="api-parameters">
+<dt><code>fanout</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>local_fanout</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>minimum_delay_steps</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=1.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`tuple[DelayBucket, ...]`
+
+</section>
+
+<section class="api-symbol" id="connectome-compact-active-sources">
 
 ## compact_active_sources
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L74-L86)
+<div class="api-signature">
 
 ```python
-compact_active_sources(outputs: torch.Tensor, *, threshold: float=0.0) -> torch.Tensor
+axosim.connectome.compact_active_sources(outputs: torch.Tensor, *, threshold: float=0.0) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L74-L86)
+
+</div>
 
 Return source-sorted int32 indices whose scalar output fires.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `outputs` | `torch.Tensor` | required |
-| `threshold` | `float` | `0.0` |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>outputs</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span> Number of readout channels.</dd>
+<dt><code>threshold</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">keyword-only, default=0.0.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+<section class="api-symbol" id="connectome-build-typed-tile-pools">
 
 ## build_typed_tile_pools
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L89-L164)
+<div class="api-signature">
 
 ```python
-build_typed_tile_pools(source_is_inhibitory: torch.Tensor, physical_to_logical: torch.Tensor, *, spatial_tile_neurons: int) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]
+axosim.connectome.build_typed_tile_pools(source_is_inhibitory: torch.Tensor, physical_to_logical: torch.Tensor, *, spatial_tile_neurons: int) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L89-L164)
+
+</div>
 
 Build invertible logical E/I ranks within every spatial tile.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `source_is_inhibitory` | `torch.Tensor` | required |
-| `physical_to_logical` | `torch.Tensor` | required |
-| `spatial_tile_neurons` | `int` | required |
+<p class="api-label">Parameters</p>
 
-Returns `tuple[torch.Tensor, torch.Tensor, torch.Tensor]`.
+<dl class="api-parameters">
+<dt><code>source_is_inhibitory</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>physical_to_logical</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>spatial_tile_neurons</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`tuple[torch.Tensor, torch.Tensor, torch.Tensor]`
+
+</section>
+
+<section class="api-symbol" id="connectome-build-external-count-branch-bank">
 
 ## build_external_count_branch_bank
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L167-L261)
+<div class="api-signature">
 
 ```python
-build_external_count_branch_bank(*, slot_map: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, max_event_count: int=32, channels_per_type: int | None=None) -> torch.Tensor
+axosim.connectome.build_external_count_branch_bank(*, slot_map: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, max_event_count: int=32, channels_per_type: int | None=None) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L167-L261)
+
+</div>
 
 Precompute exact branch currents for a consecutive event pattern.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `slot_map` | `torch.Tensor` | required |
-| `morphology_gain` | `torch.Tensor` | required |
-| `feature_gain` | `torch.Tensor` | required |
-| `synapses_per_branch` | `int` | required |
-| `max_event_count` | `int` | `32` |
-| `channels_per_type` | `int \| None` | `None` |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>slot_map</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>morphology_gain</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>feature_gain</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>synapses_per_branch</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>max_event_count</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=32.</span></dd>
+<dt><code>channels_per_type</code> <span class="api-type">int | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+<section class="api-symbol" id="connectome-trajectoryexternalbranchdrive">
 
 ## TrajectoryExternalBranchDrive
 
+<div class="api-signature">
+
+```python
+axosim.connectome.TrajectoryExternalBranchDrive(*, trajectories: torch.Tensor, branch_bank: torch.Tensor, logical_ids: torch.Tensor, morphology: torch.Tensor, seed: int, excitatory_gain: float, inhibitory_gain: float, slot_map: torch.Tensor | None=None, morphology_gain: torch.Tensor | None=None, feature_gain: torch.Tensor | None=None, synapses_per_branch: int | None=None, block_rows: int=8, block_branches: int=128)
+```
+
 [Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1514-L1768)
+
+</div>
 
 Exact native-time trajectory drive at the learned branch boundary.
 
-### TrajectoryExternalBranchDrive.__init__
+<p class="api-label">Parameters</p>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1517-L1640)
+<dl class="api-parameters">
+<dt><code>trajectories</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>branch_bank</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>logical_ids</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>morphology</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span> Enable gradients on morphology-shared adaptation rows.</dd>
+<dt><code>seed</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span> Random seed for the declared operation.</dd>
+<dt><code>excitatory_gain</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>inhibitory_gain</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>slot_map</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>morphology_gain</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>feature_gain</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>synapses_per_branch</code> <span class="api-type">int | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>block_rows</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=8.</span></dd>
+<dt><code>block_branches</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=128.</span></dd>
+</dl>
 
-```python
-__init__(self, *, trajectories: torch.Tensor, branch_bank: torch.Tensor, logical_ids: torch.Tensor, morphology: torch.Tensor, seed: int, excitatory_gain: float, inhibitory_gain: float, slot_map: torch.Tensor | None=None, morphology_gain: torch.Tensor | None=None, feature_gain: torch.Tensor | None=None, synapses_per_branch: int | None=None, block_rows: int=8, block_branches: int=128) -> None
-```
+<p class="api-label">Methods</p>
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `trajectories` | `torch.Tensor` | required |
-| `branch_bank` | `torch.Tensor` | required |
-| `logical_ids` | `torch.Tensor` | required |
-| `morphology` | `torch.Tensor` | required |
-| `seed` | `int` | required |
-| `excitatory_gain` | `float` | required |
-| `inhibitory_gain` | `float` | required |
-| `slot_map` | `torch.Tensor \| None` | `None` |
-| `morphology_gain` | `torch.Tensor \| None` | `None` |
-| `feature_gain` | `torch.Tensor \| None` | `None` |
-| `synapses_per_branch` | `int \| None` | `None` |
-| `block_rows` | `int` | `8` |
-| `block_branches` | `int` | `128` |
+<ul class="api-method-list">
+<li><a href="#connectome-trajectoryexternalbranchdrive-materialize"><code>TrajectoryExternalBranchDrive.materialize()</code></a></li>
+</ul>
 
-`seed`: Random seed for the declared operation.
-
-Returns `None`.
+<section class="api-method" id="connectome-trajectoryexternalbranchdrive-materialize">
 
 ### TrajectoryExternalBranchDrive.materialize
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1642-L1768)
+<div class="api-signature">
 
 ```python
-materialize(self, step: int, *, output: torch.Tensor | None=None, add_existing: bool=False, existing: torch.Tensor | None=None, recurrent_bits: torch.Tensor | None=None) -> torch.Tensor
+axosim.connectome.TrajectoryExternalBranchDrive.materialize(step: int, *, output: torch.Tensor | None=None, add_existing: bool=False, existing: torch.Tensor | None=None, recurrent_bits: torch.Tensor | None=None) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1642-L1768)
+
+</div>
 
 Materialize exact branch currents for one native timestep.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `step` | `int` | required |
-| `output` | `torch.Tensor \| None` | `None` |
-| `add_existing` | `bool` | `False` |
-| `existing` | `torch.Tensor \| None` | `None` |
-| `recurrent_bits` | `torch.Tensor \| None` | `None` |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>step</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>output</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>add_existing</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">keyword-only, default=False.</span></dd>
+<dt><code>existing</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>recurrent_bits</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+</section>
+
+<section class="api-symbol" id="connectome-proceduralbinarychannelconnectomerouter">
 
 ## ProceduralBinaryChannelConnectomeRouter
 
+<div class="api-signature">
+
+```python
+axosim.connectome.ProceduralBinaryChannelConnectomeRouter(contract: LargePopulationSimulationContract, *, slot_map: torch.Tensor, morphology: torch.Tensor, source_is_inhibitory: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, physical_to_logical: torch.Tensor | None=None, logical_to_physical: torch.Tensor | None=None, route_block_size: int=512, route_num_warps: int=4, branch_block_rows: int=8, branch_block_size: int=128)
+```
+
 [Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1771-L2083)
+
+</div>
 
 Exact delayed routing in AxoBench's signed binary-channel space.
 
-### ProceduralBinaryChannelConnectomeRouter.__init__
+<p class="api-label">Parameters</p>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1774-L1949)
+<dl class="api-parameters">
+<dt><code>contract</code> <span class="api-type">LargePopulationSimulationContract</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>slot_map</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>morphology</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span> Enable gradients on morphology-shared adaptation rows.</dd>
+<dt><code>source_is_inhibitory</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>morphology_gain</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>feature_gain</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>synapses_per_branch</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>physical_to_logical</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>logical_to_physical</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>route_block_size</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=512.</span></dd>
+<dt><code>route_num_warps</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=4.</span></dd>
+<dt><code>branch_block_rows</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=8.</span></dd>
+<dt><code>branch_block_size</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=128.</span></dd>
+</dl>
 
-```python
-__init__(self, contract: LargePopulationSimulationContract, *, slot_map: torch.Tensor, morphology: torch.Tensor, source_is_inhibitory: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, physical_to_logical: torch.Tensor | None=None, logical_to_physical: torch.Tensor | None=None, route_block_size: int=512, route_num_warps: int=4, branch_block_rows: int=8, branch_block_size: int=128) -> None
-```
+<p class="api-label">Read-only attributes</p>
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `contract` | `LargePopulationSimulationContract` | required |
-| `slot_map` | `torch.Tensor` | required |
-| `morphology` | `torch.Tensor` | required |
-| `source_is_inhibitory` | `torch.Tensor` | required |
-| `morphology_gain` | `torch.Tensor` | required |
-| `feature_gain` | `torch.Tensor` | required |
-| `synapses_per_branch` | `int` | required |
-| `physical_to_logical` | `torch.Tensor \| None` | `None` |
-| `logical_to_physical` | `torch.Tensor \| None` | `None` |
-| `route_block_size` | `int` | `512` |
-| `route_num_warps` | `int` | `4` |
-| `branch_block_rows` | `int` | `8` |
-| `branch_block_size` | `int` | `128` |
+<dl class="api-attributes">
+<dt id="connectome-proceduralbinarychannelconnectomerouter-queue-bytes"><code>ProceduralBinaryChannelConnectomeRouter.queue_bytes: int</code></dt>
+<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1952-L1953">Source</a></dd>
+</dl>
 
-Returns `None`.
+<p class="api-label">Methods</p>
 
-### ProceduralBinaryChannelConnectomeRouter.queue_bytes
+<ul class="api-method-list">
+<li><a href="#connectome-proceduralbinarychannelconnectomerouter-current-channel-bits"><code>ProceduralBinaryChannelConnectomeRouter.current_channel_bits()</code></a></li>
+<li><a href="#connectome-proceduralbinarychannelconnectomerouter-current-inputs"><code>ProceduralBinaryChannelConnectomeRouter.current_inputs()</code></a></li>
+<li><a href="#connectome-proceduralbinarychannelconnectomerouter-clear-and-route"><code>ProceduralBinaryChannelConnectomeRouter.clear_and_route()</code></a></li>
+</ul>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1952-L1953)
-
-```python
-ProceduralBinaryChannelConnectomeRouter.queue_bytes: int
-```
-
-Read-only property. Access as `instance.queue_bytes`; do not call it as a function.
-
-Returns `int`.
+<section class="api-method" id="connectome-proceduralbinarychannelconnectomerouter-current-channel-bits">
 
 ### ProceduralBinaryChannelConnectomeRouter.current_channel_bits
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1955-L1957)
+<div class="api-signature">
 
 ```python
-current_channel_bits(self, current_slot: int) -> torch.Tensor
+axosim.connectome.ProceduralBinaryChannelConnectomeRouter.current_channel_bits(current_slot: int) -> torch.Tensor
 ```
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `current_slot` | `int` | required |
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1955-L1957)
 
-Returns `torch.Tensor`.
+</div>
+
+<p class="api-label">Parameters</p>
+
+<dl class="api-parameters">
+<dt><code>current_slot</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+<section class="api-method" id="connectome-proceduralbinarychannelconnectomerouter-current-inputs">
 
 ### ProceduralBinaryChannelConnectomeRouter.current_inputs
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1959-L2018)
+<div class="api-signature">
 
 ```python
-current_inputs(self, current_slot: int, *, output: torch.Tensor | None=None) -> torch.Tensor
+axosim.connectome.ProceduralBinaryChannelConnectomeRouter.current_inputs(current_slot: int, *, output: torch.Tensor | None=None) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L1959-L2018)
+
+</div>
 
 Convert one exact binary channel slot to learned branch currents.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `current_slot` | `int` | required |
-| `output` | `torch.Tensor \| None` | `None` |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>current_slot</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>output</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+<section class="api-method" id="connectome-proceduralbinarychannelconnectomerouter-clear-and-route">
 
 ### ProceduralBinaryChannelConnectomeRouter.clear_and_route
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2020-L2079)
+<div class="api-signature">
 
 ```python
-clear_and_route(self, active_sources: torch.Tensor, *, current_slot: int, clear_consumed: bool=True) -> torch.Tensor
+axosim.connectome.ProceduralBinaryChannelConnectomeRouter.clear_and_route(active_sources: torch.Tensor, *, current_slot: int, clear_consumed: bool=True) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2020-L2079)
+
+</div>
 
 Clear a consumed slot and OR new delayed recurrent channels.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `active_sources` | `torch.Tensor` | required |
-| `current_slot` | `int` | required |
-| `clear_consumed` | `bool` | `True` |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>active_sources</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>current_slot</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>clear_consumed</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">keyword-only, default=True.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+</section>
+
+<section class="api-symbol" id="connectome-proceduralexactbranchconnectomerouter">
 
 ## ProceduralExactBranchConnectomeRouter
 
+<div class="api-signature">
+
+```python
+axosim.connectome.ProceduralExactBranchConnectomeRouter(*args, external_trajectories: torch.Tensor | None=None, external_seed: int=0, external_excitatory_gain: float=1.0, external_inhibitory_gain: float=1.0, max_external_event_count: int=32, **kwargs)
+```
+
 [Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2086-L2277)
+
+</div>
 
 Sparse exact-OR routing with ready-to-consume branch currents.
 
 Bases: `ProceduralBinaryChannelConnectomeRouter`.
 
-### ProceduralExactBranchConnectomeRouter.__init__
+<p class="api-label">Parameters</p>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2091-L2147)
+<dl class="api-parameters">
+<dt><code>args</code> <span class="api-type">unannotated</span></dt>
+<dd><span class="api-default">variadic.</span></dd>
+<dt><code>external_trajectories</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>external_seed</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=0.</span></dd>
+<dt><code>external_excitatory_gain</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">keyword-only, default=1.0.</span></dd>
+<dt><code>external_inhibitory_gain</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">keyword-only, default=1.0.</span></dd>
+<dt><code>max_external_event_count</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=32.</span></dd>
+<dt><code>kwargs</code> <span class="api-type">unannotated</span></dt>
+<dd><span class="api-default">variadic.</span></dd>
+</dl>
 
-```python
-__init__(self, *args, external_trajectories: torch.Tensor | None=None, external_seed: int=0, external_excitatory_gain: float=1.0, external_inhibitory_gain: float=1.0, max_external_event_count: int=32, **kwargs) -> None
-```
+<p class="api-label">Read-only attributes</p>
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `args` | `unspecified` | `variadic` |
-| `external_trajectories` | `torch.Tensor \| None` | `None` |
-| `external_seed` | `int` | `0` |
-| `external_excitatory_gain` | `float` | `1.0` |
-| `external_inhibitory_gain` | `float` | `1.0` |
-| `max_external_event_count` | `int` | `32` |
-| `kwargs` | `unspecified` | `variadic` |
+<dl class="api-attributes">
+<dt id="connectome-proceduralexactbranchconnectomerouter-queue-bytes"><code>ProceduralExactBranchConnectomeRouter.queue_bytes: int</code></dt>
+<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2150-L2156">Source</a></dd>
+</dl>
 
-Returns `None`.
+<p class="api-label">Methods</p>
 
-### ProceduralExactBranchConnectomeRouter.queue_bytes
+<ul class="api-method-list">
+<li><a href="#connectome-proceduralexactbranchconnectomerouter-current-inputs"><code>ProceduralExactBranchConnectomeRouter.current_inputs()</code></a></li>
+<li><a href="#connectome-proceduralexactbranchconnectomerouter-clear-and-route"><code>ProceduralExactBranchConnectomeRouter.clear_and_route()</code></a></li>
+</ul>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2150-L2156)
-
-```python
-ProceduralExactBranchConnectomeRouter.queue_bytes: int
-```
-
-Read-only property. Access as `instance.queue_bytes`; do not call it as a function.
-
-Returns `int`.
+<section class="api-method" id="connectome-proceduralexactbranchconnectomerouter-current-inputs">
 
 ### ProceduralExactBranchConnectomeRouter.current_inputs
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2158-L2179)
+<div class="api-signature">
 
 ```python
-current_inputs(self, current_slot: int, *, output: torch.Tensor | None=None) -> torch.Tensor
+axosim.connectome.ProceduralExactBranchConnectomeRouter.current_inputs(current_slot: int, *, output: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `current_slot` | `int` | required |
-| `output` | `torch.Tensor \| None` | `None` |
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2158-L2179)
 
-Returns `torch.Tensor`.
+</div>
+
+<p class="api-label">Parameters</p>
+
+<dl class="api-parameters">
+<dt><code>current_slot</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>output</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+<section class="api-method" id="connectome-proceduralexactbranchconnectomerouter-clear-and-route">
 
 ### ProceduralExactBranchConnectomeRouter.clear_and_route
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2181-L2277)
+<div class="api-signature">
 
 ```python
-clear_and_route(self, active_sources: torch.Tensor, *, current_slot: int, current_step: int | None=None, clear_consumed: bool=True) -> torch.Tensor
+axosim.connectome.ProceduralExactBranchConnectomeRouter.clear_and_route(active_sources: torch.Tensor, *, current_slot: int, current_step: int | None=None, clear_consumed: bool=True) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2181-L2277)
+
+</div>
 
 Clear consumed state and route each binary channel at most once.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `active_sources` | `torch.Tensor` | required |
-| `current_slot` | `int` | required |
-| `current_step` | `int \| None` | `None` |
-| `clear_consumed` | `bool` | `True` |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>active_sources</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>current_slot</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>current_step</code> <span class="api-type">int | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>clear_consumed</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">keyword-only, default=True.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+</section>
+
+<section class="api-symbol" id="connectome-proceduralmorphologyconnectomerouter">
 
 ## ProceduralMorphologyConnectomeRouter
 
+<div class="api-signature">
+
+```python
+axosim.connectome.ProceduralMorphologyConnectomeRouter(contract: LargePopulationSimulationContract, *, slot_map: torch.Tensor, morphology: torch.Tensor, source_is_inhibitory: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, physical_to_logical: torch.Tensor | None=None, logical_to_physical: torch.Tensor | None=None, route_block_size: int=512, route_num_warps: int=4)
+```
+
 [Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2280-L2606)
+
+</div>
 
 Persistent delay-queue router for the scalable connectome control.
 
-### ProceduralMorphologyConnectomeRouter.__init__
+<p class="api-label">Parameters</p>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2283-L2445)
+<dl class="api-parameters">
+<dt><code>contract</code> <span class="api-type">LargePopulationSimulationContract</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>slot_map</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>morphology</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span> Enable gradients on morphology-shared adaptation rows.</dd>
+<dt><code>source_is_inhibitory</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>morphology_gain</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>feature_gain</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>synapses_per_branch</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>physical_to_logical</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>logical_to_physical</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>route_block_size</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=512.</span></dd>
+<dt><code>route_num_warps</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=4.</span></dd>
+</dl>
 
-```python
-__init__(self, contract: LargePopulationSimulationContract, *, slot_map: torch.Tensor, morphology: torch.Tensor, source_is_inhibitory: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, physical_to_logical: torch.Tensor | None=None, logical_to_physical: torch.Tensor | None=None, route_block_size: int=512, route_num_warps: int=4) -> None
-```
+<p class="api-label">Methods</p>
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `contract` | `LargePopulationSimulationContract` | required |
-| `slot_map` | `torch.Tensor` | required |
-| `morphology` | `torch.Tensor` | required |
-| `source_is_inhibitory` | `torch.Tensor` | required |
-| `morphology_gain` | `torch.Tensor` | required |
-| `feature_gain` | `torch.Tensor` | required |
-| `synapses_per_branch` | `int` | required |
-| `physical_to_logical` | `torch.Tensor \| None` | `None` |
-| `logical_to_physical` | `torch.Tensor \| None` | `None` |
-| `route_block_size` | `int` | `512` |
-| `route_num_warps` | `int` | `4` |
+<ul class="api-method-list">
+<li><a href="#connectome-proceduralmorphologyconnectomerouter-current-inputs"><code>ProceduralMorphologyConnectomeRouter.current_inputs()</code></a></li>
+<li><a href="#connectome-proceduralmorphologyconnectomerouter-clear-and-route"><code>ProceduralMorphologyConnectomeRouter.clear_and_route()</code></a></li>
+<li><a href="#connectome-proceduralmorphologyconnectomerouter-clear-recorded-branches"><code>ProceduralMorphologyConnectomeRouter.clear_recorded_branches()</code></a></li>
+</ul>
 
-Returns `None`.
+<section class="api-method" id="connectome-proceduralmorphologyconnectomerouter-current-inputs">
 
 ### ProceduralMorphologyConnectomeRouter.current_inputs
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2447-L2449)
+<div class="api-signature">
 
 ```python
-current_inputs(self, current_slot: int) -> torch.Tensor
+axosim.connectome.ProceduralMorphologyConnectomeRouter.current_inputs(current_slot: int) -> torch.Tensor
 ```
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `current_slot` | `int` | required |
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2447-L2449)
 
-Returns `torch.Tensor`.
+</div>
+
+<p class="api-label">Parameters</p>
+
+<dl class="api-parameters">
+<dt><code>current_slot</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+<section class="api-method" id="connectome-proceduralmorphologyconnectomerouter-clear-and-route">
 
 ### ProceduralMorphologyConnectomeRouter.clear_and_route
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2451-L2577)
+<div class="api-signature">
 
 ```python
-clear_and_route(self, active_sources: torch.Tensor, *, current_slot: int, clear_consumed: bool=True, touched_offsets: torch.Tensor | None=None) -> torch.Tensor
+axosim.connectome.ProceduralMorphologyConnectomeRouter.clear_and_route(active_sources: torch.Tensor, *, current_slot: int, clear_consumed: bool=True, touched_offsets: torch.Tensor | None=None) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2451-L2577)
+
+</div>
 
 Clear a consumed queue slot and schedule new delayed events.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `active_sources` | `torch.Tensor` | required |
-| `current_slot` | `int` | required |
-| `clear_consumed` | `bool` | `True` |
-| `touched_offsets` | `torch.Tensor \| None` | `None` |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>active_sources</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>current_slot</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>clear_consumed</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">keyword-only, default=True.</span></dd>
+<dt><code>touched_offsets</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+<section class="api-method" id="connectome-proceduralmorphologyconnectomerouter-clear-recorded-branches">
 
 ### ProceduralMorphologyConnectomeRouter.clear_recorded_branches
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2579-L2602)
+<div class="api-signature">
 
 ```python
-clear_recorded_branches(self, touched_offsets: torch.Tensor) -> None
+axosim.connectome.ProceduralMorphologyConnectomeRouter.clear_recorded_branches(touched_offsets: torch.Tensor) -> None
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2579-L2602)
+
+</div>
 
 Clear branch queue destinations recorded by event delivery.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `touched_offsets` | `torch.Tensor` | required |
+<p class="api-label">Parameters</p>
 
-Returns `None`.
+<dl class="api-parameters">
+<dt><code>touched_offsets</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+<dl class="api-parameters">
+<dt><code>result</code> <span class="api-type">None</span></dt>
+<dd>No return value.</dd>
+</dl>
+
+</section>
+
+</section>
+
+<section class="api-symbol" id="connectome-proceduraluniquechannelconnectomerouter">
 
 ## ProceduralUniqueChannelConnectomeRouter
 
+<div class="api-signature">
+
+```python
+axosim.connectome.ProceduralUniqueChannelConnectomeRouter(*args, synaptic_efficacy_bank: QuantizedSynapticEfficacyBank | None=None, external_trajectories: torch.Tensor | None=None, external_seed: int=0, external_excitatory_gain: float=1.0, external_inhibitory_gain: float=1.0, max_external_event_count: int=32, allow_repeated_source_target_pairs: bool=False, **kwargs)
+```
+
 [Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2609-L3007)
+
+</div>
 
 Collision-free typed fan-in with invertible event-wise routing.
 
 Bases: `ProceduralMorphologyConnectomeRouter`.
 
-### ProceduralUniqueChannelConnectomeRouter.__init__
+<p class="api-label">Parameters</p>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2614-L2753)
+<dl class="api-parameters">
+<dt><code>args</code> <span class="api-type">unannotated</span></dt>
+<dd><span class="api-default">variadic.</span></dd>
+<dt><code>synaptic_efficacy_bank</code> <span class="api-type">QuantizedSynapticEfficacyBank | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>external_trajectories</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>external_seed</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=0.</span></dd>
+<dt><code>external_excitatory_gain</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">keyword-only, default=1.0.</span></dd>
+<dt><code>external_inhibitory_gain</code> <span class="api-type">float</span></dt>
+<dd><span class="api-default">keyword-only, default=1.0.</span></dd>
+<dt><code>max_external_event_count</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, default=32.</span></dd>
+<dt><code>allow_repeated_source_target_pairs</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">keyword-only, default=False.</span></dd>
+<dt><code>kwargs</code> <span class="api-type">unannotated</span></dt>
+<dd><span class="api-default">variadic.</span></dd>
+</dl>
 
-```python
-__init__(self, *args, synaptic_efficacy_bank: QuantizedSynapticEfficacyBank | None=None, external_trajectories: torch.Tensor | None=None, external_seed: int=0, external_excitatory_gain: float=1.0, external_inhibitory_gain: float=1.0, max_external_event_count: int=32, allow_repeated_source_target_pairs: bool=False, **kwargs) -> None
-```
+<p class="api-label">Read-only attributes</p>
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `args` | `unspecified` | `variadic` |
-| `synaptic_efficacy_bank` | `QuantizedSynapticEfficacyBank \| None` | `None` |
-| `external_trajectories` | `torch.Tensor \| None` | `None` |
-| `external_seed` | `int` | `0` |
-| `external_excitatory_gain` | `float` | `1.0` |
-| `external_inhibitory_gain` | `float` | `1.0` |
-| `max_external_event_count` | `int` | `32` |
-| `allow_repeated_source_target_pairs` | `bool` | `False` |
-| `kwargs` | `unspecified` | `variadic` |
+<dl class="api-attributes">
+<dt id="connectome-proceduraluniquechannelconnectomerouter-queue-bytes"><code>ProceduralUniqueChannelConnectomeRouter.queue_bytes: int</code></dt>
+<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2756-L2757">Source</a></dd>
+<dt id="connectome-proceduraluniquechannelconnectomerouter-recorded-offsets-per-source"><code>ProceduralUniqueChannelConnectomeRouter.recorded_offsets_per_source: int</code></dt>
+<dd>Candidate offset slots needed to record one routed source. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2760-L2779">Source</a></dd>
+</dl>
 
-Returns `None`.
+<p class="api-label">Methods</p>
 
-### ProceduralUniqueChannelConnectomeRouter.queue_bytes
+<ul class="api-method-list">
+<li><a href="#connectome-proceduraluniquechannelconnectomerouter-clear-and-route"><code>ProceduralUniqueChannelConnectomeRouter.clear_and_route()</code></a></li>
+</ul>
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2756-L2757)
-
-```python
-ProceduralUniqueChannelConnectomeRouter.queue_bytes: int
-```
-
-Read-only property. Access as `instance.queue_bytes`; do not call it as a function.
-
-Returns `int`.
-
-### ProceduralUniqueChannelConnectomeRouter.recorded_offsets_per_source
-
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2760-L2779)
-
-```python
-ProceduralUniqueChannelConnectomeRouter.recorded_offsets_per_source: int
-```
-
-Read-only property. Access as `instance.recorded_offsets_per_source`; do not call it as a function.
-
-Candidate offset slots needed to record one routed source.
-
-Returns `int`.
+<section class="api-method" id="connectome-proceduraluniquechannelconnectomerouter-clear-and-route">
 
 ### ProceduralUniqueChannelConnectomeRouter.clear_and_route
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2781-L3007)
+<div class="api-signature">
 
 ```python
-clear_and_route(self, active_sources: torch.Tensor, *, current_slot: int, current_step: int | None=None, clear_consumed: bool=True, touched_offsets: torch.Tensor | None=None, unique_rows: torch.Tensor | None=None, unique_row_flags: torch.Tensor | None=None, unique_row_count: torch.Tensor | None=None) -> torch.Tensor
+axosim.connectome.ProceduralUniqueChannelConnectomeRouter.clear_and_route(active_sources: torch.Tensor, *, current_slot: int, current_step: int | None=None, clear_consumed: bool=True, touched_offsets: torch.Tensor | None=None, unique_rows: torch.Tensor | None=None, unique_row_flags: torch.Tensor | None=None, unique_row_count: torch.Tensor | None=None) -> torch.Tensor
 ```
+
+[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/connectome.py#L2781-L3007)
+
+</div>
 
 Route the exact selected typed channel for each active source.
 
-| Parameter | Type | Default |
-| --- | --- | --- |
-| `active_sources` | `torch.Tensor` | required |
-| `current_slot` | `int` | required |
-| `current_step` | `int \| None` | `None` |
-| `clear_consumed` | `bool` | `True` |
-| `touched_offsets` | `torch.Tensor \| None` | `None` |
-| `unique_rows` | `torch.Tensor \| None` | `None` |
-| `unique_row_flags` | `torch.Tensor \| None` | `None` |
-| `unique_row_count` | `torch.Tensor \| None` | `None` |
+<p class="api-label">Parameters</p>
 
-Returns `torch.Tensor`.
+<dl class="api-parameters">
+<dt><code>active_sources</code> <span class="api-type">torch.Tensor</span></dt>
+<dd><span class="api-default">required.</span></dd>
+<dt><code>current_slot</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span></dd>
+<dt><code>current_step</code> <span class="api-type">int | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>clear_consumed</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">keyword-only, default=True.</span></dd>
+<dt><code>touched_offsets</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>unique_rows</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>unique_row_flags</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+<dt><code>unique_row_count</code> <span class="api-type">torch.Tensor | None</span></dt>
+<dd><span class="api-default">keyword-only, default=None.</span></dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+`torch.Tensor`
+
+</section>
+
+</section>

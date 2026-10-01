@@ -1,7 +1,7 @@
 ---
 title: Inference-time adaptation
 description: Optimize behavior, morphology, and synaptic parameters through the full temporal horizon.
-section: Inference-time adaptation
+section: Training and adaptation
 order: 70
 ---
 
@@ -13,14 +13,21 @@ Behavior coefficients modify encoded-input offset and gain, state decay, recurre
 
 ## Run an eager update
 
-Download [population_example.py](/examples/population_example.py) into the directory where you run this script; [build populations](/populations/) explains its construction. This complete example optimizes all three banks against an illustrative target:
+Download [population_example.py](/examples/population_example.py) into the directory where you run this script; [build populations](/populations/) explains its construction. This example creates a controlled target by increasing every contact efficacy in an otherwise identical teacher population. It then uses all three adaptation banks to fit the changed responses:
 
 ```python
 import torch
+from copy import deepcopy
+from math import log
 from population_example import build_population
 
+torch.manual_seed(7)
 population = build_population()
 contacts = torch.randn(3, 12, 4)
+teacher = deepcopy(population)
+with torch.no_grad():
+    teacher.synaptic_log_efficacy.add_(log(1.25))
+    target = teacher(contacts).detach()
 population.enable_adaptation_training(
     behavior=True,
     morphology=True,
@@ -28,7 +35,6 @@ population.enable_adaptation_training(
 )
 trainable = list(population.trainable_adaptation_parameters())
 optimizer = torch.optim.Adam(trainable, lr=1e-3)
-target = torch.randn_like(population(contacts))
 
 def causal_mse(prediction, target):
     return torch.nn.functional.mse_loss(
@@ -36,19 +42,26 @@ def causal_mse(prediction, target):
         target[:, 4:],
     )
 
-optimizer.zero_grad(set_to_none=True)
-loss = causal_mse(population(contacts), target)
-loss.backward()
-torch.nn.utils.clip_grad_norm_(trainable, 1.0)
-optimizer.step()
+before = causal_mse(population(contacts), target).item()
+for _ in range(20):
+    optimizer.zero_grad(set_to_none=True)
+    loss = causal_mse(population(contacts), target)
+    loss.backward()
+    torch.nn.utils.clip_grad_norm_(trainable, 1.0)
+    optimizer.step()
+after = causal_mse(population(contacts), target).item()
 print(loss.shape, len(trainable))
+print(after < before)
 ```
 
 ```text
 torch.Size([]) 3
+True
 ```
 
-Use measured targets and a task-appropriate objective in an adaptation study; random targets here demonstrate the update contract. `enable_adaptation_training` freezes the shared neuron weights and sets `requires_grad` independently for each selected bank. The gradients span the complete temporal horizon unless you explicitly truncate the graph. Use `enable_full_training` to enable all population parameters, including shared weights.
+The final Boolean tests whether the controlled response discrepancy decreased. It does not identify the teacher's contact efficacies, because behavior and morphology adjustments can compensate for synaptic changes. If contact recovery is the question, enable only `synaptic=True`; enable additional banks when the task requires response or morphology calibration.
+
+The learning rate and twenty-step budget make this a bounded interface example; select both on development data for a scientific adaptation study. Norm clipping limits unusually large gradients. `enable_adaptation_training` freezes the shared neuron weights, and gradients span the complete temporal horizon unless you explicitly truncate the graph. Use measured targets and a task-appropriate objective for biological or downstream accuracy claims.
 
 ## Validate an adaptation recipe
 

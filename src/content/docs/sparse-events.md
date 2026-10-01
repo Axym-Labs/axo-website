@@ -1,8 +1,8 @@
 ---
 title: Submit sparse events
 description: Address exact contact events without allocating dense population-by-time-by-contact histories.
-section: Build populations
-order: 60
+section: Simulation
+order: 50
 ---
 
 ## Address an event
@@ -26,8 +26,11 @@ import torch
 from population_example import build_population
 
 population = build_population("cuda")
-summary_indices = torch.tensor([0, 7, 16, 35], device="cuda")
-contact_indices = torch.tensor([1, 3, 6, 8], device="cuda")
+neurons = torch.tensor([0, 0, 1, 2], device="cuda")
+times = torch.tensor([0, 7, 4, 11], device="cuda")
+contacts = torch.tensor([1, 3, 2, 0], device="cuda")
+summary_indices = neurons * 12 + times
+contact_indices = neurons * 4 + contacts
 event_values = torch.tensor(
     [1.0, -0.5, 0.75, 0.25],
     device="cuda",
@@ -48,7 +51,23 @@ print(prediction.shape, event_values.grad.shape)
 torch.Size([3, 12, 2]) torch.Size([4])
 ```
 
-Replace `"cuda"` with `"cpu"` throughout for a CPU run. This example masks the first four causal padding positions before computing the loss.
+Replace `"cuda"` with `"cpu"` throughout for a CPU run. The four events make the addressing rule visible: events zero and one reach different contacts of neuron zero, while the remaining events reach neurons one and two. The negative amplitude is an inhibitory event; its contact efficacy remains positive. The loss excludes the first four causal padding positions.
+
+## Check sparse addressing against a dense history
+
+Before building a larger event pipeline, construct the equivalent dense history and compare predictions:
+
+```python
+dense = torch.zeros(3, 12, 4, device=event_values.device)
+dense.index_put_(
+    (neurons, times, contacts),
+    event_values.detach(),
+    accumulate=True,
+)
+torch.testing.assert_close(prediction.detach(), population(dense).detach())
+```
+
+`accumulate=True` preserves repeated events at the same contact and timestep. If this assertion fails, first inspect the flattened neuron identities and event order; comparing equal predictions isolates addressing errors before optimization changes any banks.
 
 ## Gradients and memory
 

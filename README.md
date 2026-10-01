@@ -6,10 +6,10 @@ and Axym purple match the Axym website. Dark mode is the default; explicit theme
 choices persist. Subtle hover transitions follow the reference documentation
 and respect reduced-motion preferences.
 
-The documentation order follows installation, model selection, inference and
-training, population construction, inference-time adaptation, evaluation and
-deployment, then the complete API reference. The technical report's former
-practitioner part has moved here.
+Start with installation and the illustrated model catalog, then follow
+simulation, training and adaptation, and evaluation and deployment. The final
+API category has expandable groups for models, populations, training and
+evaluation, data, compatibility, and CLI commands.
 
 ## Develop and verify
 
@@ -37,6 +37,7 @@ tablet, and mobile widths:
 ```sh
 npx playwright install chromium
 npm run test:browser
+npm run test:refinement
 ```
 
 Browser verification stores screenshots in the sibling internal project by
@@ -48,7 +49,8 @@ another server, and `CHROMIUM_PATH` to reuse a local Chromium installation.
 Edit lifecycle guides in `src/content/docs/`. Frontmatter specifies the page
 title, description, navigation category, and explicit order. The navigation,
 previous/next links, table of contents, and sitemap use this metadata. API
-reference is deliberately the final category.
+reference is deliberately the final category. Its `apiGroup` field selects
+the one-level expandable subgroup. The first navigation block has no heading.
 
 API pages are generated from a pinned AxoSim revision. They cover every
 `axosim.__all__` export, the public functions/classes/methods in the guide
@@ -64,15 +66,28 @@ The generator's `--help` lists its exact options. The public
 `api-inventory.json` records symbol and CLI coverage. Inherited PyTorch methods
 use PyTorch's normal interface rather than duplicated framework documentation.
 
-To refresh the downloadable report and export its original TikZ central figure
-as SVG and PNG, install Tectonic and Poppler, rebuild the sibling report, and run:
+To rebuild the downloadable report and export its TikZ central figure as
+transparent light/dark SVGs and PNGs, install Tectonic and Poppler, then run:
 
 ```sh
 npm run sync:report
 ```
 
-`public/report/provenance.json` records the source and output hashes. Normal
-website builds use checked-in assets and need neither TeX nor private repositories.
+The exporter validates every plotted coordinate against the frozen measurements
+and records the raw values in `public/report/central-figure-values.json`.
+`public/report/provenance.json` records evidence, font, source, and output hashes.
+Normal website builds use checked-in assets and need neither TeX nor private
+repositories.
+
+The shared pixel mark and multi-size favicon are reproducible without network
+access:
+
+```sh
+node scripts/generate-brand.mjs
+```
+
+Its original glyphs, MNIST sample, palette, and shared Axym-site asset paths are
+documented in `public/brand/README.md`.
 
 ## GitHub Pages and the custom domain
 

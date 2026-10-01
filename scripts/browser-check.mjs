@@ -23,7 +23,7 @@ try {
   assert.equal(await page.locator('h1').innerText(),'Overview');
   assert.equal(await page.locator('.nav-group a[aria-current="page"]').innerText(),'Overview');
   assert(await page.locator('.table-of-contents').isVisible());
-  assert((await page.locator('.overview-figure img').evaluate(img=>img.naturalWidth))>0);
+  assert((await page.locator('.overview-figure img:visible').evaluate(img=>img.naturalWidth))>0);
   assert(/^['"]?Inter/.test(await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily)));
   assert(await page.evaluate(()=>[...document.fonts].some(font=>font.family.includes('Inter') && font.status==='loaded')),'The self-hosted Inter font must actually load');
   await page.screenshot({path:join(artifacts,'overview-desktop-dark.png'),fullPage:true});
@@ -101,7 +101,7 @@ try {
   assert(page.url().startsWith(base));
   results.push('Search: content/API results, Ctrl K, arrow-key focus, Enter navigation.');
 
-  const routes = [...new Set((await page.locator('.navigation a').evaluateAll(links=>links.map(link=>link.getAttribute('href')))))];
+  const routes = [...new Set((await page.locator('.navigation a').evaluateAll(links=>links.map(link=>link.getAttribute('href')).filter(href=>href?.startsWith('/')))))];
   for (const viewport of [{width:1440,height:1000},{width:768,height:1024},{width:390,height:844}]) {
     await page.setViewportSize(viewport);
     for (const route of routes) {
