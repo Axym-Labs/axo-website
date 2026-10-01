@@ -1,0 +1,27 @@
+{
+  "name": "axo-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build && pagefind --site dist && node scripts/verify-site.mjs",
+    "preview": "astro preview --host 127.0.0.1",
+    "test": "node scripts/verify-site.mjs",
+    "check": "astro check",
+    "sync:report": "node scripts/sync-report.mjs",
+    "test:browser": "node scripts/browser-check.mjs"
+  },
+  "dependencies": {
+    "astro": "7.3.5",
+    "pagefind": "1.5.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "playwright": "1.61.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

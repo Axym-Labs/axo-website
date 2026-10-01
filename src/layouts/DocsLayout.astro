@@ -1,0 +1,119 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
+import '../styles/docs.css';
+
+interface Props {
+  entry: CollectionEntry<'docs'>;
+  entries: CollectionEntry<'docs'>[];
+  headings: MarkdownHeading[];
+}
+const { entry, entries, headings } = Astro.props;
+const groups = [...new Set(entries.map(item => item.data.section))];
+const url = (id: string) => id === 'overview' ? '/' : id === 'api/index' ? '/api/' : `/${id}/`;
+const index = entries.findIndex(item => item.id === entry.id);
+const previous = entries[index - 1];
+const next = entries[index + 1];
+const canonical = new URL(url(entry.id), Astro.site);
+const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 3);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={entry.data.description} />
+    {entry.id === '404' && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#ffffff" />
+    <title>{entry.data.title} | AxoSim documentation</title>
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={`${entry.data.title} | AxoSim`} />
+    <meta property="og:description" content={entry.data.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://axo.axym.org/figures/central-comparison.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/P052-Roman.otf" as="font" type="font/otf" crossorigin />
+    <script is:inline>
+      (() => {
+        let theme;
+        try { theme = localStorage.getItem('axo-theme'); } catch {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#111111' : '#ffffff');
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <aside class="sidebar" id="site-sidebar" aria-label="Documentation navigation">
+      <div class="sidebar-head">
+        <div class="brand-row">
+          <a class="wordmark" href="/" aria-label="AxoSim overview">Axo<span>Sim</span></a>
+          <span class="docs-label">Docs</span>
+          <button class="icon-button theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch color theme">
+            <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+            <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 15.4A8.8 8.8 0 0 1 8.6 4a9 9 0 1 0 11.4 11.4Z"/></svg>
+          </button>
+        </div>
+        <button class="search-trigger" type="button" aria-haspopup="dialog">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+          <span>Search docs</span><kbd>Ctrl K</kbd>
+        </button>
+      </div>
+      <nav class="navigation">
+        {groups.map(group => <section class="nav-group">
+          <h2>{group}</h2>
+          {entries.filter(item => item.data.section === group).map(item => (
+            <a href={url(item.id)} aria-current={item.id === entry.id ? 'page' : undefined}>{item.data.title}</a>
+          ))}
+        </section>)}
+      </nav>
+      <div class="sidebar-footer"><a href="https://axym.org">Axym Labs <span aria-hidden="true">↗</span></a><a href="https://github.com/Axym-Labs/axo-website">GitHub <span aria-hidden="true">↗</span></a></div>
+    </aside>
+
+    <header class="mobile-header">
+      <button id="menu-toggle" class="icon-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-sidebar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <a href="/" class="wordmark">Axo<span>Sim</span></a>
+      <button class="mobile-search icon-button search-trigger" type="button" aria-label="Search documentation" aria-haspopup="dialog"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
+    </header>
+    <button class="sidebar-scrim" type="button" aria-label="Close navigation" tabindex="-1"></button>
+
+    <div class="reading-layout">
+      <main id="main-content" tabindex="-1">
+        <article data-pagefind-body={entry.id === '404' ? undefined : true}>
+          <header class="page-heading">
+            <p class="eyebrow">{entry.data.section}</p>
+            <h1 data-pagefind-meta="title">{entry.data.title}</h1>
+            <p class="page-description">{entry.data.description}</p>
+          </header>
+          <div class="prose"><slot /></div>
+        </article>
+        <nav class="page-navigation" aria-label="Previous and next page">
+          {previous ? <a href={url(previous.id)}><span>Previous</span><strong>← {previous.data.title}</strong></a> : <span />}
+          {next && <a href={url(next.id)} class="next"><span>Next</span><strong>{next.data.title} →</strong></a>}
+        </nav>
+        <footer class="page-footer"><span>AxoSim · Axym Labs</span><a href={`https://github.com/Axym-Labs/axo-website/blob/main/src/content/docs/${entry.id}.md`}>View source <span aria-hidden="true">↗</span></a></footer>
+      </main>
+      <aside class="table-of-contents" aria-label="On this page">
+        <p>On this page</p>
+        <nav>{toc.map(heading => <a href={`#${heading.slug}`} class:list={['toc-link', { nested: heading.depth === 3 }]}>{heading.text}</a>)}</nav>
+      </aside>
+    </div>
+
+    <dialog id="search-dialog" aria-labelledby="search-title">
+      <div class="search-header">
+        <label id="search-title" class="visually-hidden" for="search-input">Search documentation</label>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+        <input id="search-input" name="query" type="search" placeholder="Search AxoSim documentation…" autocomplete="off" spellcheck="false" />
+        <button class="icon-button" id="search-close" type="button" aria-label="Close search">✕</button>
+      </div>
+      <p id="search-status" role="status" aria-live="polite">Search guides, examples, and API signatures.</p>
+      <div id="search-results"></div>
+      <div class="search-footer"><span><kbd>↑</kbd> <kbd>↓</kbd> to navigate</span><span><kbd>Enter</kbd> to open</span><span><kbd>Esc</kbd> to close</span></div>
+    </dialog>
+    <script src="../scripts/docs.ts"></script>
+  </body>
+</html>

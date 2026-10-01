@@ -1,0 +1,9 @@
+---
+import { getCollection } from 'astro:content';
+import DocsLayout from '../layouts/DocsLayout.astro';
+const entries = (await getCollection('docs')).sort((a,b) => a.data.order-b.data.order);
+const entry = { ...entries[0], id: '404', data: { ...entries[0].data, title: 'Page not found', description: 'Use search or the navigation to find the guide you need.', section: 'Documentation' } };
+---
+<DocsLayout entry={entry} entries={entries} headings={[]}>
+  <p><a href="/">Return to the overview</a>, or search for a model, method, or parameter with <kbd>Ctrl K</kbd>.</p>
+</DocsLayout>

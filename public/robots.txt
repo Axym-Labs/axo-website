@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://axo.axym.org/sitemap.xml
