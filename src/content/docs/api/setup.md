@@ -3,14 +3,14 @@ title: Setup workflow
 description: Signatures, parameters, return contracts, and source for setup workflow.
 section: API reference
 apiGroup: CLI
-order: 221
+order: 222
 ---
 
 ## Overview
 
 Setup planning separates the declared installation/download/conversion steps from execution. Default setup creates local directories and installs the checkout; downloads occur only when explicitly requested. A dry run prints the plan without executing its commands.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="setup-workflow-datasetspec">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.setup_workflow.DatasetSpec(name: str, slug: str)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/setup_workflow.py#L12-L14)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/setup_workflow.py#L12-L14)
 
 </div>
 
@@ -53,7 +53,7 @@ Constructor fields are retained as read-only attributes.
 axosim.setup_workflow.SetupOptions(project_root: Path, data_dir: Path, install_kaggle: bool = False, download_data: bool = False, convert_raw: bool = False, raw_dir: Path | None = None, shard_dir: Path | None = None, shard_size: int = 128, skip_install: bool = False, datasets: tuple[DatasetSpec, ...] = DEFAULT_DATASETS, python_executable: str = sys.executable)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/setup_workflow.py#L24-L35)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/setup_workflow.py#L24-L35)
 
 </div>
 
@@ -102,7 +102,7 @@ Constructor fields are retained as read-only attributes.
 axosim.setup_workflow.SetupStep(description: str, command: str | None = None, argv: tuple[str, ...] | None = None, mkdir: Path | None = None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/setup_workflow.py#L39-L43)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/setup_workflow.py#L39-L43)
 
 </div>
 
@@ -137,7 +137,7 @@ Constructor fields are retained as read-only attributes.
 axosim.setup_workflow.SetupPlan(steps: tuple[SetupStep, ...], next_steps: tuple[str, ...] = field(default_factory=tuple))
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/setup_workflow.py#L47-L49)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/setup_workflow.py#L47-L49)
 
 </div>
 
@@ -168,7 +168,7 @@ Constructor fields are retained as read-only attributes.
 axosim.setup_workflow.build_setup_plan(options: SetupOptions) -> SetupPlan
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/setup_workflow.py#L52-L128)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/setup_workflow.py#L52-L128)
 
 </div>
 
@@ -200,7 +200,7 @@ Construct the setup operations without executing installations, downloads, or co
 axosim.setup_workflow.run_setup_plan(plan: SetupPlan, *, dry_run: bool=False) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/setup_workflow.py#L131-L145)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/setup_workflow.py#L131-L145)
 
 </div>
 

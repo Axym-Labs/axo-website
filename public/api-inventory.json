@@ -2,7 +2,7 @@
   "schema_version": 1,
   "source": {
     "repository": "https://github.com/Axym-Labs/axosim",
-    "commit": "306a51ed950b411e8858af622d48062b28e4fbfe"
+    "commit": "856207f6de56dbf8e3f754a142581a7c050eeac6"
   },
   "exports": [
     {
@@ -154,6 +154,42 @@
       "module": "model_family",
       "implementation": "create_axosim_profile",
       "page": "api/model-family"
+    },
+    {
+      "name": "ConnectedPopulation",
+      "module": "connected_population",
+      "implementation": "ConnectedPopulation",
+      "page": "api/connected-population"
+    },
+    {
+      "name": "ExplicitConnectome",
+      "module": "connected_population",
+      "implementation": "ExplicitConnectome",
+      "page": "api/connected-population"
+    },
+    {
+      "name": "InputEvents",
+      "module": "connected_population",
+      "implementation": "InputEvents",
+      "page": "api/connected-population"
+    },
+    {
+      "name": "PopulationFrame",
+      "module": "connected_population",
+      "implementation": "PopulationFrame",
+      "page": "api/connected-population"
+    },
+    {
+      "name": "ProceduralConnectome",
+      "module": "connected_population",
+      "implementation": "ProceduralConnectome",
+      "page": "api/connected-population"
+    },
+    {
+      "name": "create_population",
+      "module": "connected_population",
+      "implementation": "create_population",
+      "page": "api/connected-population"
     }
   ],
   "pages": [
@@ -161,6 +197,12 @@
       "slug": "api/index",
       "modules": [
         "__init__"
+      ]
+    },
+    {
+      "slug": "api/connected-population",
+      "modules": [
+        "connected_population"
       ]
     },
     {
@@ -312,6 +354,823 @@
     }
   ],
   "symbols": [
+    {
+      "module": "connected_population",
+      "name": "InputEvents",
+      "kind": "class",
+      "page": "api/connected-population",
+      "line": 48,
+      "end_line": 68,
+      "signature": "InputEvents(neurons: Sequence[int] | torch.Tensor, channels: Sequence[int] | torch.Tensor, values: Sequence[float] | torch.Tensor) -> None",
+      "parameters": [
+        {
+          "name": "neurons",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "channels",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "values",
+          "type": "Sequence[float] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        }
+      ],
+      "fields": [
+        {
+          "name": "neurons",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "channels",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "values",
+          "type": "Sequence[float] | torch.Tensor",
+          "default": null
+        }
+      ],
+      "methods": [],
+      "bases": [],
+      "inherited_fields": []
+    },
+    {
+      "module": "connected_population",
+      "name": "ExplicitConnectome",
+      "kind": "class",
+      "page": "api/connected-population",
+      "line": 72,
+      "end_line": 110,
+      "signature": "ExplicitConnectome(sources: Sequence[int] | torch.Tensor, targets: Sequence[int] | torch.Tensor, channels: Sequence[int] | torch.Tensor, delays: Sequence[int] | torch.Tensor, source_roles: Sequence[int] | torch.Tensor, efficacies: Sequence[float] | torch.Tensor) -> None",
+      "parameters": [
+        {
+          "name": "sources",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "targets",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "channels",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "delays",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "source_roles",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "efficacies",
+          "type": "Sequence[float] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        }
+      ],
+      "fields": [
+        {
+          "name": "sources",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "targets",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "channels",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "delays",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "source_roles",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "efficacies",
+          "type": "Sequence[float] | torch.Tensor",
+          "default": null
+        }
+      ],
+      "methods": [
+        {
+          "name": "edge_count",
+          "kind": "property",
+          "signature": "ExplicitConnectome.edge_count: int",
+          "parameters": [],
+          "line": 108,
+          "end_line": 110,
+          "return_type": "int",
+          "decorators": [
+            "property"
+          ]
+        }
+      ],
+      "bases": [],
+      "inherited_fields": []
+    },
+    {
+      "module": "connected_population",
+      "name": "ProceduralConnectome",
+      "kind": "class",
+      "page": "api/connected-population",
+      "line": 114,
+      "end_line": 184,
+      "signature": "ProceduralConnectome(n: int, out_degree: int, input_dim: int, neuron_roles: Sequence[int] | torch.Tensor, channel_roles: Sequence[int] | torch.Tensor, delay_ms: int = 4, seed: int = 0, efficacy: float = 1.0) -> None",
+      "parameters": [
+        {
+          "name": "n",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "out_degree",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "input_dim",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "neuron_roles",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "channel_roles",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "delay_ms",
+          "type": "int",
+          "default": "4",
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "seed",
+          "type": "int",
+          "default": "0",
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "efficacy",
+          "type": "float",
+          "default": "1.0",
+          "kind": "positional_or_keyword"
+        }
+      ],
+      "fields": [
+        {
+          "name": "n",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "out_degree",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "input_dim",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "neuron_roles",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "channel_roles",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "delay_ms",
+          "type": "int",
+          "default": "4"
+        },
+        {
+          "name": "seed",
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "name": "efficacy",
+          "type": "float",
+          "default": "1.0"
+        }
+      ],
+      "methods": [
+        {
+          "name": "edge_count",
+          "kind": "property",
+          "signature": "ProceduralConnectome.edge_count: int",
+          "parameters": [],
+          "line": 168,
+          "end_line": 170,
+          "return_type": "int",
+          "decorators": [
+            "property"
+          ]
+        },
+        {
+          "name": "materialize",
+          "kind": "method",
+          "signature": "materialize(self) -> ExplicitConnectome",
+          "parameters": [],
+          "line": 172,
+          "end_line": 184,
+          "return_type": "ExplicitConnectome",
+          "decorators": []
+        }
+      ],
+      "bases": [],
+      "inherited_fields": []
+    },
+    {
+      "module": "connected_population",
+      "name": "PopulationFrame",
+      "kind": "class",
+      "page": "api/connected-population",
+      "line": 199,
+      "end_line": 212,
+      "signature": "PopulationFrame(time_ms: int, valid: bool, signals: dict[str, torch.Tensor], neuron_ids: dict[str, torch.Tensor]) -> None",
+      "parameters": [
+        {
+          "name": "time_ms",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "valid",
+          "type": "bool",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "signals",
+          "type": "dict[str, torch.Tensor]",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "neuron_ids",
+          "type": "dict[str, torch.Tensor]",
+          "default": null,
+          "kind": "positional_or_keyword"
+        }
+      ],
+      "fields": [
+        {
+          "name": "time_ms",
+          "type": "int",
+          "default": null
+        },
+        {
+          "name": "valid",
+          "type": "bool",
+          "default": null
+        },
+        {
+          "name": "signals",
+          "type": "dict[str, torch.Tensor]",
+          "default": null
+        },
+        {
+          "name": "neuron_ids",
+          "type": "dict[str, torch.Tensor]",
+          "default": null
+        }
+      ],
+      "methods": [],
+      "bases": [],
+      "inherited_fields": []
+    },
+    {
+      "module": "connected_population",
+      "name": "ConnectedPopulation",
+      "kind": "class",
+      "page": "api/connected-population",
+      "line": 221,
+      "end_line": 905,
+      "signature": "ConnectedPopulation(self, *, model: AdaptiveSupportP4Surrogate, n: int, connectome: ExplicitConnectome | ProceduralConnectome, morphology_indices: Sequence[int] | torch.Tensor, input_encoding: Literal['signed', 'channel'], channel_roles: Sequence[int] | torch.Tensor | None=None, stream_inputs: StreamInput | None=None, stream_outputs: Mapping[str, Sequence[int] | torch.Tensor | Literal['all']] | None=None, backend: Literal['reference', 'fused']='reference', spike_threshold: float | Sequence[float] | torch.Tensor=0.0, sample_every_ms: int=1, soma_transform: tuple[float, float] | None=None, runtime_coefficients: torch.Tensor | None=None) -> None",
+      "parameters": [
+        {
+          "name": "model",
+          "type": "AdaptiveSupportP4Surrogate",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "n",
+          "type": "int",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "connectome",
+          "type": "ExplicitConnectome | ProceduralConnectome",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "morphology_indices",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "input_encoding",
+          "type": "Literal['signed', 'channel']",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "channel_roles",
+          "type": "Sequence[int] | torch.Tensor | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "stream_inputs",
+          "type": "StreamInput | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "stream_outputs",
+          "type": "Mapping[str, Sequence[int] | torch.Tensor | Literal['all']] | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "backend",
+          "type": "Literal['reference', 'fused']",
+          "default": "'reference'",
+          "kind": "keyword_only",
+          "resolved_default": "reference"
+        },
+        {
+          "name": "spike_threshold",
+          "type": "float | Sequence[float] | torch.Tensor",
+          "default": "0.0",
+          "kind": "keyword_only",
+          "resolved_default": 0.0
+        },
+        {
+          "name": "sample_every_ms",
+          "type": "int",
+          "default": "1",
+          "kind": "keyword_only",
+          "resolved_default": 1
+        },
+        {
+          "name": "soma_transform",
+          "type": "tuple[float, float] | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "runtime_coefficients",
+          "type": "torch.Tensor | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        }
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "name": "__init__",
+          "kind": "method",
+          "signature": "__init__(self, *, model: AdaptiveSupportP4Surrogate, n: int, connectome: ExplicitConnectome | ProceduralConnectome, morphology_indices: Sequence[int] | torch.Tensor, input_encoding: Literal['signed', 'channel'], channel_roles: Sequence[int] | torch.Tensor | None=None, stream_inputs: StreamInput | None=None, stream_outputs: Mapping[str, Sequence[int] | torch.Tensor | Literal['all']] | None=None, backend: Literal['reference', 'fused']='reference', spike_threshold: float | Sequence[float] | torch.Tensor=0.0, sample_every_ms: int=1, soma_transform: tuple[float, float] | None=None, runtime_coefficients: torch.Tensor | None=None) -> None",
+          "parameters": [
+            {
+              "name": "model",
+              "type": "AdaptiveSupportP4Surrogate",
+              "default": null,
+              "kind": "keyword_only"
+            },
+            {
+              "name": "n",
+              "type": "int",
+              "default": null,
+              "kind": "keyword_only"
+            },
+            {
+              "name": "connectome",
+              "type": "ExplicitConnectome | ProceduralConnectome",
+              "default": null,
+              "kind": "keyword_only"
+            },
+            {
+              "name": "morphology_indices",
+              "type": "Sequence[int] | torch.Tensor",
+              "default": null,
+              "kind": "keyword_only"
+            },
+            {
+              "name": "input_encoding",
+              "type": "Literal['signed', 'channel']",
+              "default": null,
+              "kind": "keyword_only"
+            },
+            {
+              "name": "channel_roles",
+              "type": "Sequence[int] | torch.Tensor | None",
+              "default": "None",
+              "kind": "keyword_only",
+              "resolved_default": null
+            },
+            {
+              "name": "stream_inputs",
+              "type": "StreamInput | None",
+              "default": "None",
+              "kind": "keyword_only",
+              "resolved_default": null
+            },
+            {
+              "name": "stream_outputs",
+              "type": "Mapping[str, Sequence[int] | torch.Tensor | Literal['all']] | None",
+              "default": "None",
+              "kind": "keyword_only",
+              "resolved_default": null
+            },
+            {
+              "name": "backend",
+              "type": "Literal['reference', 'fused']",
+              "default": "'reference'",
+              "kind": "keyword_only",
+              "resolved_default": "reference"
+            },
+            {
+              "name": "spike_threshold",
+              "type": "float | Sequence[float] | torch.Tensor",
+              "default": "0.0",
+              "kind": "keyword_only",
+              "resolved_default": 0.0
+            },
+            {
+              "name": "sample_every_ms",
+              "type": "int",
+              "default": "1",
+              "kind": "keyword_only",
+              "resolved_default": 1
+            },
+            {
+              "name": "soma_transform",
+              "type": "tuple[float, float] | None",
+              "default": "None",
+              "kind": "keyword_only",
+              "resolved_default": null
+            },
+            {
+              "name": "runtime_coefficients",
+              "type": "torch.Tensor | None",
+              "default": "None",
+              "kind": "keyword_only",
+              "resolved_default": null
+            }
+          ],
+          "line": 241,
+          "end_line": 403,
+          "return_type": "None",
+          "decorators": []
+        },
+        {
+          "name": "connectome",
+          "kind": "property",
+          "signature": "ConnectedPopulation.connectome: ExplicitConnectome | ProceduralConnectome",
+          "parameters": [],
+          "line": 489,
+          "end_line": 491,
+          "return_type": "ExplicitConnectome | ProceduralConnectome",
+          "decorators": [
+            "property"
+          ]
+        },
+        {
+          "name": "morphology_indices",
+          "kind": "property",
+          "signature": "ConnectedPopulation.morphology_indices: torch.Tensor",
+          "parameters": [],
+          "line": 494,
+          "end_line": 496,
+          "return_type": "torch.Tensor",
+          "decorators": [
+            "property"
+          ]
+        },
+        {
+          "name": "efficacies",
+          "kind": "property",
+          "signature": "ConnectedPopulation.efficacies: torch.Tensor",
+          "parameters": [],
+          "line": 499,
+          "end_line": 501,
+          "return_type": "torch.Tensor",
+          "decorators": [
+            "property"
+          ]
+        },
+        {
+          "name": "thresholds",
+          "kind": "property",
+          "signature": "ConnectedPopulation.thresholds: torch.Tensor",
+          "parameters": [],
+          "line": 504,
+          "end_line": 506,
+          "return_type": "torch.Tensor",
+          "decorators": [
+            "property"
+          ]
+        },
+        {
+          "name": "set_efficacies",
+          "kind": "method",
+          "signature": "set_efficacies(self, edge_ids: Sequence[int] | torch.Tensor, values: Sequence[float] | torch.Tensor) -> None",
+          "parameters": [
+            {
+              "name": "edge_ids",
+              "type": "Sequence[int] | torch.Tensor",
+              "default": null,
+              "kind": "positional_or_keyword"
+            },
+            {
+              "name": "values",
+              "type": "Sequence[float] | torch.Tensor",
+              "default": null,
+              "kind": "positional_or_keyword"
+            }
+          ],
+          "line": 508,
+          "end_line": 538,
+          "return_type": "None",
+          "decorators": []
+        },
+        {
+          "name": "set_thresholds",
+          "kind": "method",
+          "signature": "set_thresholds(self, values: float | Sequence[float] | torch.Tensor) -> None",
+          "parameters": [
+            {
+              "name": "values",
+              "type": "float | Sequence[float] | torch.Tensor",
+              "default": null,
+              "kind": "positional_or_keyword"
+            }
+          ],
+          "line": 540,
+          "end_line": 547,
+          "return_type": "None",
+          "decorators": []
+        },
+        {
+          "name": "step",
+          "kind": "method",
+          "signature": "step(self, inputs: InputEvents | torch.Tensor | None=None) -> PopulationFrame",
+          "parameters": [
+            {
+              "name": "inputs",
+              "type": "InputEvents | torch.Tensor | None",
+              "default": "None",
+              "kind": "positional_or_keyword",
+              "resolved_default": null
+            }
+          ],
+          "line": 710,
+          "end_line": 719,
+          "return_type": "PopulationFrame",
+          "decorators": []
+        },
+        {
+          "name": "run",
+          "kind": "method",
+          "signature": "run(self, duration_ms: int) -> Iterator[PopulationFrame]",
+          "parameters": [
+            {
+              "name": "duration_ms",
+              "type": "int",
+              "default": null,
+              "kind": "positional_or_keyword"
+            }
+          ],
+          "line": 721,
+          "end_line": 739,
+          "return_type": "Iterator[PopulationFrame]",
+          "decorators": []
+        },
+        {
+          "name": "observe",
+          "kind": "method",
+          "signature": "observe(self, *, neurons: Sequence[int] | torch.Tensor | None=None, signals: Sequence[str] | None=None) -> PopulationFrame",
+          "parameters": [
+            {
+              "name": "neurons",
+              "type": "Sequence[int] | torch.Tensor | None",
+              "default": "None",
+              "kind": "keyword_only",
+              "resolved_default": null
+            },
+            {
+              "name": "signals",
+              "type": "Sequence[str] | None",
+              "default": "None",
+              "kind": "keyword_only",
+              "resolved_default": null
+            }
+          ],
+          "line": 742,
+          "end_line": 783,
+          "return_type": "PopulationFrame",
+          "decorators": [
+            "torch.inference_mode()"
+          ]
+        },
+        {
+          "name": "state_dict",
+          "kind": "method",
+          "signature": "state_dict(self) -> dict[str, object]",
+          "parameters": [],
+          "line": 827,
+          "end_line": 854,
+          "return_type": "dict[str, object]",
+          "decorators": []
+        },
+        {
+          "name": "load_state_dict",
+          "kind": "method",
+          "signature": "load_state_dict(self, state: Mapping[str, object]) -> None",
+          "parameters": [
+            {
+              "name": "state",
+              "type": "Mapping[str, object]",
+              "default": null,
+              "kind": "positional_or_keyword"
+            }
+          ],
+          "line": 857,
+          "end_line": 901,
+          "return_type": "None",
+          "decorators": [
+            "torch.inference_mode()"
+          ]
+        },
+        {
+          "name": "reset",
+          "kind": "method",
+          "signature": "reset(self) -> None",
+          "parameters": [],
+          "line": 903,
+          "end_line": 905,
+          "return_type": "None",
+          "decorators": []
+        }
+      ],
+      "bases": []
+    },
+    {
+      "module": "connected_population",
+      "name": "create_population",
+      "kind": "function",
+      "page": "api/connected-population",
+      "line": 908,
+      "end_line": 949,
+      "signature": "create_population(*, model: AdaptiveSupportP4Surrogate, n: int, connectome: ExplicitConnectome | ProceduralConnectome, morphology_indices: Sequence[int] | torch.Tensor, input_encoding: Literal['signed', 'channel'], channel_roles: Sequence[int] | torch.Tensor | None=None, stream_inputs: StreamInput | None=None, stream_outputs: Mapping[str, Sequence[int] | torch.Tensor | Literal['all']] | None=None, backend: Literal['reference', 'fused']='reference', spike_threshold: float | Sequence[float] | torch.Tensor=0.0, sample_every_ms: int=1, soma_transform: tuple[float, float] | None=None, runtime_coefficients: torch.Tensor | None=None) -> ConnectedPopulation",
+      "parameters": [
+        {
+          "name": "model",
+          "type": "AdaptiveSupportP4Surrogate",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "n",
+          "type": "int",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "connectome",
+          "type": "ExplicitConnectome | ProceduralConnectome",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "morphology_indices",
+          "type": "Sequence[int] | torch.Tensor",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "input_encoding",
+          "type": "Literal['signed', 'channel']",
+          "default": null,
+          "kind": "keyword_only"
+        },
+        {
+          "name": "channel_roles",
+          "type": "Sequence[int] | torch.Tensor | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "stream_inputs",
+          "type": "StreamInput | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "stream_outputs",
+          "type": "Mapping[str, Sequence[int] | torch.Tensor | Literal['all']] | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "backend",
+          "type": "Literal['reference', 'fused']",
+          "default": "'reference'",
+          "kind": "keyword_only",
+          "resolved_default": "reference"
+        },
+        {
+          "name": "spike_threshold",
+          "type": "float | Sequence[float] | torch.Tensor",
+          "default": "0.0",
+          "kind": "keyword_only",
+          "resolved_default": 0.0
+        },
+        {
+          "name": "sample_every_ms",
+          "type": "int",
+          "default": "1",
+          "kind": "keyword_only",
+          "resolved_default": 1
+        },
+        {
+          "name": "soma_transform",
+          "type": "tuple[float, float] | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "runtime_coefficients",
+          "type": "torch.Tensor | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        }
+      ],
+      "fields": [],
+      "methods": []
+    },
     {
       "module": "interfaces",
       "name": "AxoSimPopulation",

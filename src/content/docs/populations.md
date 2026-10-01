@@ -1,9 +1,13 @@
 ---
-title: Build populations
-description: Construct persistent Lite populations with morphology identities and mutable contact efficacies.
+title: Fit supplied population histories
+description: Fit independently supplied Lite contact histories with shared weights and persistent adaptation banks.
 section: Simulation
 order: 40
 ---
+
+## Choose supplied histories or connected simulation
+
+Use this module to fit externally supplied histories with full temporal gradients. Its neuron identities and adaptation parameters persist, but each sequence call starts temporal state afresh and does not route emitted events between neurons. To construct a connected graph with a continuing clock, delay queue and selected streamed observations, start with [simulate a connected population](/connected-populations/).
 
 ## Construct a Lite population
 

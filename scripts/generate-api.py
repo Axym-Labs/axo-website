@@ -17,6 +17,7 @@ from pathlib import Path
 
 
 PAGES = [
+    ("connected-population", "Connected population lifecycle", ["connected_population"], "create_population constructs an actually connected Lite inference simulator from an explicitly supplied model and graph. Persistent state, thresholded recurrent events, native time and delayed deliveries belong to this object. Read the connected population guide for the complete lifecycle. AxoSimPopulation remains the separate supplied-history autograd interface. Reference and fused-neuron backends support the same explicit or deterministic procedural graphs; the historical specialized quantized large-population runtime has a different topology and timing contract."),
     ("interfaces", "Population interfaces", ["interfaces"], "The public differentiable population combines one Lite model with persistent neuron identities, morphology assignments, contact routes, and adaptation banks. AxoSimMamba aliases AxoMamba; AxoSimLite aliases AdaptiveSupportP4Surrogate; AxoSimGRU currently aliases CausalBlockForecastModel. Named GRU profiles are built by create_axosim_profile and return AxoTemporalModel."),
     ("model-family", "Model profiles", ["model_family"], "Named profiles provide fixed architecture recipes. Construction returns an untrained model. Mamba profiles use AxoMamba; GRU profiles use AxoTemporalModel with a GRU temporal core. Preserve the backend and saved model kind when loading weights."),
     ("mamba", "Mamba models and configuration", ["axomamba", "mamba_official"], "AxoMamba is the public Mamba implementation and inherits BranchOfficialMamba. AxoMambaConfig inherits all BranchOfficialMambaConfig fields. The default_axomamba_config factory supplies the promoted recipe, which differs from the dataclass's raw field defaults. AxoPyTorchMamba is a test-oriented fallback with a different checkpoint format."),
@@ -42,7 +43,7 @@ PAGES = [
 
 API_GROUPS = {
     **dict.fromkeys(("model-family", "mamba", "temporal-core", "block-forecast", "lite", "checkpoint"), "Models"),
-    **dict.fromkeys(("interfaces", "population", "simulation-contract", "synapse", "connectome", "activity"), "Populations"),
+    **dict.fromkeys(("connected-population", "interfaces", "population", "simulation-contract", "synapse", "connectome", "activity"), "Populations"),
     **dict.fromkeys(("adaptation", "training", "metrics", "inference-benchmark"), "Training and evaluation"),
     **dict.fromkeys(("data", "axobench"), "Data"),
     **dict.fromkeys(("model", "neuronio"), "Compatibility"),
@@ -50,6 +51,21 @@ API_GROUPS = {
 }
 
 CONTRACTS = {
+    "connected_population.create_population": "The model is mandatory and must be AxoSimLite (AdaptiveSupportP4Surrogate). Morphology indices have shape (n,) and address the model's declared vocabulary. One native step is 1 ms, and recurrent delays must be integer >=4 ms; graph delays are never adjusted. 'signed' applies the source role to recurrent event amplitude; 'channel' uses nonnegative counts with inhibition encoded by channel identity/features. External amplitudes are already in that convention. Every outgoing edge of a source must declare the same role, and channel_roles validates destination-channel compatibility when supplied. Model weights, graph topology, morphology assignments and initial banks are copied rather than borrowed. The connected threshold/event loop is inference-only.",
+    "connected_population.ConnectedPopulation.__init__": "Use create_population with the same keyword arguments. The reference backend executes the supplied Lite model on CPU or CUDA. The fused backend requires an explicitly CUDA FP16 Lite model and Triton; it fuses the neuron recurrence/decoder, not the old specialized million-neuron router. Edge efficacies and feature queue accumulation remain float32. stream_outputs=None selects all-neuron spikes; {} selects no signals. sample_every_ms applies to run; step always returns its native frame.",
+    "connected_population.ExplicitConnectome.__init__": "The six owned CPU arrays have equal length E. Parallel edges and ragged degrees are retained. Integer source/target bounds [0,n), channel bounds [0,input_dim), consistent source roles (+1/-1), and P4 delays >=4 ms are checked at population construction. Efficacies are independently stored nonnegative float32 magnitudes, including zero for a disabled edge. Edge ID is its original row index.",
+    "connected_population.ProceduralConnectome.__init__": "Retains n*out_degree edges with edge ID source*out_degree+contact. Target ID is (source+seed+contact*104729)%n; channel cycles through declared channels matching the source role. Self and parallel edges are allowed. Any positive n is supported; source and channel roles must have shapes (n,) and (input_dim,), and each source role requires a matching channel. Topology is computed only for active sources, but exact mutable efficacies still require O(E) storage. This is a deterministic graph, not an empirical connectome or the old tiled unique-channel topology.",
+    "connected_population.InputEvents.__init__": "Owns equally sized one-dimensional CPU arrays; duplicate neuron/channel events add. Neuron/channel bounds and input signs are checked before a native step changes runtime state. Channel-encoded inputs must be nonnegative. Signed amplitudes must agree with channel_roles when declared. External values receive no second source-role sign.",
+    "connected_population.PopulationFrame.__init__": "Signals and matching row identities are selected before copying and stay on the simulation device. Returned frames own ordinary tensors, so later steps and caller edits do not change runtime buffers. valid=False identifies the first four causal-padding samples; spikes are always false there. Before any step, observe has time_ms=-1. The runtime time_ms attribute instead names the next sample to process.",
+    "connected_population.ConnectedPopulation.step": "Advances one native 1-ms sample. Optional sparse InputEvents or dense inputs (n,input_dim) add to the configured native-time stream. The returned frame contains only subscribed signals. At timestamps 3,7,11,... hidden_state is updated from the completed patch; spike/soma values are the current sample from the preceding forecast. State is held between these boundaries.",
+    "connected_population.ConnectedPopulation.run": "Consuming the iterator advances exactly duration_ms native steps unless iteration is stopped early. Observations are copied/yielded only at absolute timestamps divisible by sample_every_ms; intervening steps still execute. The consumer controls progress, with no background/unbounded output queue. Coarse samples do not aggregate skipped spikes: use sample_every_ms=1 for the complete event history. duration_ms=0 does not advance.",
+    "connected_population.ConnectedPopulation.observe": "Copies selected signals without advancing time. Without arguments, uses the output subscriptions. With signals, neurons selects a shared row order (all neurons when omitted). Known signals: spikes (L,) bool; spike_logit (L,) native logit; soma_target (L,) native coordinate; soma_mv (L,) validated affine millivolts; hidden_state (L,state_dim) learned state; input_features (L,route_feature_dim) current routed input. soma_mv requires soma_transform=(positive scale_mv,offset_mv).",
+    "connected_population.ConnectedPopulation.state_dict": "Returns owned runtime tensors: learned state, partial patch, forecasts, delayed queue, current routed features/outputs/spikes, thresholds, direct coefficients and exact efficacies, plus version, clock, validity and model/topology fingerprint. Save with torch.save; read with torch.load(...,weights_only=True). Recreate the same model/topology/encoding/backend; weights and topology are not embedded. A native-time input callback must reproduce the same value on replay; arbitrary callback/random state is not saved.",
+    "connected_population.ConnectedPopulation.load_state_dict": "Checks identity, time/validity, complete tensor schema, shapes, dtypes, finite values and nonnegative efficacies before any runtime mutation. Compatible tensor values are transferred to the execution device. The external stream remains the configured callback or owned timestamp mapping.",
+    "connected_population.ConnectedPopulation.reset": "Restores construction-time state, zero clock, empty delayed queue, initial forecasts/patch, original thresholds, runtime coefficients and exact edge efficacies. External callbacks must likewise return their original timestamp-dependent inputs.",
+    "connected_population.ConnectedPopulation.set_efficacies": "edge_ids is a unique integer selection into E retained edges; values is an equally sized finite nonnegative array. Values are stored as float32 even for FP16 neuron execution. An emitted event uses its emission-time efficacy; already scheduled deliveries do not change.",
+    "connected_population.ConnectedPopulation.set_thresholds": "values is a finite scalar or (n,) vector in spike-logit coordinates. Changes future native threshold decisions; warmup remains spike-free at any finite threshold.",
+    "connected_population.ProceduralConnectome.materialize": "Allocates O(E) CPU edge-index arrays for the equivalent exact explicit multigraph. It preserves every procedural edge ID, role, destination channel, delay and initial efficacy; use for small topology inspection or parity checks.",
     "interfaces.AxoSimPopulation.__init__": "neuron is a Lite model. morphology_indices is integer (N,); contact_branch_indices is integer (N,K), with values in [0, neuron.config.input_dim). The morphology indices must refer to declared morphology classes. Buffers are cloned and converted to long.",
     "interfaces.AxoSimPopulation.forward": "contact_inputs is (N,T,K). Optional synaptic_log_efficacy is (N,K) and replaces the stored efficacy values for this call. Return shape is (N,T,2); hidden state starts fresh for the sequence.",
     "interfaces.AxoSimPopulation.forward_sparse_contacts": "The three event tensors are equal-length one-dimensional arrays. Summary indices address n*T+t; contact indices address n*K+k, and both must identify the same neuron. Integer indices and floating event values must share the module device. Return shape is (N,time_steps,2). Gradients propagate through amplitudes and selected efficacies.",
@@ -373,6 +389,41 @@ FIELD_HELP.update({
 })
 
 PARAM_HELP = {
+    "connected_population.ExplicitConnectome": {
+        "sources": "Integer (E,) source neuron IDs; outgoing edges of one neuron must share a role.",
+        "targets": "Integer (E,) destination neuron IDs; ragged degrees and parallel edges are preserved.",
+        "channels": "Integer (E,) destination Lite input-channel IDs.",
+        "delays": "Integer (E,) native delivery delays in milliseconds; Lite requires each >=4.",
+        "source_roles": "Integer (E,) source roles, +1 excitatory or -1 inhibitory.",
+        "efficacies": "Finite nonnegative (E,) independent edge magnitudes; zero disables deliveries without deleting the edge.",
+    },
+    "connected_population.ProceduralConnectome": {
+        "n": "Positive population size; no power-of-two constraint.",
+        "out_degree": "Positive retained outgoing edge count per source; total E=n*out_degree.",
+        "input_dim": "Destination input-channel count, matching the supplied Lite model.",
+        "neuron_roles": "Integer (n,) +1/-1 role for each source neuron.",
+        "channel_roles": "Integer (input_dim,) +1/-1 role for each destination input channel.",
+        "delay_ms": "Common native delivery delay in milliseconds; Lite population construction requires >=4.",
+        "seed": "Nonnegative integer <2**31 added to the deterministic target formula; not a random generator state.",
+        "efficacy": "Initial nonnegative float32 magnitude copied into all E independently mutable edges.",
+    },
+    "connected_population.InputEvents": {
+        "neurons": "Integer (events,) destination neuron IDs for one native input sample.",
+        "channels": "Integer (events,) Lite input-channel IDs, paired with neurons.",
+        "values": "Finite (events,) native amplitudes in the declared input convention; no additional source sign is applied.",
+    },
+    "connected_population.PopulationFrame": {
+        "time_ms": "Processed native sample timestamp; -1 before the first step.",
+        "valid": "False for the first four causal-padding samples; true from timestamp 4 ms onward.",
+        "signals": "Mapping of subscribed signal names to owned selected device tensors.",
+        "neuron_ids": "Mapping of each signal name to its integer row identities in the same order.",
+    },
+    "connected_population.ConnectedPopulation.step": {"inputs": "Optional InputEvents or dense (n,input_dim) native sample, added to the configured stream at the current timestamp."},
+    "connected_population.ConnectedPopulation.run": {"duration_ms": "Nonnegative integer number of native 1-ms steps to execute when consumed."},
+    "connected_population.ConnectedPopulation.observe": {"neurons": "Selected neuron IDs in desired row order; omit for all neurons when signals is supplied.", "signals": "Known signal names; omit to use output subscriptions. Supplying neurons requires an explicit signals selection."},
+    "connected_population.ConnectedPopulation.set_efficacies": {"edge_ids": "Unique valid integer retained-edge IDs.", "values": "Equally sized finite nonnegative edge magnitudes, stored as float32."},
+    "connected_population.ConnectedPopulation.set_thresholds": {"values": "Finite scalar or (n,) threshold vector in native spike-logit coordinates."},
+    "connected_population.ConnectedPopulation.load_state_dict": {"state": "Owned compatible runtime snapshot returned by state_dict or read with weights_only=True."},
     "data.NeuronIOSample": {
         "sample_id": "Persistent trace identity from the shard's sample_ids array.",
         "inputs": "One native input trace, shaped (time,input_channels).",
@@ -471,6 +522,12 @@ API_EXAMPLES = {
 }
 
 RETURN_HELP = {
+    "connected_population.create_population": [("population", "ConnectedPopulation", "State-owning Lite inference simulator with closed-loop delayed recurrence, exact edge efficacies and selected timestamped observations.")],
+    "connected_population.ConnectedPopulation.step": [("frame", "PopulationFrame", "Owned subscribed signals and row identities at the native sample just processed; population.time_ms now names the next sample.")],
+    "connected_population.ConnectedPopulation.run": [("frames", "Iterator[PopulationFrame]", "Owned frames at requested absolute sample timestamps; consuming the iterator executes all intervening native steps.")],
+    "connected_population.ConnectedPopulation.observe": [("frame", "PopulationFrame", "Owned selected current signals and neuron IDs without any time/state advance.")],
+    "connected_population.ConnectedPopulation.state_dict": [("state", "dict[str, object]", "Owned runtime tensors, native clock/validity, schema version and model/topology identity fingerprint; weights and external callback state are not embedded.")],
+    "connected_population.ProceduralConnectome.materialize": [("graph", "ExplicitConnectome", "Equivalent exact CPU multigraph with all E edge identities and initial efficacies.")],
     "checkpoint.load_checkpoint": [("model", "torch.nn.Module", "Reconstructed model with its stored weights, architecture configuration, and backend."), ("metadata", "dict[str, Any]", "Metadata stored with the checkpoint; an empty dictionary when absent.")],
     "model_family.create_axosim_profile": [("model", "nn.Module", "Newly initialized Mamba backbone or GRU AxoTemporalModel for the requested profile; no weights are downloaded.")],
     "adaptation.CudaGraphAdaptationStep.capture": [("step", "CudaGraphAdaptationStep", "Captured update with retained static buffers; warmup/capture changes to stored module and optimizer values have been restored.")],
@@ -514,6 +571,36 @@ RETURN_HELP = {
 
 for _recipe in ("default", "structured_compact", "regression", "population", "spike"):
     RETURN_HELP[f"axomamba.{_recipe}_axomamba_config"] = [("config", "AxoMambaConfig", "Architecture recipe with the supplied keyword overrides applied.")]
+
+_CONNECTED_PARAMETERS = {
+    "model": "Explicit trained AxoSimLite model, copied with its weights/configuration. The factory never chooses or initializes weights for you.",
+    "n": "Positive persistent neuron count.",
+    "connectome": "ExplicitConnectome or ProceduralConnectome, copied and validated without altering topology/delays.",
+    "morphology_indices": "Integer (n,) assignments into model.config.morphology_ids, one per persistent neuron.",
+    "input_encoding": "Required training-compatible convention: 'signed' applies recurrent E/I sign; 'channel' uses positive counts and inhibitory channel identity/features.",
+    "channel_roles": "Optional integer (input_dim,) +1/-1 vector for explicit-graph and external-sign validation; the procedural schema carries its own vector.",
+    "stream_inputs": "Deterministic callback(time_ms) or owned timestamp mapping returning InputEvents, dense (n,input_dim) tensors, or None. Arbitrary iterators are rejected.",
+    "stream_outputs": "Signal-name to neuron-ID-selection mapping; 'all' selects all rows. None defaults to all-neuron spikes; {} selects no signals.",
+    "backend": "'reference' executes the actual Lite PyTorch step; 'fused' requires CUDA FP16 plus Triton and fuses neuron recurrence/decoding only.",
+    "spike_threshold": "Finite scalar or (n,) native spike-logit threshold; calibrate on development data. Warmup never emits spikes.",
+    "sample_every_ms": "Positive integer output-sampling cadence for run, aligned to absolute timestamps 0, k, 2k, ...; step always exports its native sample.",
+    "soma_transform": "Optional (positive scale_mv,offset_mv) affine transform: soma_mv=soma_target*scale_mv+offset_mv. Required to request soma_mv.",
+    "runtime_coefficients": "Optional finite (n,model.cache_width) packed coefficients. Otherwise compile the model's morphology behavior rows, or use zeros when adaptation is disabled.",
+}
+PARAM_HELP["connected_population.create_population"] = _CONNECTED_PARAMETERS
+PARAM_HELP["connected_population.ConnectedPopulation"] = _CONNECTED_PARAMETERS
+
+CLASS_ATTRIBUTES = {
+    "connected_population.ConnectedPopulation": [
+        ("n", "int", "Persistent population size."),
+        ("time_ms", "int", "Next native sample timestamp; the latest observed frame has time_ms-1."),
+        ("backend", "str", "Explicit reference or fused-neuron backend."),
+        ("device", "torch.device", "Device inherited from the explicitly supplied Lite model."),
+        ("dtype", "torch.dtype", "Neuron-execution dtype; edge efficacies and the feature queue remain float32."),
+        ("input_encoding", "str", "Declared signed or channel input convention."),
+        ("sample_every_ms", "int", "Absolute-timestamp observation cadence used by run."),
+    ],
+}
 
 
 def expression(node):
@@ -713,6 +800,12 @@ def class_document(module, node, item, repository, commit):
     if full in {"axomamba.AxoMamba", "axomamba.AxoPyTorchMamba"}:
         lines.extend(["Full-sequence and streaming methods are inherited from `BranchOfficialMamba` below. Preserve the recorded fused/fallback backend when loading weights.", ""])
     lines.extend(parameter_definition_list(item["parameters"], context=full))
+    if full in CLASS_ATTRIBUTES:
+        lines.extend(['<p class="api-label">Attributes</p>', "", '<dl class="api-attributes">'])
+        for name, typename, explanation in CLASS_ATTRIBUTES[full]:
+            lines.append(f'<dt><code>{escape(name)}</code> <span class="api-type">{escape(typename)}</span></dt>')
+            lines.append(f'<dd>{escape(explanation)}</dd>')
+        lines.extend(["</dl>", ""])
     properties = [(n, m) for n in node.body if isinstance(n, ast.FunctionDef) for m in item["methods"] if m["name"] == n.name and m["kind"] == "property"]
     if item["fields"] or item.get("inherited_fields"):
         frozen = any(isinstance(d, ast.Call) and any(k.arg == "frozen" and isinstance(k.value, ast.Constant) and k.value.value is True for k in d.keywords) for d in node.decorator_list)

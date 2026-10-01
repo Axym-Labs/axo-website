@@ -37,7 +37,7 @@ write deterministic demo NPZ shards
 <dd>Random seed for the declared operation.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/cli.py#L61)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/cli.py#L61)
 
 ## axosim convert-neuronio
 
@@ -60,7 +60,7 @@ convert raw NeuronIO pickle files to deterministic shards
 <dd>Initial native timesteps excluded by the declared path.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/cli.py#L69)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/cli.py#L69)
 
 ## axosim repack-shards
 
@@ -77,7 +77,7 @@ repack shards as sliceable .npy arrays
 <dd>Stored NumPy dtype of the converted input arrays. Choices: [&#x27;int8&#x27;, &#x27;float32&#x27;].</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/cli.py#L77)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/cli.py#L77)
 
 ## axosim list-presets
 
@@ -144,7 +144,7 @@ evaluate a model with the corrected full-trace metric path
 <dd>Sets registry=&#x27;off&#x27;.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/cli.py#L84)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/cli.py#L84)
 
 ## axosim diagnose
 
@@ -201,7 +201,7 @@ write biology-oriented surrogate fidelity diagnostics
 <dd>Request asynchronous tensor transfers where supported. Sets non_blocking=False.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/cli.py#L112)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/cli.py#L112)
 
 ## axosim train
 
@@ -342,7 +342,7 @@ train a model with the current experiment workflow
 <dd>Sets registry=&#x27;off&#x27;.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/cli.py#L138)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/cli.py#L138)
 
 ## axosim benchmark
 
@@ -375,7 +375,7 @@ time model forward passes on random input
 <dd>Destination: output.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/cli.py#L214)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/cli.py#L214)
 
 ## axosim inference-benchmark
 
@@ -416,4 +416,4 @@ benchmark deployment-oriented inference throughput across batch and sequence sca
 <dd>Destination: output.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/cli.py#L230)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/cli.py#L230)

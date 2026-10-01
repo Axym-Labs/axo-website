@@ -3,14 +3,14 @@ title: GRU temporal models
 description: Signatures, parameters, return contracts, and source for gru temporal models.
 section: API reference
 apiGroup: Models
-order: 204
+order: 205
 ---
 
 ## Overview
 
 AxoTemporalModel wraps the common backbone with a selected temporal core. Named public GRU profiles use this class. Full-sequence forward calls reset temporal state; streaming calls use an explicitly allocated persistent state. Low-level temporal cores and behavior adapters are included below for direct construction.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="temporal-core-axotemporalstreamingstate">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.temporal_core.AxoTemporalStreamingState(core_state: torch.Tensor | tuple[torch.Tensor, torch.Tensor], local_tcn_histories: list[torch.Tensor], morphology_feature_gains: torch.Tensor | None, patch_sum: torch.Tensor | None = None, patch_correction: torch.Tensor | None = None, patch_position: int = 0)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L16-L24)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L16-L24)
 
 </div>
 
@@ -61,7 +61,7 @@ Constructor fields are retained as attributes.
 axosim.temporal_core.AxoTemporalCoreConfig(kind: TemporalCoreKind, gru_hidden_units: int | None = None, branch_memory_units: int = 30, branch_hidden_units: int = 64, branch_synapse_decay: float = 0.85, branch_memory_decay: float = 0.9, residual_scale_init: float = 0.1, keep_local_tcn: bool = False, patch_size: int = 1, behavior_adapter_morphology_id: str | None = None, behavior_adapter_rank: int = 0, behavior_adapter_branch_token_offset: bool = False)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L28-L85)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L28-L85)
 
 </div>
 
@@ -112,7 +112,7 @@ Constructor fields are retained as read-only attributes.
 axosim.temporal_core.NeuronBehaviorAdapter(*, branches: int, width: int, outputs: int, morphology_index: int, rank: int=0, branch_token_offset: bool=False)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L88-L205)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L88-L205)
 
 </div>
 
@@ -141,9 +141,9 @@ Bases: `nn.Module`.
 
 <dl class="api-attributes">
 <dt id="temporal-core-neuronbehavioradapter-parameter-counts"><code>NeuronBehaviorAdapter.parameter_counts: dict[str, int]</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L162-L201">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L162-L201">Source</a></dd>
 <dt id="temporal-core-neuronbehavioradapter-parameter-count"><code>NeuronBehaviorAdapter.parameter_count: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L204-L205">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L204-L205">Source</a></dd>
 </dl>
 
 </section>
@@ -158,7 +158,7 @@ Bases: `nn.Module`.
 axosim.temporal_core.ResidualGRUTemporalCore(width: int, *, hidden_units: int | None=None, residual_scale_init: float)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L208-L328)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L208-L328)
 
 </div>
 
@@ -181,7 +181,7 @@ Bases: `nn.Module`.
 
 <dl class="api-attributes">
 <dt id="temporal-core-residualgrutemporalcore-recurrent-state-elements"><code>ResidualGRUTemporalCore.recurrent_state_elements: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L327-L328">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L327-L328">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -201,7 +201,7 @@ Bases: `nn.Module`.
 axosim.temporal_core.ResidualGRUTemporalCore.forward(hidden: torch.Tensor, *, weight_ih_delta: torch.Tensor | None=None, weight_hh_delta: torch.Tensor | None=None, adapter_mask: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L240-L253)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L240-L253)
 
 </div>
 
@@ -236,7 +236,7 @@ Predict native spike and soma outputs for the supplied sequence.
 axosim.temporal_core.ResidualGRUTemporalCore.temporal_correction(hidden: torch.Tensor, *, weight_ih_delta: torch.Tensor | None=None, weight_hh_delta: torch.Tensor | None=None, adapter_mask: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L255-L286)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L255-L286)
 
 </div>
 
@@ -273,7 +273,7 @@ Compute the temporal correction for encoded features.
 axosim.temporal_core.BranchELMTemporalCore(width: int, *, memory_units: int, hidden_units: int, synapse_decay: float, memory_decay: float, residual_scale_init: float)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L331-L393)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L331-L393)
 
 </div>
 
@@ -302,7 +302,7 @@ Bases: `nn.Module`.
 
 <dl class="api-attributes">
 <dt id="temporal-core-branchelmtemporalcore-recurrent-state-elements"><code>BranchELMTemporalCore.recurrent_state_elements: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L392-L393">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L392-L393">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -322,7 +322,7 @@ Bases: `nn.Module`.
 axosim.temporal_core.BranchELMTemporalCore.forward(hidden: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L361-L362)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L361-L362)
 
 </div>
 
@@ -351,7 +351,7 @@ Predict native spike and soma outputs for the supplied sequence.
 axosim.temporal_core.BranchELMTemporalCore.temporal_correction(hidden: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L364-L389)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L364-L389)
 
 </div>
 
@@ -382,7 +382,7 @@ Compute the temporal correction for encoded features.
 axosim.temporal_core.CausalPatchedTemporalCore(core: nn.Module, *, width: int, patch_size: int)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L396-L455)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L396-L455)
 
 </div>
 
@@ -405,7 +405,7 @@ Bases: `nn.Module`.
 
 <dl class="api-attributes">
 <dt id="temporal-core-causalpatchedtemporalcore-recurrent-state-elements"><code>CausalPatchedTemporalCore.recurrent_state_elements: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L451-L455">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L451-L455">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -424,7 +424,7 @@ Bases: `nn.Module`.
 axosim.temporal_core.CausalPatchedTemporalCore.forward(hidden: torch.Tensor, **temporal_kwargs) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L413-L448)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L413-L448)
 
 </div>
 
@@ -457,7 +457,7 @@ Predict native spike and soma outputs for the supplied sequence.
 axosim.temporal_core.AxoTemporalModel(source: BranchOfficialMamba, temporal_config: AxoTemporalCoreConfig)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L458-L1163)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L458-L1163)
 
 </div>
 
@@ -478,15 +478,15 @@ Bases: `nn.Module`.
 
 <dl class="api-attributes">
 <dt id="temporal-core-axotemporalmodel-config"><code>AxoTemporalModel.config</code></dt>
-<dd>Configuration retained by the model or its shared backbone. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L525-L526">Source</a></dd>
+<dd>Configuration retained by the model or its shared backbone. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L525-L526">Source</a></dd>
 <dt id="temporal-core-axotemporalmodel-num-input"><code>AxoTemporalModel.num_input: int</code></dt>
-<dd>Native input-channel count. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L529-L530">Source</a></dd>
+<dd>Native input-channel count. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L529-L530">Source</a></dd>
 <dt id="temporal-core-axotemporalmodel-num-output"><code>AxoTemporalModel.num_output: int</code></dt>
-<dd>Readout-channel count. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L533-L534">Source</a></dd>
+<dd>Readout-channel count. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L533-L534">Source</a></dd>
 <dt id="temporal-core-axotemporalmodel-num-branch"><code>AxoTemporalModel.num_branch: int</code></dt>
-<dd>Branched input-feature count. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L537-L538">Source</a></dd>
+<dd>Branched input-feature count. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L537-L538">Source</a></dd>
 <dt id="temporal-core-axotemporalmodel-base-soma-prediction"><code>AxoTemporalModel.base_soma_prediction: torch.Tensor | None</code></dt>
-<dd>Most recently retained base soma prediction, when available. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L541-L542">Source</a></dd>
+<dd>Most recently retained base soma prediction, when available. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L541-L542">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -510,7 +510,7 @@ Bases: `nn.Module`.
 axosim.temporal_core.AxoTemporalModel.forward(x: torch.Tensor, *, morphology_indices: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L544-L652)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L544-L652)
 
 </div>
 
@@ -546,7 +546,7 @@ x is (B,T,num_input), with integer morphology_indices (B,) when morphology condi
 axosim.temporal_core.AxoTemporalModel.allocate_streaming_state(batch_size: int, *, device: torch.device | str | None=None, dtype: torch.dtype | None=None) -> AxoTemporalStreamingState
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L654-L729)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L654-L729)
 
 </div>
 
@@ -584,7 +584,7 @@ Allocates an AxoTemporalStreamingState for batch_size on the requested device an
 axosim.temporal_core.AxoTemporalModel.streaming_step(x: torch.Tensor, state: AxoTemporalStreamingState, *, morphology_indices: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L731-L769)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L731-L769)
 
 </div>
 
@@ -622,7 +622,7 @@ Advances one native input step using persistent state. The guide supplies x as (
 axosim.temporal_core.AxoTemporalModel.streaming_step_events(event_indices: torch.Tensor, event_values: torch.Tensor, state: AxoTemporalStreamingState, *, morphology_indices: torch.Tensor | None=None, chunk_size: int | None=None, output_buffer: torch.Tensor | None=None, retain_base_soma_prediction: bool=True) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L771-L921)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L771-L921)
 
 </div>
 
@@ -663,7 +663,7 @@ Advance one timestep from padded sparse channel/value rows.
 axosim.temporal_core.AxoTemporalModel.recurrent_state_bytes(*, dtype: torch.dtype) -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L1127-L1135)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L1127-L1135)
 
 </div>
 
@@ -692,7 +692,7 @@ Report the declared recurrent-state storage in bytes.
 axosim.temporal_core.AxoTemporalModel.component_manifest() -> dict[str, object]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L1137-L1163)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L1137-L1163)
 
 </div>
 
@@ -716,7 +716,7 @@ Describe the model's temporal and readout components.
 axosim.temporal_core.create_temporal_model(source: BranchOfficialMamba, temporal_config: AxoTemporalCoreConfig) -> BranchOfficialMamba | AxoTemporalModel
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L1166-L1174)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L1166-L1174)
 
 </div>
 
@@ -747,7 +747,7 @@ Compose a selected AxoMamba front end with one temporal core.
 axosim.temporal_core.migrate_legacy_gru_state_dict(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/temporal_core.py#L1177-L1195)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/temporal_core.py#L1177-L1195)
 
 </div>
 

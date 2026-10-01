@@ -3,14 +3,14 @@ title: Block-forecast models
 description: Signatures, parameters, return contracts, and source for block-forecast models.
 section: API reference
 apiGroup: Models
-order: 205
+order: 206
 ---
 
 ## Overview
 
 CausalBlockForecastModel predicts native outputs through causal block forecasting. The top-level AxoSimGRU alias points to this implementation. Its backbone and BlockForecastConfig constructor contract differs from the named GRU-profile factory.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="block-forecast-blockforecastconfig">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.block_forecast.BlockForecastConfig(core_kind: BlockForecastCore, patch_size: int, max_patch_rank: int = 8, max_trajectory_rank: int = 8, keep_local_tcn: bool = False, gru_hidden_units: int | None = None, residual_scale_init: float = 0.1, voltage_anchor_count: int | None = None, event_template: tuple[float, ...] | None = None, event_template_center_init: float = 0.9208316802978516, event_template_temperature: float = 0.25, event_template_hard: bool = False, behavior_adaptation: bool = False)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L22-L63)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L22-L63)
 
 </div>
 
@@ -75,7 +75,7 @@ Constructor fields are retained as read-only attributes.
 axosim.block_forecast.CausalBlockForecastModel(source: nn.Module, forecast_config: BlockForecastConfig)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L66-L811)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L66-L811)
 
 </div>
 
@@ -96,19 +96,19 @@ Bases: `nn.Module`.
 
 <dl class="api-attributes">
 <dt id="block-forecast-causalblockforecastmodel-config"><code>CausalBlockForecastModel.config</code></dt>
-<dd>Configuration retained by the model or its shared backbone. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L209-L210">Source</a></dd>
+<dd>Configuration retained by the model or its shared backbone. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L209-L210">Source</a></dd>
 <dt id="block-forecast-causalblockforecastmodel-num-input"><code>CausalBlockForecastModel.num_input: int</code></dt>
-<dd>Native input-channel count. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L213-L214">Source</a></dd>
+<dd>Native input-channel count. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L213-L214">Source</a></dd>
 <dt id="block-forecast-causalblockforecastmodel-num-output"><code>CausalBlockForecastModel.num_output: int</code></dt>
-<dd>Readout-channel count. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L217-L218">Source</a></dd>
+<dd>Readout-channel count. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L217-L218">Source</a></dd>
 <dt id="block-forecast-causalblockforecastmodel-num-branch"><code>CausalBlockForecastModel.num_branch: int</code></dt>
-<dd>Branched input-feature count. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L221-L222">Source</a></dd>
+<dd>Branched input-feature count. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L221-L222">Source</a></dd>
 <dt id="block-forecast-causalblockforecastmodel-patch-size"><code>CausalBlockForecastModel.patch_size: int</code></dt>
-<dd>Native timesteps represented by one forecast block. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L225-L226">Source</a></dd>
+<dd>Native timesteps represented by one forecast block. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L225-L226">Source</a></dd>
 <dt id="block-forecast-causalblockforecastmodel-sparse-voltage-output"><code>CausalBlockForecastModel.sparse_voltage_output: bool</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L229-L230">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L229-L230">Source</a></dd>
 <dt id="block-forecast-causalblockforecastmodel-behavior-parameter-count"><code>CausalBlockForecastModel.behavior_parameter_count: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L233-L238">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L233-L238">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -130,7 +130,7 @@ Bases: `nn.Module`.
 axosim.block_forecast.CausalBlockForecastModel.block_state_sequence(x: torch.Tensor, *, morphology_indices: torch.Tensor | None=None, behavior_parameters: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L447-L485)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L447-L485)
 
 </div>
 
@@ -163,7 +163,7 @@ Encode a native sequence and return each causal macro state.
 axosim.block_forecast.CausalBlockForecastModel.decode_block_state_sequence(block_state: torch.Tensor, *, behavior_parameters: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L487-L509)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L487-L509)
 
 </div>
 
@@ -194,7 +194,7 @@ Decode dense native-rate trajectories from causal macro states.
 axosim.block_forecast.CausalBlockForecastModel.forward(x: torch.Tensor, *, morphology_indices: torch.Tensor | None=None, behavior_parameters: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L611-L716)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L611-L716)
 
 </div>
 
@@ -227,7 +227,7 @@ Predict native spike and soma outputs for the supplied sequence.
 axosim.block_forecast.CausalBlockForecastModel.component_manifest() -> dict[str, object]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/block_forecast.py#L782-L811)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/block_forecast.py#L782-L811)
 
 </div>
 

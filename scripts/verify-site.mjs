@@ -8,7 +8,7 @@ function files(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap(item => item.isDirectory() ? files(join(dir, item.name)) : [join(dir, item.name)]);
 }
 const pages = files(dist).filter(path => path.endsWith('.html') && !path.endsWith('/404.html'));
-const required = ['/', '/installation/', '/models/', '/inference/', '/training/', '/populations/', '/sparse-events/', '/adaptation/', '/cuda-graphs/', '/evaluation/', '/datasets/', '/reproducibility/', '/troubleshooting/', '/api/'];
+const required = ['/', '/installation/', '/models/', '/connected-populations/', '/inference/', '/training/', '/populations/', '/sparse-events/', '/adaptation/', '/cuda-graphs/', '/evaluation/', '/datasets/', '/reproducibility/', '/troubleshooting/', '/api/', '/api/connected-population/'];
 for (const path of required) assert(existsSync(join(dist, path, 'index.html')), `Missing page: ${path}`);
 assert.equal(readFileSync(join(dist, 'CNAME'), 'utf8').trim(), 'axo.axym.org');
 assert(existsSync(join(dist, 'pagefind/pagefind.js')), 'Search index missing');
@@ -16,8 +16,21 @@ assert(statSync(join(dist, 'report/main.pdf')).size > 100000, 'Report missing or
 assert(existsSync(join(dist, 'figures/central-comparison.svg')), 'Central figure missing');
 assert(readFileSync(join(dist, 'sitemap.xml'), 'utf8').includes('https://axo.axym.org/api/'), 'API omitted from sitemap');
 const inventory = JSON.parse(readFileSync(join(dist, 'api-inventory.json'), 'utf8'));
-assert.equal(inventory.exports.length, 25, 'Public export inventory incomplete');
-assert.equal(new Set(inventory.exports.map(item => item.name)).size, 25, 'Duplicate export entries');
+const expectedExports = [
+  'AXOSIM_POPULATION_PROFILE', 'MILLION_NEURON_REALTIME_CONTRACT', 'AxoMamba', 'AxoMambaConfig',
+  'AxoSimGRU', 'AxoSimLite', 'AxoSimMamba', 'AxoSimModelProfile', 'AxoSimPopulation',
+  'CudaGraphAdaptationStep', 'HomeostaticThresholdController', 'AXOSIM_MODEL_PROFILES',
+  'BranchELM', 'BranchELMConfig', 'LargePopulationSimulationContract',
+  'MixedQuantizedNeuronBehaviorBank', 'PopulationInferenceProfile',
+  'ProceduralMorphologyConnectomeRouter', 'QuantizedSynapticEfficacyBank',
+  'compact_active_sources', 'dequantize_synaptic_efficacies',
+  'dequantize_mixed_neuron_behavior_parameters', 'quantize_synaptic_efficacies',
+  'quantize_mixed_neuron_behavior_parameters', 'create_axosim_profile',
+  'ConnectedPopulation', 'ExplicitConnectome', 'InputEvents', 'PopulationFrame',
+  'ProceduralConnectome', 'create_population',
+];
+assert.deepEqual(inventory.exports.map(item => item.name).sort(), expectedExports.sort(), 'Public export inventory differs from the supported source surface');
+assert.equal(new Set(inventory.exports.map(item => item.name)).size, expectedExports.length, 'Duplicate export entries');
 assert(/^[a-f0-9]{40}$/.test(inventory.source.commit), 'API source revision is not pinned');
 assert.equal(inventory.source.repository, 'https://github.com/Axym-Labs/axosim', 'Stale API source repository');
 for (const item of inventory.exports) assert(existsSync(join(dist,item.page,'index.html')), `Export reference missing: ${item.name}`);

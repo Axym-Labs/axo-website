@@ -3,14 +3,14 @@ title: Branch-ELM compatibility
 description: Signatures, parameters, return contracts, and source for branch-elm compatibility.
 section: API reference
 apiGroup: Compatibility
-order: 207
+order: 208
 ---
 
 ## Overview
 
 BranchELM and BranchELMConfig provide the baseline and checkpoint-compatible branched neuron implementation. Inputs use (batch, time, input_channels); the standard two-channel readout contains a spike logit and a soma target coordinate.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="model-branchelmconfig">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.model.BranchELMConfig(input_dim: int = 1278, memory_units: int = 30, num_branches: int = 32, hidden_units: int = 64, synapse_decay: float = 0.85, memory_decay: float = 0.9)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L10-L20)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/model.py#L10-L20)
 
 </div>
 
@@ -66,7 +66,7 @@ Constructor fields are retained as read-only attributes.
 axosim.model.BranchELMConfig.branch_elm_30(*, input_dim: int=1278, num_branches: int=32) -> 'BranchELMConfig'
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L19-L20)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/model.py#L19-L20)
 
 </div>
 
@@ -97,7 +97,7 @@ axosim.model.BranchELMConfig.branch_elm_30(*, input_dim: int=1278, num_branches:
 axosim.model.BranchELM(config: BranchELMConfig)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L23-L74)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/model.py#L23-L74)
 
 </div>
 
@@ -129,7 +129,7 @@ Bases: `nn.Module`.
 axosim.model.BranchELM.forward(x: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L48-L71)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/model.py#L48-L71)
 
 </div>
 
@@ -163,7 +163,7 @@ x must be (B,T,config.input_dim). Returns (B,T,2), with one spike logit and one 
 axosim.model.BranchELM.parameter_count() -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/model.py#L73-L74)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/model.py#L73-L74)
 
 </div>
 

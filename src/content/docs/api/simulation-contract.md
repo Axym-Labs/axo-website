@@ -3,14 +3,14 @@ title: Population simulation contracts
 description: Signatures, parameters, return contracts, and source for population simulation contracts.
 section: API reference
 apiGroup: Populations
-order: 210
+order: 211
 ---
 
 ## Overview
 
 The immutable simulation contract specifies the connected workload and timing boundary. PopulationInferenceProfile specifies a deployment recipe. These values are declarations, not measured speed results. Check the technical report's measured throughput at the contact count and population scale relevant to your application.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="simulation-contract-largepopulationsimulationcontract">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.simulation_contract.LargePopulationSimulationContract(name: str, population_size: int, step_ms: float, input_step_ms: float, output_step_ms: float, target_latency_ms: float, model_family: str, patch_size: int, temporal_execution_mode: str, patch_phase_mode: str, patch_phase_assignment: str, patch_phase_storage_layout: str, lossless_ordered_temporal_io: bool, causal_block_feedback_required: bool, minimum_routing_delay_steps: int, synaptic_efficacy_values_per_neuron: int, adaptation_storage_bits: int, activation_storage_bits: int, recurrent_state_storage_bits: int, external_drive_storage_bits: int, morphology_classes: int, firing_rate: float, fanout: int, recurrent_contact_fraction: float, excitatory_fraction: float, local_connection_fraction: float, spatial_tile_neurons: int, delay_slots: int, branch_count: int, local_source_identity_required: bool, long_range_source_identity_required: bool, local_branch_input_mode: str, input_channel_collision_mode: str, local_source_summary_is_lossless_for_declared_router: bool, posthoc_source_projection_allowed: bool, morphology_assignment_independent: bool, activity_must_be_model_generated: bool, quota_activity_forcing_allowed: bool, activity_selection_mode: str, adaptation_reference_envelope_validation_required: bool, morphology_aware_branch_targeting: bool = True, source_type_aware_branch_targeting: bool = True, source_discovery_included: bool = True, event_delivery_included: bool = True, delay_queue_included: bool = True, every_neuron_has_custom_adaptation: bool = True, empirical_connectome: bool = False)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L9-L272)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L9-L272)
 
 </div>
 
@@ -135,21 +135,21 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="simulation-contract-largepopulationsimulationcontract-steps-per-second"><code>LargePopulationSimulationContract.steps_per_second: float</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L216-L217">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L216-L217">Source</a></dd>
 <dt id="simulation-contract-largepopulationsimulationcontract-target-neuron-steps-per-second"><code>LargePopulationSimulationContract.target_neuron_steps_per_second: float</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L220-L221">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L220-L221">Source</a></dd>
 <dt id="simulation-contract-largepopulationsimulationcontract-largest-patch-phase-population"><code>LargePopulationSimulationContract.largest_patch_phase_population: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L224-L227">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L224-L227">Source</a></dd>
 <dt id="simulation-contract-largepopulationsimulationcontract-active-sources-per-step"><code>LargePopulationSimulationContract.active_sources_per_step: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L230-L231">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L230-L231">Source</a></dd>
 <dt id="simulation-contract-largepopulationsimulationcontract-events-per-step"><code>LargePopulationSimulationContract.events_per_step: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L234-L239">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L234-L239">Source</a></dd>
 <dt id="simulation-contract-largepopulationsimulationcontract-synaptic-efficacy-bank-bytes"><code>LargePopulationSimulationContract.synaptic_efficacy_bank_bytes: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L242-L248">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L242-L248">Source</a></dd>
 <dt id="simulation-contract-largepopulationsimulationcontract-delay-queue-bytes"><code>LargePopulationSimulationContract.delay_queue_bytes: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L251-L258">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L251-L258">Source</a></dd>
 <dt id="simulation-contract-largepopulationsimulationcontract-external-drive-block-bytes"><code>LargePopulationSimulationContract.external_drive_block_bytes: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L261-L268">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L261-L268">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -169,7 +169,7 @@ Constructor fields are retained as read-only attributes.
 axosim.simulation_contract.LargePopulationSimulationContract.bytes_to_gib(byte_count: int) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L271-L272)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L271-L272)
 
 </div>
 
@@ -200,7 +200,7 @@ Convert a byte count to gibibytes using 1024 cubed bytes per GiB.
 axosim.simulation_contract.PopulationInferenceProfile(name: str, support_model_id: str, support_token_width: int, support_state_width: int, support_block_rows: int, support_block_token: int, support_block_state: int, external_block_width: int, project_block_width: int, compiled_adaptation_values_per_neuron: int, morphology_adapter_values_per_class: int, synaptic_efficacy_values_per_neuron: int, output_export_fraction: float, primary_metric: str, minimum_neuron_steps_per_second: float, measured_median_neuron_steps_per_second: float, measured_p90_neuron_steps_per_second: float, measured_voltage_sera_mv2: float, measured_voltage_root_sera_mv: float, measured_spike_mean_f1: float, measured_population_firing_rate_hz: float, population_adaptation_initialization: str, population_adaptation_individually_fitted: bool, individual_behavior_adaptation_supported: bool, individual_synaptic_adaptation_supported: bool)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L276-L361)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L276-L361)
 
 </div>
 
@@ -277,7 +277,7 @@ Constructor fields are retained as read-only attributes.
 axosim.simulation_contract.MILLION_NEURON_REALTIME_CONTRACT: LargePopulationSimulationContract
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L362-L405)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L362-L405)
 
 </div>
 
@@ -295,7 +295,7 @@ Named workload contract for the connected population benchmark. Its attributes s
 axosim.simulation_contract.AXOSIM_POPULATION_PROFILE: PopulationInferenceProfile
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/simulation_contract.py#L407-L437)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/simulation_contract.py#L407-L437)
 
 </div>
 

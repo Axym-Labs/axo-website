@@ -43,4 +43,4 @@ The default data directory is `<project-root>/data`; raw and shard output direct
 <dd>Maximum sample count in each converted shard.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/setup_workflow.py#L152)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/setup_workflow.py#L152)

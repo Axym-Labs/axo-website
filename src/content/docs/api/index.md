@@ -7,7 +7,7 @@ order: 200
 
 ## Public Python surface
 
-This reference covers all 25 names in `axosim.__all__` at revision `306a51ed950b`, plus the public module functions, configuration fields, dataset methods, and CLI options used by the guides. The package lazily imports these names; implementation aliases are stated explicitly.
+This reference covers all 31 names in `axosim.__all__` at revision `856207f6de56`, plus the public module functions, configuration fields, dataset methods, and CLI options used by the guides. The package lazily imports these names; implementation aliases are stated explicitly.
 
 | Import from axosim | Implementation | Reference |
 | --- | --- | --- |
@@ -36,11 +36,18 @@ This reference covers all 25 names in `axosim.__all__` at revision `306a51ed950b
 | `quantize_synaptic_efficacies` | `axosim.synapse.quantize_synaptic_efficacies` | [Open](/api/synapse/) |
 | `quantize_mixed_neuron_behavior_parameters` | `axosim.population.quantize_mixed_neuron_behavior_parameters` | [Open](/api/population/) |
 | `create_axosim_profile` | `axosim.model_family.create_axosim_profile` | [Open](/api/model-family/) |
+| `ConnectedPopulation` | `axosim.connected_population.ConnectedPopulation` | [Open](/api/connected-population/) |
+| `ExplicitConnectome` | `axosim.connected_population.ExplicitConnectome` | [Open](/api/connected-population/) |
+| `InputEvents` | `axosim.connected_population.InputEvents` | [Open](/api/connected-population/) |
+| `PopulationFrame` | `axosim.connected_population.PopulationFrame` | [Open](/api/connected-population/) |
+| `ProceduralConnectome` | `axosim.connected_population.ProceduralConnectome` | [Open](/api/connected-population/) |
+| `create_population` | `axosim.connected_population.create_population` | [Open](/api/connected-population/) |
 
 `HomeostaticThresholdController` is experimental. Configuration recipes and workload constants describe construction or execution contracts; they are not benchmark measurements. Historical checkpoint classes remain documented because the loader supports them.
 
 ## Modules and configuration
 
+- [Connected population lifecycle](/api/connected-population/)
 - [Population interfaces](/api/interfaces/)
 - [Model profiles](/api/model-family/)
 - [Mamba models and configuration](/api/mamba/)
@@ -71,4 +78,4 @@ This reference covers all 25 names in `axosim.__all__` at revision `306a51ed950b
 
 ## Source and inventory
 
-Every source link is pinned to [revision 306a51ed950b](https://github.com/Axym-Labs/axosim/tree/306a51ed950b411e8858af622d48062b28e4fbfe). Repository access is currently required to open the AxoSim and AxoBench source links because these repositories are private. The [machine-readable API inventory](/api-inventory.json) records source locations, exact signatures, parameters/defaults, fields, methods, exported aliases, and CLI options. It is generated using AST parsing without importing PyTorch.
+Every source link is pinned to [revision 856207f6de56](https://github.com/Axym-Labs/axosim/tree/856207f6de56dbf8e3f754a142581a7c050eeac6). Repository access is currently required to open the AxoSim and AxoBench source links because these repositories are private. The [machine-readable API inventory](/api-inventory.json) records source locations, exact signatures, parameters/defaults, fields, methods, exported aliases, and CLI options. It is generated using AST parsing without importing PyTorch.

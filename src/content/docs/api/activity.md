@@ -3,14 +3,14 @@ title: Activity and experimental control
 description: Signatures, parameters, return contracts, and source for activity and experimental control.
 section: API reference
 apiGroup: Populations
-order: 214
+order: 215
 ---
 
 ## Overview
 
 Threshold functions convert model-generated spike logits into events using fixed declared thresholds. Patch-phase layout helpers organize native cadence. HomeostaticThresholdController is an experimental optional code feature; it is not required by the lifecycle guides and is not a contribution presented in the technical report.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="activity-stratifiedpatchphaselayout">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.activity.StratifiedPatchPhaseLayout(phase_ids: torch.Tensor, storage_permutation: torch.Tensor, inverse_permutation: torch.Tensor, phase_population_sizes: tuple[int, ...], storage_group_offsets: tuple[int, ...], storage_group_shape: tuple[int, int])
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L12-L32)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L12-L32)
 
 </div>
 
@@ -53,11 +53,11 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="activity-stratifiedpatchphaselayout-patch-size"><code>StratifiedPatchPhaseLayout.patch_size: int</code></dt>
-<dd>Native timesteps represented by one forecast block. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L23-L24">Source</a></dd>
+<dd>Native timesteps represented by one forecast block. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L23-L24">Source</a></dd>
 <dt id="activity-stratifiedpatchphaselayout-population-size"><code>StratifiedPatchPhaseLayout.population_size: int</code></dt>
-<dd>Number of persistent neurons. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L27-L28">Source</a></dd>
+<dd>Number of persistent neurons. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L27-L28">Source</a></dd>
 <dt id="activity-stratifiedpatchphaselayout-phase-sizes"><code>StratifiedPatchPhaseLayout.phase_sizes: tuple[int, ...]</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L31-L32">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L31-L32">Source</a></dd>
 </dl>
 
 </section>
@@ -72,7 +72,7 @@ Constructor fields are retained as read-only attributes.
 axosim.activity.FixedActivityThresholds(excitatory: tuple[float, ...], inhibitory: tuple[float, ...])
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L36-L67)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L36-L67)
 
 </div>
 
@@ -95,7 +95,7 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="activity-fixedactivitythresholds-morphology-count"><code>FixedActivityThresholds.morphology_count: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L54-L55">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L54-L55">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -114,7 +114,7 @@ Constructor fields are retained as read-only attributes.
 axosim.activity.FixedActivityThresholds.as_tensor(*, device: torch.device | str, dtype: torch.dtype) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L57-L67)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L57-L67)
 
 </div>
 
@@ -145,7 +145,7 @@ axosim.activity.FixedActivityThresholds.as_tensor(*, device: torch.device | str,
 axosim.activity.FixedBlockActivityThresholds(forecast_steps: tuple[FixedActivityThresholds, ...])
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L71-L106)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L71-L106)
 
 </div>
 
@@ -166,9 +166,9 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="activity-fixedblockactivitythresholds-forecast-step-count"><code>FixedBlockActivityThresholds.forecast_step_count: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L88-L89">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L88-L89">Source</a></dd>
 <dt id="activity-fixedblockactivitythresholds-morphology-count"><code>FixedBlockActivityThresholds.morphology_count: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L92-L93">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L92-L93">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -187,7 +187,7 @@ Constructor fields are retained as read-only attributes.
 axosim.activity.FixedBlockActivityThresholds.as_tensor(*, device: torch.device | str, dtype: torch.dtype) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L95-L106)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L95-L106)
 
 </div>
 
@@ -218,7 +218,7 @@ axosim.activity.FixedBlockActivityThresholds.as_tensor(*, device: torch.device |
 axosim.activity.HomeostaticThresholdController(*, group_ids: torch.Tensor, target_rates_hz: torch.Tensor, dt_ms: float, update_interval_ms: float, time_constant_ms: float, learning_rate: float, max_abs_offset: float)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L109-L253)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L109-L253)
 
 </div>
 
@@ -262,7 +262,7 @@ Experimental optional feature. group_ids assigns neurons to declared groups; tar
 axosim.activity.HomeostaticThresholdController.observe(activity: torch.Tensor) -> bool
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L207-L248)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L207-L248)
 
 </div>
 
@@ -296,7 +296,7 @@ Observes one neuron activity vector for a simulation step; returns whether the u
 axosim.activity.HomeostaticThresholdController.threshold_offsets_per_neuron() -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L250-L253)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L250-L253)
 
 </div>
 
@@ -325,7 +325,7 @@ Returns one current group-derived threshold offset per neuron.
 axosim.activity.build_stratified_patch_phase_layout(morphology_ids: torch.Tensor, inhibitory: torch.Tensor, *, patch_size: int, seed: int, tile_ids: torch.Tensor | None=None) -> StratifiedPatchPhaseLayout
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L256-L376)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L256-L376)
 
 </div>
 
@@ -362,7 +362,7 @@ Balance phases independently inside every morphology and E/I group.
 axosim.activity.threshold_model_activity(spike_scores: torch.Tensor, morphology_ids: torch.Tensor, inhibitory: torch.Tensor, thresholds: FixedActivityThresholds) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L379-L414)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L379-L414)
 
 </div>
 
@@ -397,7 +397,7 @@ Return variable-cardinality events from fixed model-score crossings.
 axosim.activity.threshold_block_model_activity(spike_scores: torch.Tensor, morphology_ids: torch.Tensor, inhibitory: torch.Tensor, thresholds: FixedBlockActivityThresholds) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/activity.py#L417-L451)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/activity.py#L417-L451)
 
 </div>
 

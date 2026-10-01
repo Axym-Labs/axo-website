@@ -3,14 +3,14 @@ title: Checkpoints
 description: Signatures, parameters, return contracts, and source for checkpoints.
 section: API reference
 apiGroup: Models
-order: 208
+order: 209
 ---
 
 ## Overview
 
 Checkpoint files contain model_kind, config, state_dict, and metadata. save_checkpoint writes a temporary sibling then atomically replaces the destination. Model-only checkpoints do not store a complete optimizer or scheduler trajectory. load_checkpoint uses torch.load with weights_only=False, so load trusted artifacts.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="checkpoint-save-checkpoint">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.checkpoint.save_checkpoint(model: torch.nn.Module, path: str | Path, *, metadata: dict[str, Any] | None=None) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/checkpoint.py#L188-L206)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/checkpoint.py#L188-L206)
 
 </div>
 
@@ -60,7 +60,7 @@ Writes model kind, serializable configuration, state_dict, and metadata. Creates
 axosim.checkpoint.load_checkpoint(path: str | Path, *, map_location: str='cpu') -> tuple[torch.nn.Module, dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/checkpoint.py#L209-L329)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/checkpoint.py#L209-L329)
 
 </div>
 

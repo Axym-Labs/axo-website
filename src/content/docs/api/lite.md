@@ -3,14 +3,14 @@ title: Lite neuron and configuration
 description: Signatures, parameters, return contracts, and source for lite neuron and configuration.
 section: API reference
 apiGroup: Models
-order: 206
+order: 207
 ---
 
 ## Overview
 
 AxoSimLite aliases AdaptiveSupportP4Surrogate. Route features have shape (morphologies, input_dim, route_feature_dim). The Lite neuron forecasts four native outputs from preceding input blocks; sequence losses should mask the first four causal padding positions. SupportP4Config requires positive dimensions, patch_size=4, output_dim=2, and at least one morphology ID.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="support-surrogate-supportp4config">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.support_surrogate.SupportP4Config(input_dim: int = 1278, route_feature_dim: int = 118, token_dim: int = 58, state_dim: int = 16, patch_size: int = 4, output_dim: int = 2, morphology_ids: tuple[str, ...] = (), behavior_adaptation: bool = True)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L13-L38)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L13-L38)
 
 </div>
 
@@ -65,7 +65,7 @@ Constructor fields are retained as read-only attributes.
 axosim.support_surrogate.AdaptiveSupportP4Surrogate(config: SupportP4Config, route_features: torch.Tensor)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L41-L535)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L41-L535)
 
 </div>
 
@@ -88,11 +88,11 @@ route_features must match (len(config.morphology_ids),config.input_dim,config.ro
 
 <dl class="api-attributes">
 <dt id="support-surrogate-adaptivesupportp4surrogate-patch-size"><code>AdaptiveSupportP4Surrogate.patch_size: int</code></dt>
-<dd>Native timesteps represented by one forecast block. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L118-L119">Source</a></dd>
+<dd>Native timesteps represented by one forecast block. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L118-L119">Source</a></dd>
 <dt id="support-surrogate-adaptivesupportp4surrogate-gate-feature-dim"><code>AdaptiveSupportP4Surrogate.gate_feature_dim: int</code></dt>
-<dd>Width of the concatenated token and state gate features. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L122-L123">Source</a></dd>
+<dd>Width of the concatenated token and state gate features. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L122-L123">Source</a></dd>
 <dt id="support-surrogate-adaptivesupportp4surrogate-runtime-coefficient-slices"><code>AdaptiveSupportP4Surrogate.runtime_coefficient_slices: dict[str, slice]</code></dt>
-<dd>Named packed slices of the direct deployed adaptation coefficients. <a href="https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L212-L248">Source</a></dd>
+<dd>Named packed slices of the direct deployed adaptation coefficients. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L212-L248">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -120,7 +120,7 @@ route_features must match (len(config.morphology_ids),config.input_dim,config.ro
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.reset_parameters() -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L135-L149)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L135-L149)
 
 </div>
 
@@ -145,7 +145,7 @@ Initialize the model's learned parameters.
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.aggregate_inputs(inputs: torch.Tensor, *, morphology_indices: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L151-L172)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L151-L172)
 
 </div>
 
@@ -181,7 +181,7 @@ inputs is (B,T,input_dim), and morphology_indices is integer (B,). Selects each 
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.compile_adaptation(behavior_parameters: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L174-L186)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L174-L186)
 
 </div>
 
@@ -215,7 +215,7 @@ behavior_parameters is (B,behavior_parameter_count). Returns compiled coefficien
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.initial_state(batch_size: int, *, device: torch.device, dtype: torch.dtype) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L188-L200)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L188-L200)
 
 </div>
 
@@ -253,7 +253,7 @@ Allocates a zero state with shape (batch_size,state_dim) on the requested device
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.step_token(token: torch.Tensor, state: torch.Tensor, *, adaptation_cache: torch.Tensor | None) -> tuple[torch.Tensor, torch.Tensor]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L250-L312)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L250-L312)
 
 </div>
 
@@ -293,7 +293,7 @@ token is (B,token_dim), state is (B,state_dim), and optional adaptation_cache is
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.step_p4(feature_patch: torch.Tensor, state: torch.Tensor, *, behavior_parameters: torch.Tensor | None=None, adaptation_cache: torch.Tensor | None=None) -> tuple[torch.Tensor, torch.Tensor]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L314-L342)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L314-L342)
 
 </div>
 
@@ -335,7 +335,7 @@ feature_patch is (B,4,route_feature_dim) and state is (B,state_dim). Supply eith
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.forward_feature_summaries(summaries: torch.Tensor, *, morphology_indices: torch.Tensor | None=None, behavior_parameters: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L453-L469)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L453-L469)
 
 </div>
 
@@ -368,7 +368,7 @@ summaries is (B,T,route_feature_dim), with T>0. Select logical adaptation by mor
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.forward_runtime_coefficients(summaries: torch.Tensor, *, runtime_coefficients: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L471-L489)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L471-L489)
 
 </div>
 
@@ -401,7 +401,7 @@ summaries is (B,T,route_feature_dim), and runtime_coefficients must be (B,cache_
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.forward_with_gate_features(inputs: torch.Tensor, *, morphology_indices: torch.Tensor | None=None, behavior_parameters: torch.Tensor | None=None) -> tuple[torch.Tensor, torch.Tensor]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L491-L516)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L491-L516)
 
 </div>
 
@@ -441,7 +441,7 @@ inputs is (B,T,input_dim); morphology_indices is required. Returns (predictions,
 axosim.support_surrogate.AdaptiveSupportP4Surrogate.forward(inputs: torch.Tensor, *, morphology_indices: torch.Tensor | None=None, behavior_parameters: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/support_surrogate.py#L518-L535)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/support_surrogate.py#L518-L535)
 
 </div>
 

@@ -2,7 +2,7 @@
 title: Run inference
 description: Load a checkpoint, submit native input traces, and interpret spike and voltage outputs.
 section: Simulation
-order: 30
+order: 31
 ---
 
 ## Load and execute a checkpoint

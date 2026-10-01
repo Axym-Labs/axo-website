@@ -3,14 +3,14 @@ title: Inference benchmarking
 description: Signatures, parameters, return contracts, and source for inference benchmarking.
 section: API reference
 apiGroup: Training and evaluation
-order: 219
+order: 220
 ---
 
 ## Overview
 
 The benchmark measures model sequence execution across batch sizes, horizons, and precision choices. It does not include the complete connected population runtime. Preserve the warmup, repetitions, synchronization, compilation mode, device, and shape contract with every reported timing.
 
-Source revision: `306a51ed950b`. [Public export index](/api/).
+Source revision: `856207f6de56`. [Public export index](/api/).
 
 <section class="api-symbol" id="inference-benchmark-benchmark-inference-matrix">
 
@@ -22,7 +22,7 @@ Source revision: `306a51ed950b`. [Public export index](/api/).
 axosim.inference_benchmark.benchmark_inference_matrix(model: torch.nn.Module, *, batch_sizes: Iterable[int], time_steps: Iterable[int], input_dim: int, device: str='cpu', precision: str='float32', warmup_runs: int=5, runs: int=20, compile_model: bool=False, accuracy_metrics_path: str | Path | None=None) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/inference_benchmark.py#L12-L103)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/inference_benchmark.py#L12-L103)
 
 </div>
 
@@ -72,7 +72,7 @@ Benchmark dense full-window inference for deployment-oriented comparisons.
 axosim.inference_benchmark.count_parameters(model: torch.nn.Module) -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/inference_benchmark.py#L106-L107)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/inference_benchmark.py#L106-L107)
 
 </div>
 
@@ -104,7 +104,7 @@ Count all resident model parameter elements, including frozen parameters.
 axosim.inference_benchmark.write_inference_benchmark(report: dict[str, Any], path: str | Path) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/inference_benchmark.py#L110-L113)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/inference_benchmark.py#L110-L113)
 
 </div>
 
@@ -138,7 +138,7 @@ Write the inference timing report as JSON, creating the parent directory when ne
 axosim.inference_benchmark.parse_int_list(value: str) -> list[int]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/306a51ed950b411e8858af622d48062b28e4fbfe/src/axosim/inference_benchmark.py#L116-L120)
+[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/inference_benchmark.py#L116-L120)
 
 </div>
 
