@@ -43,13 +43,35 @@ const sample = Buffer.from(
 );
 if (sample.length !== 28 * 28) throw new Error('MNIST sample must contain exactly 784 pixels');
 
-// Original 7 × 7 glyphs, each occupying a square 14 × 14-pixel quadrant interior.
-const glyphs = [
-  ['0111110', '1100011', '1100011', '1111111', '1100011', '1100011', '1100011'],
-  ['1100011', '0110110', '0011100', '0001000', '0011100', '0110110', '1100011'],
-  ['1100011', '1100011', '0110110', '0011100', '0001000', '0001000', '0001000'],
-  ['1100011', '1110111', '1111111', '1101011', '1100011', '1100011', '1100011'],
+// Original square glyphs: each segment is rasterized at exactly one native
+// pixel in the 32 × 32 mark, with a 14 × 14-pixel quadrant interior.
+const letterPaths = [
+  [[[1, 13], [1, 3], [4, 0], [9, 0], [12, 3], [12, 13]], [[1, 7], [12, 7]]],
+  [[[0, 0], [13, 13]], [[13, 0], [0, 13]]],
+  [[[0, 0], [6, 6], [13, 0]], [[6, 6], [6, 13]]],
+  [[[0, 13], [0, 0], [6, 6], [13, 0], [13, 13]]],
 ];
+function pixelLine(mask, start, end) {
+  let [x, y] = start;
+  const [endX, endY] = end;
+  const dx = Math.abs(endX - x), dy = -Math.abs(endY - y);
+  const stepX = x < endX ? 1 : -1, stepY = y < endY ? 1 : -1;
+  let error = dx + dy;
+  for (;;) {
+    mask[y][x] = true;
+    if (x === endX && y === endY) break;
+    const twiceError = 2 * error;
+    if (twiceError >= dy) { error += dy; x += stepX; }
+    if (twiceError <= dx) { error += dx; y += stepY; }
+  }
+}
+const glyphs = letterPaths.map(paths => {
+  const mask = Array.from({ length: 14 }, () => Array(14).fill(false));
+  for (const path of paths) {
+    for (let i = 1; i < path.length; i++) pixelLine(mask, path[i - 1], path[i]);
+  }
+  return mask;
+});
 
 function ink(x, y) {
   const sx = Math.max(0, Math.min(27, Math.round(x)));
@@ -58,19 +80,21 @@ function ink(x, y) {
 }
 
 // Clockwise rotation, 2× enlargement, plus an offset reflection of the same sample.
-// A faint deterministic stipple extends the digit's rich local structure into its margins.
+// Deterministic pixel stipple extends the rotated digit into its margins.
+// A gamma lift makes most of the black–purple interpolation visibly purple.
 function field(x, y) {
   const first = ink(6 + y / 2, 22 - x / 2);
   const second = ink(21 - y / 1.8, 6 + x / 1.8);
   const stipple = ((x * 73 + y * 151 + x * y * 29) % 101) / 101;
-  return Math.min(1, 0.08 + 0.73 * first + 0.36 * second + 0.12 * stipple);
+  const pattern = Math.min(1, 0.50 * first + 0.30 * second + 0.20 * stipple);
+  return 0.15 + 0.85 * Math.pow(pattern, 0.35);
 }
 
 const grid = Array.from({ length: 32 }, (_, y) => Array.from({ length: 32 }, (_, x) => {
   const quadrant = Math.floor(y / 16) * 2 + Math.floor(x / 16);
-  const gx = Math.floor(((x % 16) - 1) / 2);
-  const gy = Math.floor(((y % 16) - 1) / 2);
-  if (gx >= 0 && gx < 7 && gy >= 0 && gy < 7 && glyphs[quadrant][gy][gx] === '1') {
+  const gx = (x % 16) - 1;
+  const gy = (y % 16) - 1;
+  if (gx >= 0 && gx < 14 && gy >= 0 && gy < 14 && glyphs[quadrant][gy][gx]) {
     return [255, 255, 255];
   }
   return [63, 33, 182].map(channel => Math.round(channel * field(x, y)));
@@ -81,7 +105,7 @@ grid.forEach((row, y) => row.forEach((rgb, x) => {
   const color = `#${rgb.map(channel => channel.toString(16).padStart(2, '0')).join('')}`;
   groups.set(color, `${groups.get(color) ?? ''}M${x} ${y}h1v1h-1z`);
 }));
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="title" shape-rendering="crispEdges"><title id="title">Axym Labs — A X Y M</title><desc>Four square white pixel letters over a clockwise-rotated MNIST-derived black and Axym-purple pixel field.</desc>${[...groups].map(([color, d]) => `<path fill="${color}" d="${d}"/>`).join('')}</svg>\n`;
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="title" shape-rendering="crispEdges"><title id="title">Axym Labs — A X Y M</title><desc>Four square white letters with one-pixel strokes over a purple-biased, a clockwise-rotated MNIST-derived black and Axym-purple pixel field.</desc>${[...groups].map(([color, d]) => `<path fill="${color}" d="${d}"/>`).join('')}</svg>\n`;
 
 function crc32(buffer) {
   let crc = 0xffffffff;
@@ -103,6 +127,25 @@ function pngChunk(type, data) {
 }
 
 function png(size) {
+  // At 16px, rasterize the same paths on its own grid; decimating 32px
+  // would erase odd-column one-pixel stems in the favicon.
+  let sourceGrid = grid;
+  if (size === 16) {
+    const smallGlyphs = letterPaths.map(paths => {
+      const mask = Array.from({ length: 7 }, () => Array(7).fill(false));
+      for (const path of paths) {
+        const scaled = path.map(point => point.map(value => Math.round(value * 6 / 13)));
+        for (let i = 1; i < scaled.length; i++) pixelLine(mask, scaled[i - 1], scaled[i]);
+      }
+      return mask;
+    });
+    sourceGrid = Array.from({ length: 16 }, (_, y) => Array.from({ length: 16 }, (_, x) => {
+      const quadrant = Math.floor(y / 8) * 2 + Math.floor(x / 8);
+      const gx = x % 8, gy = y % 8;
+      if (gx < 7 && gy < 7 && smallGlyphs[quadrant][gy][gx]) return [255, 255, 255];
+      return [63, 33, 182].map(channel => Math.round(channel * field(x * 2, y * 2)));
+    }));
+  }
   const header = Buffer.alloc(13);
   header.writeUInt32BE(size, 0);
   header.writeUInt32BE(size, 4);
@@ -111,7 +154,7 @@ function png(size) {
   const rows = Buffer.alloc(size * (size * 3 + 1));
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
-      const source = grid[Math.floor(y * 32 / size)][Math.floor(x * 32 / size)];
+      const source = sourceGrid[Math.floor(y * sourceGrid.length / size)][Math.floor(x * sourceGrid.length / size)];
       source.forEach((channel, c) => { rows[y * (size * 3 + 1) + 1 + x * 3 + c] = channel; });
     }
   }

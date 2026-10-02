@@ -1,9 +1,10 @@
 # Axym mark
 
 The mark has original square A/X/Y/M pixel glyphs in reading order across four
-quadrants. Its pixel field interpolates black and Axym purple (`#3F21B6`), using
+quadrants, with one-pixel strokes in the native 32 × 32 mark. Its pixel field interpolates black and Axym purple (`#3F21B6`), using
 an enlarged clockwise-rotated MNIST handwritten eight, an offset reflection,
-and a low-amplitude deterministic stipple.
+and a deterministic stipple. A gamma lift biases the interpolation toward purple
+while retaining dark patterned pockets.
 
 Regenerate the exact same SVG, 16/32/48-pixel favicon, and PNG for both sites:
 
