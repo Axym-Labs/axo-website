@@ -8,8 +8,8 @@ order: 0
 AxoSim approximates the response of detailed biological neurons to synaptic input histories. You can load trained GRU and Mamba models, construct populations with explicit dendritic contacts, and adapt neuronal and synaptic parameters through a complete temporal sequence.
 
 <figure class="overview-figure">
-  <img class="figure-light" src="/figures/central-comparison.svg" width="32077" height="17971" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM models and the CoreNEURON reference in gray, compared on inference throughput, voltage and dynamics fidelity, and spike F1." fetchpriority="high" />
-  <img class="figure-dark" src="/figures/central-comparison-dark.svg" width="32077" height="17971" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM models and the CoreNEURON reference in gray, compared on inference throughput, voltage and dynamics fidelity, and spike F1." fetchpriority="high" />
+  <img class="figure-light" src="/figures/central-comparison.svg" width="34829" height="19659" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM models and the CoreNEURON reference in gray, compared on inference and history throughput, voltage and dynamics fidelity, and spike F1." fetchpriority="high" />
+  <img class="figure-dark" src="/figures/central-comparison-dark.svg" width="34829" height="19659" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM models and the CoreNEURON reference in gray, compared on inference and history throughput, voltage and dynamics fidelity, and spike F1." fetchpriority="high" />
 </figure>
 
 <p class="figure-caption">A comparison between AxoSim models and baselines; more details are available in the <a href="/report/main.pdf">technical report</a>.</p>

@@ -22,12 +22,52 @@ const coreCsv = join(report, 'data/central-comparison.csv');
 const coreRate = Number(readFileSync(coreCsv, 'utf8').split('\n')
   .find(line => line.startsWith('CoreNEURON,Hay L5PC reference,Inference throughput,')).split(',')[3]);
 assert(Number.isFinite(coreRate) && coreRate > 0, 'CoreNEURON recorded rate is missing');
+const historyEvidence = join(report, 'reproducibility/evidence/history-throughput/learned-model-timings.json');
+const coreHistoryEvidence = join(report, 'reproducibility/evidence/history-throughput/coreneuron-timing.json');
+const history = JSON.parse(readFileSync(historyEvidence, 'utf8'));
+const coreHistory = JSON.parse(readFileSync(coreHistoryEvidence, 'utf8'));
+assert(history.contract.batch_size === 1 && history.contract.history_steps === 2000 &&
+  history.contract.input_contacts === 1278 && history.contract.dtype === 'float32' &&
+  history.contract.timing_repeats === 40 && history.contract.gpu_isolation_checked,
+  'History timing contract changed');
+assert(coreHistory.model_id === 'coreneuron' && coreHistory.contract.batch_size === 1 &&
+  coreHistory.contract.history_steps === 2000 && coreHistory.contract.native_dt_ms === 1,
+  'CoreNEURON history timing contract changed');
+assert(coreHistory.contract.input_sha256 === history.contract.input_sha256 &&
+  coreHistory.contract.input_exactly_matches_learned_history &&
+  coreHistory.execution_verification.coreneuron_enabled &&
+  coreHistory.execution_verification.coreneuron_gpu &&
+  coreHistory.repeat_voltage_tolerance_passed &&
+  coreHistory.diagnostics.every(row => row.initial_nonzero_synaptic_states === 0 &&
+    row.nonzero_final_excitatory_B_NMDA_states > 0 &&
+    row.nonzero_final_inhibitory_B_states > 0 && row.spike_labels_identical_to_first),
+  'CoreNEURON input, execution or replay verification failed');
+const historyRows = new Map(history.results.map(row => [row.model_id, row]));
+assert.equal(historyRows.size,7,'Seven distinct learned history timings are required');
+for (const row of [...history.results,coreHistory]) {
+  const samples = [...row.latency_samples_ms].sort((a,b) => a-b);
+  assert(samples.length >= 3 && samples.every(value => Number.isFinite(value) && value > 0),
+    'History latency samples must be positive actual measurements');
+  const median = samples.length % 2 ? samples[(samples.length-1)/2] :
+    (samples[samples.length/2-1]+samples[samples.length/2])/2;
+  assert(Math.abs(median-row.latency_median_ms) < 1e-6,'History latency median disagrees with samples');
+  assert(Math.abs(row.history_steps_per_second-2000000/median) < 1e-6,
+    'History rate disagrees with measured latency');
+}
+for (const row of [...axosim.results,...branch.results]) {
+  const measured = historyRows.get(row.profile_id || row.candidate_id);
+  if (measured) assert.equal(measured.checkpoint_sha256,row.checkpoint_sha256,
+    'History throughput must use the existing plotted checkpoint');
+}
 const values = row => ({
   inference_neuron_steps_per_second:row.benchmark.inference.neuron_steps_per_second,
   voltage_sera_mv2:row.metrics.voltage_sera_mv2,
   dynamics_sera_mv2_per_ms2:row.metrics.dynamics_sera_mv2_per_ms2,
   mean_f1_0_5ms:row.metrics.spike_mean_f1_0_5ms,
   f1_5ms:row.metrics.spike_f1_5ms,
+  ...(historyRows.has(row.profile_id || row.candidate_id) ? {
+    history_steps_per_second:historyRows.get(row.profile_id || row.candidate_id).history_steps_per_second,
+  } : {}),
 });
 const raw = Object.fromEntries([
   ...axosim.results.map(row => [row.profile_id, values(row)]),
@@ -35,6 +75,7 @@ const raw = Object.fromEntries([
   ['coreneuron', {
     inference_neuron_steps_per_second:coreRate, voltage_sera_mv2:0,
     dynamics_sera_mv2_per_ms2:0, mean_f1_0_5ms:1, f1_5ms:1,
+    history_steps_per_second:coreHistory.history_steps_per_second,
   }],
 ]);
 const mapped = value => [
@@ -42,15 +83,19 @@ const mapped = value => [
   Math.exp(-value.voltage_sera_mv2/350),
   Math.exp(-value.dynamics_sera_mv2_per_ms2/450),
   value.mean_f1_0_5ms, value.f1_5ms,
+  1-Math.exp(-value.history_steps_per_second/1e6),
 ];
 // Fail closed on stale or invented coordinates before rendering either theme.
 const plotted = [];
 for (const match of figureSource.matchAll(/% series: (\S+)\s+\\RadarPolygon[^\n]+\n\s+\{([^\n]+)\}/g)) {
   const [,id,path] = match;
   assert(raw[id], `No frozen evidence for plotted series ${id}`);
-  const radii = [...path.matchAll(/\((?:90|18|-54|-126|162):([\d.]+)\)/g)].map(point => Number(point[1]));
+  const coordinates = [...path.matchAll(/\((-?\d+):([\d.]+)\)/g)];
+  assert.deepEqual(coordinates.map(point => Number(point[1])),[90,30,-30,-90,-150,150],
+    `${id}: six evenly spaced axis angles are required`);
+  const radii = coordinates.map(point => Number(point[2]));
   const expected = mapped(raw[id]);
-  assert.equal(radii.length,5,`${id}: five axis values are required`);
+  assert.equal(radii.length,6,`${id}: six axis values are required`);
   radii.forEach((value,i) => assert(Math.abs(value-expected[i]) <= 0.00000501,
     `${id}: axis ${i} has ${value}, expected ${expected[i]}`));
   plotted.push(id);
@@ -109,20 +154,23 @@ for (const [theme,palette] of Object.entries(themes)) {
   let vector = readFileSync(svg,'utf8');
   const dimensions = vector.match(/viewBox="([^"]+)"/)[1].split(/\s+/).map(Number);
   // Cairo outlines the actual Inter glyphs. No page-sized background is drawn.
-  vector = vector.replace(/(<svg\b[^>]*>)/, `$1\n<title>AxoSim and baseline comparison (${theme} theme)</title>\n<desc>GRU Small and Mamba Medium, three released Branch-ELM sizes, and CoreNEURON; axes show inference throughput, voltage and dynamics fidelity, Mean F1 0–5 ms, and F1 at 5 ms. Axis mappings and measurements are documented in the technical report appendix.</desc>`);
+  vector = vector.replace(/(<svg\b[^>]*>)/, `$1\n<title>AxoSim and baseline comparison (${theme} theme)</title>\n<desc>GRU Small and Mamba Medium, three released Branch-ELM sizes, and CoreNEURON; axes show inference throughput, voltage and dynamics fidelity, Mean F1 0–5 ms, F1 at 5 ms, and history throughput. Axis mappings and measurements are documented in the technical report appendix.</desc>`);
   writeFileSync(svg,vector);
   variants[theme] = {svg:`/figures/${stem}.svg`,png:`/figures/${stem}.png`,svg_sha256:hash(svg),png_sha256:hash(png),viewBox:dimensions};
 }
 copyFileSync(join(report,'main.pdf'),join(root,'public/report/main.pdf'));
 const data = {
-  axis_order:['Inference throughput','Voltage fidelity','Dynamics fidelity','Mean F1 0–5 ms','F1 @ 5 ms'],
-  mappings:['1-exp(-rate/10000000)','exp(-Voltage SERA/350)','exp(-Dynamics SERA/450)','identity','identity'],
+  axis_order:['Inference throughput','Voltage fidelity','Dynamics fidelity','Mean F1 0–5 ms','F1 @ 5 ms','History throughput'],
+  mappings:['1-exp(-rate/10000000)','exp(-Voltage SERA/350)','exp(-Dynamics SERA/450)','identity','identity','1-exp(-history rate/1000000)'],
   plotted_series:plotted,
   raw_values:raw,
+  history_timing_contracts:{learned:history.contract,coreneuron:coreHistory.contract},
   evidence:[
     {path:axosimEvidence.slice(report.length+1),sha256:hash(axosimEvidence)},
     {path:branchEvidence.slice(report.length+1),sha256:hash(branchEvidence)},
     {path:coreCsv.slice(report.length+1),sha256:hash(coreCsv)},
+    {path:historyEvidence.slice(report.length+1),sha256:hash(historyEvidence)},
+    {path:coreHistoryEvidence.slice(report.length+1),sha256:hash(coreHistoryEvidence)},
   ],
 };
 writeFileSync(join(root,'public/report/central-figure-values.json'),JSON.stringify(data,null,2)+'\n');

@@ -4,14 +4,16 @@
     "Voltage fidelity",
     "Dynamics fidelity",
     "Mean F1 0–5 ms",
-    "F1 @ 5 ms"
+    "F1 @ 5 ms",
+    "History throughput"
   ],
   "mappings": [
     "1-exp(-rate/10000000)",
     "exp(-Voltage SERA/350)",
     "exp(-Dynamics SERA/450)",
     "identity",
-    "identity"
+    "identity",
+    "1-exp(-history rate/1000000)"
   ],
   "plotted_series": [
     "axosim-gru-small",
@@ -27,7 +29,8 @@
       "voltage_sera_mv2": 243.91649056238518,
       "dynamics_sera_mv2_per_ms2": 429.12023099573895,
       "mean_f1_0_5ms": 0.48566264070331117,
-      "f1_5ms": 0.6043874784323391
+      "f1_5ms": 0.6043874784323391,
+      "history_steps_per_second": 3893717.0727733593
     },
     "axosim-gru-medium": {
       "inference_neuron_steps_per_second": 16809548.115202837,
@@ -48,49 +51,108 @@
       "voltage_sera_mv2": 244.46237165362885,
       "dynamics_sera_mv2_per_ms2": 439.001436750375,
       "mean_f1_0_5ms": 0.5201904276120038,
-      "f1_5ms": 0.6406528946697272
+      "f1_5ms": 0.6406528946697272,
+      "history_steps_per_second": 2004554.3073899709
     },
     "branch-elm-memory-1": {
       "inference_neuron_steps_per_second": 788195.9579227073,
       "voltage_sera_mv2": 312.2595432096951,
       "dynamics_sera_mv2_per_ms2": 448.63824067746987,
       "mean_f1_0_5ms": 0.053354804079441764,
-      "f1_5ms": 0.07020933977455716
+      "f1_5ms": 0.07020933977455716,
+      "history_steps_per_second": 28781.907310804723
     },
     "branch-elm-memory-10": {
       "inference_neuron_steps_per_second": 716868.9828880873,
       "voltage_sera_mv2": 309.7612353822578,
       "dynamics_sera_mv2_per_ms2": 448.60434838482246,
       "mean_f1_0_5ms": 0.06551901336073997,
-      "f1_5ms": 0.08838643371017471
+      "f1_5ms": 0.08838643371017471,
+      "history_steps_per_second": 31861.55082705193
     },
     "branch-elm-memory-30": {
       "inference_neuron_steps_per_second": 741780.8604078535,
       "voltage_sera_mv2": 307.41245780155975,
       "dynamics_sera_mv2_per_ms2": 448.5676333969412,
       "mean_f1_0_5ms": 0.07691124442393478,
-      "f1_5ms": 0.10198431010613752
+      "f1_5ms": 0.10198431010613752,
+      "history_steps_per_second": 31294.273449627377
     },
     "branch-elm-memory-50": {
       "inference_neuron_steps_per_second": 734514.2382812842,
       "voltage_sera_mv2": 307.1812130903738,
       "dynamics_sera_mv2_per_ms2": 448.5791357759131,
       "mean_f1_0_5ms": 0.0760653126244524,
-      "f1_5ms": 0.10083632019115889
+      "f1_5ms": 0.10083632019115889,
+      "history_steps_per_second": 31627.409846773666
     },
     "branch-elm-memory-100": {
       "inference_neuron_steps_per_second": 711974.8494525923,
       "voltage_sera_mv2": 307.3371177073618,
       "dynamics_sera_mv2_per_ms2": 448.5598508059241,
       "mean_f1_0_5ms": 0.07323292692644832,
-      "f1_5ms": 0.09753765240258189
+      "f1_5ms": 0.09753765240258189,
+      "history_steps_per_second": 31281.742813022156
     },
     "coreneuron": {
       "inference_neuron_steps_per_second": 851.6951032305248,
       "voltage_sera_mv2": 0,
       "dynamics_sera_mv2_per_ms2": 0,
       "mean_f1_0_5ms": 1,
-      "f1_5ms": 1
+      "f1_5ms": 1,
+      "history_steps_per_second": 31.036397670254715
+    }
+  },
+  "history_timing_contracts": {
+    "learned": {
+      "batch_size": 1,
+      "history_steps": 2000,
+      "native_dt_ms": 1,
+      "input_contacts": 1278,
+      "dtype": "float32",
+      "seed": 20261002,
+      "event_probability_per_contact_step": 0.005,
+      "input_sha256": "1aef729db0d2a0f5a9054e4d16f6328e5b581f581b0ff4504c2a1ba5d536fb2e",
+      "channel_signs": "first639 excitatory +1; last639 inhibitory -1",
+      "warmup_runs": 10,
+      "timing_repeats": 40,
+      "statistic": "median CUDA-event latency; continuous repetitions, synchronized after timing block",
+      "timed_work": "full forward: branching, temporal integration, all-time voltage/spike readouts",
+      "data_loading_and_host_device_transfer": "excluded",
+      "gradient_and_optimizer": "excluded",
+      "gpu_isolation_checked": true
+    },
+    "coreneuron": {
+      "cells": 1,
+      "batch_size": 1,
+      "history_steps": 2000,
+      "native_dt_ms": 1,
+      "native_readout_dt_ms": 1,
+      "internal_dt_ms": 0.025,
+      "biological_integration_dt_ms": 0.025,
+      "seed": 20261002,
+      "event_probability_per_contact_step": 0.005,
+      "input_contacts": 1278,
+      "input_sha256": "1aef729db0d2a0f5a9054e4d16f6328e5b581f581b0ff4504c2a1ba5d536fb2e",
+      "input_exactly_matches_learned_history": true,
+      "input_reference": "/home/davwis/main/workspace/AxoSim-paper-internal/technical-contribution-integration/artifacts/history-speed/learned-model-timings.json",
+      "input_reference_sha256": "c16d0c3af7f846a7ba9b3f1d28bcbc00fea47f74c026585b6db40ba4c091e123",
+      "synapse_policy": "DetAMPANMDA/DetGABA; historical deterministic Use=1 Dep=0 Fac=0 subset",
+      "exc_gmax_scale": 0.925,
+      "inh_gmax_scale": 1,
+      "v_init_mv": -76,
+      "vshift_Ih": 0,
+      "timed_work": "pc.psolve(2000) including CoreNEURON handoff/device transfer, full native-dt soma recording, 1ms voltage interpolation and .125ms peak-derived 1ms spike labels",
+      "excluded": "imports, HOC/mechanism loading, cell/synapse construction, input sampling, PatternStim event setup, finitialize, diagnostics, file output",
+      "warmup_runs": 0,
+      "timing_repeats": 3,
+      "celsius": 6.3,
+      "excitatory_event_count": 6405,
+      "inhibitory_event_count": 6453,
+      "reset_policy": "h.finitialize(-76) per replay, original PatternStim without repeated play; initps resets event index",
+      "statistic": "median synchronous wall time; not CUDA-event kernel-only time",
+      "engine": "CoreNEURON GPU; coreneuron.enable=True, gpu=True; no NEURON fallback",
+      "temperature_policy": "Inherited HOC default as in preserved AxoBench generator and original upstream simulation; no temperature reassignment."
     }
   },
   "evidence": [
@@ -105,6 +167,14 @@
     {
       "path": "data/central-comparison.csv",
       "sha256": "3c15b6040d3571b5eacb30080bdb8fa163f89b855977b684e5d48a2888ae49da"
+    },
+    {
+      "path": "reproducibility/evidence/history-throughput/learned-model-timings.json",
+      "sha256": "c16d0c3af7f846a7ba9b3f1d28bcbc00fea47f74c026585b6db40ba4c091e123"
+    },
+    {
+      "path": "reproducibility/evidence/history-throughput/coreneuron-timing.json",
+      "sha256": "f2096d05c40d325350b0b4f0755ecfebf632cd10120250b37645811875dda579"
     }
   ]
 }
