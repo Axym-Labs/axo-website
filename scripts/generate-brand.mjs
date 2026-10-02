@@ -1,8 +1,8 @@
-/** Reproduce the original Axym A/X/Y/M mark. No network or raster library required. */
+/** Reproduce the Axym four-letter mark: outlined Inter typography and a data-derived purple field. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
-import { deflateSync } from 'node:zlib';
+import sharp from 'sharp';
 
 // MNIST test-image archive, sample 61 (zero-based), handwritten digit 8.
 // Source: https://storage.googleapis.com/cvdf-datasets/mnist/t10k-images-idx3-ubyte.gz
@@ -43,127 +43,56 @@ const sample = Buffer.from(
 );
 if (sample.length !== 28 * 28) throw new Error('MNIST sample must contain exactly 784 pixels');
 
-// Original square glyphs: each segment is rasterized at exactly one native
-// pixel in the 32 × 32 mark, with a 14 × 14-pixel quadrant interior.
-const letterPaths = [
-  [[[1, 13], [1, 3], [4, 0], [9, 0], [12, 3], [12, 13]], [[1, 7], [12, 7]]],
-  [[[0, 0], [13, 13]], [[13, 0], [0, 13]]],
-  [[[0, 0], [6, 6], [13, 0]], [[6, 6], [6, 13]]],
-  [[[0, 13], [0, 0], [6, 6], [13, 0], [13, 13]]],
-];
-function pixelLine(mask, start, end) {
-  let [x, y] = start;
-  const [endX, endY] = end;
-  const dx = Math.abs(endX - x), dy = -Math.abs(endY - y);
-  const stepX = x < endX ? 1 : -1, stepY = y < endY ? 1 : -1;
-  let error = dx + dy;
-  for (;;) {
-    mask[y][x] = true;
-    if (x === endX && y === endY) break;
-    const twiceError = 2 * error;
-    if (twiceError >= dy) { error += dy; x += stepX; }
-    if (twiceError <= dx) { error += dx; y += stepY; }
-  }
-}
-const glyphs = letterPaths.map(paths => {
-  const mask = Array.from({ length: 14 }, () => Array(14).fill(false));
-  for (const path of paths) {
-    for (let i = 1; i < path.length; i++) pixelLine(mask, path[i - 1], path[i]);
-  }
-  return mask;
-});
+// Inter variable Latin, weight 650. Outlined once with fontTools to avoid
+// browser/system font substitution. Glyph coordinates retain the original font units.
+// Copyright 2016 The Inter Project Authors. SIL Open Font License 1.1.
+const letters = {"A":{"path":"M49.2999267578125 0 564.19921875 1490H933.603271484375L1460.4526977539062 0H1144.3495483398438L892.7012939453125 746.2962646484375Q851.5509643554688 875.99755859375 808.3258361816406 1034.49853515625Q765.1007080078125 1192.99951171875 715.0508422851562 1387.4996337890625H776.2515258789062Q727.6516723632812 1191.8995361328125 686.5766296386719 1032.298583984375Q645.5015869140625 872.6976318359375 606.9012451171875 746.2962646484375L363.802978515625 0ZM360.0009765625 357.4984130859375V584.7000732421875H1149.7516479492188V357.4984130859375Z","bounds":[49.2999267578125,0,1460.4526977539062,1490],"capHeight":1490},"X":{"path":"M52.04986572265625 0 661.6005859375 868.1009521484375V651.4989013671875L97.2001953125 1490H429.25323486328125L601.0520629882812 1228.9014892578125Q647.2520141601562 1158.4514770507812 676.8519897460938 1103.0262756347656Q706.4519653320312 1047.60107421875 731.0519409179688 996.4259338378906Q755.6519165039062 945.2507934570312 785.8518676757812 887.5509643554688H712.80078125Q743.9007568359375 944.7008056640625 768.7257385253906 995.8759460449219Q793.5507202148438 1047.0510864257812 823.9256896972656 1102.7512817382812Q854.3006591796875 1158.4514770507812 900.5006103515625 1228.9014892578125L1075.3994140625 1490H1399.3023681640625L843.5521850585938 666.6990966796875V873.7509155273438L1440.802734375 0H1102.99951171875L886.5507202148438 323.0985107421875Q845.4507446289062 385.99853515625 819.3758239746094 430.04852294921875Q793.3009033203125 474.0985107421875 772.1260070800781 514.3233947753906Q750.9511108398438 554.5482788085938 723.1011962890625 605.7479858398438H769.9513549804688Q743.1014404296875 556.1982421875 721.4265441894531 515.7483520507812Q699.7516479492188 475.2984619140625 673.4017333984375 430.698486328125Q647.0518188476562 386.0985107421875 603.9518432617188 323.0985107421875L382.35296630859375 0Z","bounds":[52.04986572265625,0,1440.802734375,1490],"capHeight":1490},"Y":{"path":"M600.4500122070312 0V568.598876953125L49.2999267578125 1490H384.05303955078125L643.0520629882812 1022.9503784179688Q683.601806640625 950.9506225585938 715.1266174316406 881.500732421875Q746.6514282226562 812.0508422851562 780.001220703125 713.5512084960938H711.6514282226562Q744.1011962890625 813.1508178710938 775.0009765625 883.1506958007812Q805.9007568359375 953.1505737304688 844.3505249023438 1022.9503784179688L1096.4993896484375 1490H1429.802490234375L885.8526000976562 568.598876953125V0Z","bounds":[49.2999267578125,0,1429.802490234375,1490],"capHeight":1490},"M":{"path":"M142.198974609375 0V1490H577.803466796875L839.9506225585938 763.3057861328125Q854.7506713867188 718.1554565429688 873.7257385253906 646.3798522949219Q892.7008056640625 574.604248046875 912.5508422851562 491.6285705566406Q932.40087890625 408.65289306640625 949.8508911132812 330.0023193359375Q967.3009033203125 251.35174560546875 978.9508666992188 192.00146484375H922.1004638671875Q934.3004150390625 249.7017822265625 951.5254211425781 327.8023681640625Q968.7504272460938 405.9029541015625 988.6004638671875 489.15362548828125Q1008.4505004882812 572.404296875 1027.4755554199219 645.0048828125Q1046.5006103515625 717.60546875 1061.3006591796875 763.3057861328125L1319.7978515625 1490H1756.40234375V0H1469.9496459960938V727.2466430664062Q1469.9496459960938 775.4967041015625 1471.3496704101562 845.9720153808594Q1472.7496948242188 916.4473266601562 1474.9247131347656 997.6477661132812Q1477.0997314453125 1078.8482055664062 1479.0497436523438 1161.5986328125Q1480.999755859375 1244.3490600585938 1481.5497436523438 1317.6993408203125H1500.6998291015625Q1481.0498657226562 1236.9990234375 1457.7748718261719 1151.5486450195312Q1434.4998779296875 1066.0982666015625 1411.3248596191406 985.6478881835938Q1388.1498413085938 905.197509765625 1367.2498168945312 838.2721862792969Q1346.3497924804688 771.3468627929688 1331.4497680664062 727.2466430664062L1070.4517211914062 0H828.4996337890625L563.401611328125 727.2466430664062Q548.5015869140625 770.796875 527.9265441894531 836.897216796875Q507.35150146484375 902.99755859375 483.7264709472656 982.89794921875Q460.1014404296875 1062.79833984375 436.3264465332031 1148.7987060546875Q412.55145263671875 1234.799072265625 390.25152587890625 1317.6993408203125H413.20166015625Q414.3016357421875 1248.198974609375 416.25164794921875 1166.5485229492188Q418.20166015625 1084.8980712890625 420.1016845703125 1002.8726501464844Q422.001708984375 920.8472290039062 423.6767272949219 848.9969482421875Q425.35174560546875 777.1466674804688 425.35174560546875 727.2466430664062V0Z","bounds":[142.198974609375,0,1756.40234375,1490],"capHeight":1490}};
 
 function ink(x, y) {
-  const sx = Math.max(0, Math.min(27, Math.round(x)));
-  const sy = Math.max(0, Math.min(27, Math.round(y)));
-  return sample[sy * 28 + sx] / 255;
+  x = Math.max(0, Math.min(27, x));
+  y = Math.max(0, Math.min(27, y));
+  const ix = Math.floor(x), iy = Math.floor(y);
+  const jx = Math.min(27, ix + 1), jy = Math.min(27, iy + 1);
+  const u = x - ix, v = y - iy;
+  return ((sample[iy * 28 + ix] * (1 - u) + sample[iy * 28 + jx] * u) * (1 - v)
+    + (sample[jy * 28 + ix] * (1 - u) + sample[jy * 28 + jx] * u) * v) / 255;
 }
 
-// Clockwise rotation, 2× enlargement, plus an offset reflection of the same sample.
-// Deterministic pixel stipple extends the rotated digit into its margins.
-// A gamma lift makes most of the black–purple interpolation visibly purple.
-function field(x, y) {
-  const first = ink(6 + y / 2, 22 - x / 2);
-  const second = ink(21 - y / 1.8, 6 + x / 1.8);
-  const stipple = ((x * 73 + y * 151 + x * y * 29) % 101) / 101;
-  const pattern = Math.min(1, 0.50 * first + 0.30 * second + 0.20 * stipple);
-  return 0.15 + 0.85 * Math.pow(pattern, 0.35);
-}
-
-const grid = Array.from({ length: 32 }, (_, y) => Array.from({ length: 32 }, (_, x) => {
-  const quadrant = Math.floor(y / 16) * 2 + Math.floor(x / 16);
-  const gx = (x % 16) - 1;
-  const gy = (y % 16) - 1;
-  if (gx >= 0 && gx < 14 && gy >= 0 && gy < 14 && glyphs[quadrant][gy][gx]) {
-    return [255, 255, 255];
-  }
-  return [63, 33, 182].map(channel => Math.round(channel * field(x, y)));
-}));
-
+// Purple is the base; a rotated, enlarged handwritten eight and its offset
+// reflection create interlaced shadows. A 24-cell field keeps the texture
+// visible while the smooth white letters remain distinct from the background.
 const groups = new Map();
-grid.forEach((row, y) => row.forEach((rgb, x) => {
-  const color = `#${rgb.map(channel => channel.toString(16).padStart(2, '0')).join('')}`;
-  groups.set(color, `${groups.get(color) ?? ''}M${x} ${y}h1v1h-1z`);
-}));
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="title" shape-rendering="crispEdges"><title id="title">Axym Labs — A X Y M</title><desc>Four square white letters with one-pixel strokes over a purple-biased, a clockwise-rotated MNIST-derived black and Axym-purple pixel field.</desc>${[...groups].map(([color, d]) => `<path fill="${color}" d="${d}"/>`).join('')}</svg>\n`;
-
-function crc32(buffer) {
-  let crc = 0xffffffff;
-  for (const byte of buffer) {
-    crc ^= byte;
-    for (let bit = 0; bit < 8; bit++) crc = (crc >>> 1) ^ (0xedb88320 & -(crc & 1));
+const cells = 24;
+for (let y = 0; y < cells; y++) {
+  for (let x = 0; x < cells; x++) {
+    const xx = (x + 0.5) * 32 / cells, yy = (y + 0.5) * 32 / cells;
+    const first = ink(6 + yy / 2, 22 - xx / 2);
+    const second = ink(21 - yy / 1.8, 6 + xx / 1.8);
+    const detail = ((x * 73 + y * 151 + x * y * 29) % 101) / 101;
+    const shade = Math.max(0, Math.min(1, 0.68 * first + 0.40 * second + 0.12 * (detail - 0.5)));
+    const level = Math.round(Math.max(0.08, 1 - 0.94 * Math.pow(shade, 1.3)) * 10) / 10;
+    const color = '#' + [63, 33, 182].map(channel => Math.round(channel * level).toString(16).padStart(2, '0')).join('');
+    groups.set(color, (groups.get(color) ?? '') + `M${x} ${y}h1v1h-1z`);
   }
-  return (crc ^ 0xffffffff) >>> 0;
 }
+const background = `<g transform="scale(${64 / cells})" shape-rendering="crispEdges">${[...groups].map(([color, d]) => `<path fill="${color}" d="${d}"/>`).join('')}</g>`;
+const capitals = 22.5;
+const foreground = [...'AXYM'].map((letter, i) => {
+  const glyph = letters[letter], scale = capitals / glyph.capHeight;
+  const [left, , right] = glyph.bounds;
+  const cx = i % 2 ? 47 : 17, cy = i < 2 ? 17 : 47;
+  return `<path d="${glyph.path}" transform="translate(${cx - (left + right) * scale / 2} ${cy + capitals / 2}) scale(${scale} ${-scale})"/>`;
+}).join('');
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 64 64" role="img" aria-labelledby="title"><title id="title">Axym Labs — A X Y M</title><desc>Four balanced white sans serif letters on a richly purple square with interlaced black and violet data-derived texture.</desc><defs><clipPath id="edge"><rect width="64" height="64" rx="5"/></clipPath></defs><g clip-path="url(#edge)"><rect width="64" height="64" fill="#3f21b6"/>${background}</g><g fill="#fff">${foreground}</g></svg>\n`;
 
-function pngChunk(type, data) {
-  const label = Buffer.from(type);
-  const result = Buffer.alloc(data.length + 12);
-  result.writeUInt32BE(data.length, 0);
-  label.copy(result, 4);
-  data.copy(result, 8);
-  result.writeUInt32BE(crc32(Buffer.concat([label, data])), data.length + 8);
-  return result;
+async function png(size) {
+  // Supersample curves; the letterforms must remain smooth at small sizes.
+  return sharp(Buffer.from(svg), { density: size * 72 / 16 })
+    .resize(size, size).png({ compressionLevel: 9 }).toBuffer();
 }
-
-function png(size) {
-  // At 16px, rasterize the same paths on its own grid; decimating 32px
-  // would erase odd-column one-pixel stems in the favicon.
-  let sourceGrid = grid;
-  if (size === 16) {
-    const smallGlyphs = letterPaths.map(paths => {
-      const mask = Array.from({ length: 7 }, () => Array(7).fill(false));
-      for (const path of paths) {
-        const scaled = path.map(point => point.map(value => Math.round(value * 6 / 13)));
-        for (let i = 1; i < scaled.length; i++) pixelLine(mask, scaled[i - 1], scaled[i]);
-      }
-      return mask;
-    });
-    sourceGrid = Array.from({ length: 16 }, (_, y) => Array.from({ length: 16 }, (_, x) => {
-      const quadrant = Math.floor(y / 8) * 2 + Math.floor(x / 8);
-      const gx = x % 8, gy = y % 8;
-      if (gx < 7 && gy < 7 && smallGlyphs[quadrant][gy][gx]) return [255, 255, 255];
-      return [63, 33, 182].map(channel => Math.round(channel * field(x * 2, y * 2)));
-    }));
-  }
-  const header = Buffer.alloc(13);
-  header.writeUInt32BE(size, 0);
-  header.writeUInt32BE(size, 4);
-  header[8] = 8;
-  header[9] = 2;
-  const rows = Buffer.alloc(size * (size * 3 + 1));
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      const source = sourceGrid[Math.floor(y * sourceGrid.length / size)][Math.floor(x * sourceGrid.length / size)];
-      source.forEach((channel, c) => { rows[y * (size * 3 + 1) + 1 + x * 3 + c] = channel; });
-    }
-  }
-  return Buffer.concat([Buffer.from('89504e470d0a1a0a', 'hex'), pngChunk('IHDR', header), pngChunk('IDAT', deflateSync(rows)), pngChunk('IEND', Buffer.alloc(0))]);
-}
-
-function ico() {
+async function ico() {
   const sizes = [16, 32, 48];
-  const images = sizes.map(png);
+  const images = await Promise.all(sizes.map(png));
   const header = Buffer.alloc(6 + 16 * sizes.length);
   header.writeUInt16LE(1, 2);
   header.writeUInt16LE(sizes.length, 4);
@@ -173,7 +102,7 @@ function ico() {
     header[position] = size;
     header[position + 1] = size;
     header.writeUInt16LE(1, position + 4);
-    header.writeUInt16LE(24, position + 6);
+    header.writeUInt16LE(32, position + 6);
     header.writeUInt32LE(images[i].length, position + 8);
     header.writeUInt32LE(offset, position + 12);
     offset += images[i].length;
@@ -184,12 +113,13 @@ function ico() {
 const docsRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const roots = process.argv.slice(2);
 if (!roots.length) roots.push(docsRoot);
+const icon = await ico(), largePng = await png(192);
 for (const root of roots) {
   const publicDirectory = resolve(root, 'public');
   mkdirSync(resolve(publicDirectory, 'brand'), { recursive: true });
   writeFileSync(resolve(publicDirectory, 'brand/axym-logo.svg'), svg);
   writeFileSync(resolve(publicDirectory, 'favicon.svg'), svg);
-  writeFileSync(resolve(publicDirectory, 'favicon.ico'), ico());
-  writeFileSync(resolve(publicDirectory, 'brand/axym-logo-192.png'), png(192));
-  console.log(`Generated Axym SVG, 16/32/48px ICO, and 192px PNG in ${publicDirectory}`);
+  writeFileSync(resolve(publicDirectory, 'favicon.ico'), icon);
+  writeFileSync(resolve(publicDirectory, 'brand/axym-logo-192.png'), largePng);
+  console.log(`Generated smooth Axym SVG, 16/32/48px ICO, and 192px PNG in ${publicDirectory}`);
 }
