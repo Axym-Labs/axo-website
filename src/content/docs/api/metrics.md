@@ -3,14 +3,14 @@ title: Local metrics and dataset evaluation
 description: Signatures, parameters, return contracts, and source for local metrics and dataset evaluation.
 section: API reference
 apiGroup: Training and evaluation
-order: 218
+order: 219
 ---
 
 ## Overview
 
 These local utility functions support RMSE, AUC, and dataset evaluation. AxoBench introduces and implements the report's Mean F1, Voltage SERA, and Dynamics SERA protocol; use axosim-evaluate-model for that core metric set. SERA uses squared error; Root-SERA is its square-root presentation.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="metrics-soma-rmse">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.metrics.soma_rmse(prediction: np.ndarray, target: np.ndarray) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/metrics.py#L6-L9)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/metrics.py#L6-L9)
 
 </div>
 
@@ -56,7 +56,7 @@ Compute root-mean-square error from channel 1 of matched prediction and target a
 axosim.metrics.binary_auc(scores: np.ndarray, labels: np.ndarray) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/metrics.py#L12-L34)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/metrics.py#L12-L34)
 
 </div>
 
@@ -90,7 +90,7 @@ Compute rank-based binary ROC AUC with averaged tied ranks; return NaN when eith
 axosim.metrics.spike_auc(prediction: np.ndarray, target: np.ndarray) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/metrics.py#L37-L38)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/metrics.py#L37-L38)
 
 </div>
 
@@ -124,7 +124,7 @@ Compute binary ROC AUC from channel 0 of prediction and target arrays.
 axosim.evaluate.evaluate_dataset(model: BranchELM, dataset: ShardedNeuronIODataset, *, batch_size: int=8, device: str='cpu', soma_units: str='millivolts', y_train_soma_scale: float=DEFAULT_Y_TRAIN_SOMA_SCALE, ignore_start: int=0, mask_mode: str='ignore-start', stitch_burn_in: int=150, soma_affine_calibration: bool=False, pin_memory: bool=False, non_blocking: bool=True) -> dict[str, float | int]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/evaluate.py#L17-L122)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/evaluate.py#L17-L122)
 
 </div>
 
@@ -178,7 +178,7 @@ Evaluate local spike AUC and soma RMSE over dataset batches, with the selected t
 axosim.evaluate.write_metrics(metrics: dict[str, float | int], output: str | Path) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/evaluate.py#L125-L128)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/evaluate.py#L125-L128)
 
 </div>
 

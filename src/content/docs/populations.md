@@ -9,6 +9,8 @@ order: 40
 
 Use this module to fit externally supplied histories with full temporal gradients. Its neuron identities and adaptation parameters persist, but each sequence call starts temporal state afresh and does not route emitted events between neurons. To construct a connected graph with a continuing clock, delay queue and selected streamed observations, start with [simulate a connected population](/connected-populations/).
 
+For complete native-channel histories evaluated by a Mamba model, use [supplied-history scan](/history-scan/). That interface shares weights across neuron rows and reports its actual temporal backend. The Lite interface on this page instead accepts individual contact histories and supplies persistent synaptic and behavior adaptation banks.
+
 ## Construct a Lite population
 
 `AxoSimPopulation` wraps one Lite neuron with persistent morphology assignments, incoming contact routes, and adaptation banks. Download [population_example.py](/examples/population_example.py), or save the following code under that name, so later examples can import `build_population`:

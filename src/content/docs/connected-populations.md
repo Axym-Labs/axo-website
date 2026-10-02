@@ -176,4 +176,6 @@ This topology permits self and parallel edges and any positive population size; 
 
 ## Fit supplied histories separately
 
-Use [supplied population histories](/populations/) when fitting shared/adaptive parameters with full temporal gradients. `AxoSimPopulation` runs externally supplied contact histories and starts sequence state afresh; `ConnectedPopulation` owns delayed closed-loop inference state and discrete thresholded events. The [connected API reference](/api/connected-population/) provides exact constructor, graph, observation and replay signatures.
+Use [supplied population histories](/populations/) when fitting shared/adaptive parameters with full temporal gradients. For Mamba predictions from complete recorded native inputs, use [supplied-history scan](/history-scan/), with the same interface for one neuron or a population sharing weights. The fused temporal scan applies after all inputs are known; future recurrent inputs in a live connected simulation still require causal rollout.
+
+`AxoSimPopulation` runs externally supplied contact histories and starts sequence state afresh; `ConnectedPopulation` owns delayed closed-loop inference state and discrete thresholded events. The [connected API reference](/api/connected-population/) provides exact constructor, graph, observation and replay signatures.

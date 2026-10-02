@@ -2,7 +2,7 @@
   "schema_version": 1,
   "source": {
     "repository": "https://github.com/Axym-Labs/axosim",
-    "commit": "856207f6de56dbf8e3f754a142581a7c050eeac6"
+    "commit": "0f546adfd8fc8530ff8ec0952ce7a1367616cf24"
   },
   "exports": [
     {
@@ -70,6 +70,18 @@
       "module": "activity",
       "implementation": "HomeostaticThresholdController",
       "page": "api/activity"
+    },
+    {
+      "name": "HistoryScanBackend",
+      "module": "history_scan",
+      "implementation": "HistoryScanBackend",
+      "page": "api/history-scan"
+    },
+    {
+      "name": "HistoryScanResult",
+      "module": "history_scan",
+      "implementation": "HistoryScanResult",
+      "page": "api/history-scan"
     },
     {
       "name": "AXOSIM_MODEL_PROFILES",
@@ -190,6 +202,12 @@
       "module": "connected_population",
       "implementation": "create_population",
       "page": "api/connected-population"
+    },
+    {
+      "name": "scan_histories",
+      "module": "history_scan",
+      "implementation": "scan_histories",
+      "page": "api/history-scan"
     }
   ],
   "pages": [
@@ -209,6 +227,12 @@
       "slug": "api/interfaces",
       "modules": [
         "interfaces"
+      ]
+    },
+    {
+      "slug": "api/history-scan",
+      "modules": [
+        "history_scan"
       ]
     },
     {
@@ -1474,6 +1498,139 @@
       "bases": [
         "nn.Module"
       ]
+    },
+    {
+      "module": "history_scan",
+      "name": "HistoryScanBackend",
+      "kind": "class",
+      "page": "api/history-scan",
+      "line": 14,
+      "end_line": 19,
+      "signature": "HistoryScanBackend(name: str, parallel: bool, reason: str) -> None",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "str",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "parallel",
+          "type": "bool",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "reason",
+          "type": "str",
+          "default": null,
+          "kind": "positional_or_keyword"
+        }
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "type": "str",
+          "default": null
+        },
+        {
+          "name": "parallel",
+          "type": "bool",
+          "default": null
+        },
+        {
+          "name": "reason",
+          "type": "str",
+          "default": null
+        }
+      ],
+      "methods": [],
+      "bases": [],
+      "inherited_fields": []
+    },
+    {
+      "module": "history_scan",
+      "name": "HistoryScanResult",
+      "kind": "class",
+      "page": "api/history-scan",
+      "line": 23,
+      "end_line": 27,
+      "signature": "HistoryScanResult(prediction: torch.Tensor, backend: HistoryScanBackend) -> None",
+      "parameters": [
+        {
+          "name": "prediction",
+          "type": "torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "backend",
+          "type": "HistoryScanBackend",
+          "default": null,
+          "kind": "positional_or_keyword"
+        }
+      ],
+      "fields": [
+        {
+          "name": "prediction",
+          "type": "torch.Tensor",
+          "default": null
+        },
+        {
+          "name": "backend",
+          "type": "HistoryScanBackend",
+          "default": null
+        }
+      ],
+      "methods": [],
+      "bases": [],
+      "inherited_fields": []
+    },
+    {
+      "module": "history_scan",
+      "name": "scan_histories",
+      "kind": "function",
+      "page": "api/history-scan",
+      "line": 30,
+      "end_line": 94,
+      "signature": "scan_histories(model: BranchOfficialMamba, inputs: torch.Tensor, *, morphology_indices: torch.Tensor | None=None, neuron_batch_size: int | None=None, require_parallel: bool=True) -> HistoryScanResult",
+      "parameters": [
+        {
+          "name": "model",
+          "type": "BranchOfficialMamba",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "inputs",
+          "type": "torch.Tensor",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "morphology_indices",
+          "type": "torch.Tensor | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "neuron_batch_size",
+          "type": "int | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "require_parallel",
+          "type": "bool",
+          "default": "True",
+          "kind": "keyword_only",
+          "resolved_default": true
+        }
+      ],
+      "fields": [],
+      "methods": []
     },
     {
       "module": "model_family",

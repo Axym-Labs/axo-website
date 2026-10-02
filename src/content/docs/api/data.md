@@ -3,14 +3,14 @@ title: Trace datasets
 description: Signatures, parameters, return contracts, and source for trace datasets.
 section: API reference
 apiGroup: Data
-order: 216
+order: 217
 ---
 
 ## Overview
 
 NeuronIO shards store inputs (samples, time, channels), targets (samples, time, 2), and sample identities. Dataset samples expose one (time, channels) input and one (time, 2) target. get_batch returns batched NumPy arrays. Window datasets preserve sample identity while selecting native time windows; preserve context boundaries when splitting data.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="data-neuroniosample">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.data.NeuronIOSample(sample_id: str, inputs: np.ndarray, targets: np.ndarray)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L14-L17)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L14-L17)
 
 </div>
 
@@ -55,7 +55,7 @@ Constructor fields are retained as read-only attributes.
 axosim.data.ShardedNeuronIODataset(root: str | Path, *, shuffle: bool=False, seed: int=0, shuffle_mode: Literal['sample', 'shard']='sample', cache_shards: int=0)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L29-L222)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L29-L222)
 
 </div>
 
@@ -98,7 +98,7 @@ Deterministic reader for pre-sharded NeuronIO-style NPZ files.
 axosim.data.ShardedNeuronIODataset.__len__() -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L69-L70)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L69-L70)
 
 </div>
 
@@ -120,7 +120,7 @@ Return the number of indexed samples.
 axosim.data.ShardedNeuronIODataset.reshuffle(seed: int) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L72-L80)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L72-L80)
 
 </div>
 
@@ -152,7 +152,7 @@ Reorder the enabled sampling index using the supplied seed.
 axosim.data.ShardedNeuronIODataset.__getitem__(index: int) -> NeuronIOSample
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L82-L91)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L82-L91)
 
 </div>
 
@@ -183,7 +183,7 @@ Returns NeuronIOSample with sample_id, inputs (T,C), and targets (T,2).
 axosim.data.ShardedNeuronIODataset.get_batch(indices: range | list[int]) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L93-L101)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L93-L101)
 
 </div>
 
@@ -219,7 +219,7 @@ Returns (inputs,targets) NumPy arrays with shapes (B,T,C) and (B,T,2). Selected 
 axosim.data.ShardedNeuronIODataset.get_sample_ids(indices: range | list[int]) -> list[str]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L103-L104)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L103-L104)
 
 </div>
 
@@ -248,7 +248,7 @@ Return the sample identities associated with the selected indices.
 axosim.data.ShardedNeuronIODataset.get_optional_array_batch(name: str, indices: range | list[int]) -> np.ndarray | None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L106-L115)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L106-L115)
 
 </div>
 
@@ -279,7 +279,7 @@ Return an optional per-sample array from NPZ shards when present.
 axosim.data.ShardedNeuronIODataset.get_shard_sequence_length(shard_idx: int) -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L117-L130)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L117-L130)
 
 </div>
 
@@ -310,7 +310,7 @@ Read the input time dimension without materializing a shard array.
 axosim.data.DeterministicWindowDataset(base: ShardedNeuronIODataset, *, window_size: int, stride: int | None=None, start_offset: int=0)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L225-L280)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L225-L280)
 
 </div>
 
@@ -348,7 +348,7 @@ Enumerate fixed-size windows from another NeuronIO-style dataset.
 axosim.data.DeterministicWindowDataset.__len__() -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L259-L260)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L259-L260)
 
 </div>
 
@@ -370,7 +370,7 @@ Return the number of indexed samples.
 axosim.data.DeterministicWindowDataset.__getitem__(index: int) -> NeuronIOSample
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L262-L270)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L262-L270)
 
 </div>
 
@@ -399,7 +399,7 @@ Read one sample and its input/target contract.
 axosim.data.DeterministicWindowDataset.get_batch(indices: range | list[int]) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L272-L277)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L272-L277)
 
 </div>
 
@@ -433,7 +433,7 @@ Read the requested input and target arrays as a batch.
 axosim.data.DeterministicWindowDataset.get_sample_ids(indices: range | list[int]) -> list[str]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L279-L280)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L279-L280)
 
 </div>
 
@@ -464,7 +464,7 @@ Return the sample identities associated with the selected indices.
 axosim.data.RandomFullTraceWindowDataset(base: ShardedNeuronIODataset, *, window_size: int=500, start_offset: int=500, samples_per_epoch: int | None=None, batch_size: int=8, shard_reuse_batches: int=1, sequence_length: int | None=None, seed: int=0, cache_full_shards: bool=True)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L283-L399)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L283-L399)
 
 </div>
 
@@ -513,7 +513,7 @@ Sample deterministic random windows from cached full-trace shards.
 axosim.data.RandomFullTraceWindowDataset.__len__() -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L328-L329)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L328-L329)
 
 </div>
 
@@ -535,7 +535,7 @@ Return the number of indexed samples.
 axosim.data.RandomFullTraceWindowDataset.reshuffle(seed: int) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L331-L354)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L331-L354)
 
 </div>
 
@@ -567,7 +567,7 @@ Reorder the enabled sampling index using the supplied seed.
 axosim.data.RandomFullTraceWindowDataset.__getitem__(index: int) -> NeuronIOSample
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L356-L364)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L356-L364)
 
 </div>
 
@@ -596,7 +596,7 @@ Read one sample and its input/target contract.
 axosim.data.RandomFullTraceWindowDataset.get_batch(indices: range | list[int]) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L366-L383)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L366-L383)
 
 </div>
 
@@ -630,7 +630,7 @@ Read the requested input and target arrays as a batch.
 axosim.data.RandomFullTraceWindowDataset.get_sample_ids(indices: range | list[int]) -> list[str]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L385-L386)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L385-L386)
 
 </div>
 
@@ -661,7 +661,7 @@ Return the sample identities associated with the selected indices.
 axosim.data.OfficialStyleFullTraceWindowDataset(base: ShardedNeuronIODataset, *, window_size: int=500, start_offset: int=500, samples_per_epoch: int | None=None, batch_size: int=8, file_load_fraction: float=0.3, source_simulations: int=128, sequence_length: int | None=None, seed: int=0, cache_full_shards: bool=True)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L402-L543)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L402-L543)
 
 </div>
 
@@ -712,7 +712,7 @@ Deterministic port of the official NeuronIO file/simulation/time sampling policy
 axosim.data.OfficialStyleFullTraceWindowDataset.__len__() -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L451-L452)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L451-L452)
 
 </div>
 
@@ -734,7 +734,7 @@ Return the number of indexed samples.
 axosim.data.OfficialStyleFullTraceWindowDataset.reshuffle(seed: int) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L454-L482)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L454-L482)
 
 </div>
 
@@ -766,7 +766,7 @@ Reorder the enabled sampling index using the supplied seed.
 axosim.data.OfficialStyleFullTraceWindowDataset.__getitem__(index: int) -> NeuronIOSample
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L484-L492)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L484-L492)
 
 </div>
 
@@ -795,7 +795,7 @@ Read one sample and its input/target contract.
 axosim.data.OfficialStyleFullTraceWindowDataset.get_batch(indices: range | list[int]) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L494-L511)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L494-L511)
 
 </div>
 
@@ -829,7 +829,7 @@ Read the requested input and target arrays as a batch.
 axosim.data.OfficialStyleFullTraceWindowDataset.get_sample_ids(indices: range | list[int]) -> list[str]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L513-L514)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L513-L514)
 
 </div>
 
@@ -860,7 +860,7 @@ Return the sample identities associated with the selected indices.
 axosim.data.write_demo_shards(root: str | Path, *, shard_count: int=2, samples_per_shard: int=8, time_steps: int=32, input_dim: int=64, seed: int=0) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L546-L571)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L546-L571)
 
 </div>
 
@@ -922,7 +922,7 @@ with TemporaryDirectory() as directory:
 axosim.data.repack_shards_as_npy(input_root: str | Path, output_root: str | Path, *, input_dtype: np.dtype | type=np.int8) -> list[Path]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/data.py#L574-L617)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/data.py#L574-L617)
 
 </div>
 

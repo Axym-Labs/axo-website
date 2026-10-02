@@ -3,14 +3,14 @@ title: Synaptic efficacy banks
 description: Signatures, parameters, return contracts, and source for synaptic efficacy banks.
 section: API reference
 apiGroup: Populations
-order: 213
+order: 214
 ---
 
 ## Overview
 
 An efficacy bank contains one positive multiplier for each retained incoming E/I contact slot. The retained width is 2*ceil(channels_per_role/recurrent_stride). W8 storage quantizes deviation around a positive baseline with one shared scale; dequantization reconstructs floating-point multipliers.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="synapse-quantizedsynapticefficacybank">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.synapse.QuantizedSynapticEfficacyBank(values: torch.Tensor, scale: torch.Tensor, channels_per_role: int, recurrent_stride: int, baseline: float = 1.0)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/synapse.py#L11-L33)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/synapse.py#L11-L33)
 
 </div>
 
@@ -51,11 +51,11 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="synapse-quantizedsynapticefficacybank-population-size"><code>QuantizedSynapticEfficacyBank.population_size: int</code></dt>
-<dd>Number of persistent neurons. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/synapse.py#L21-L22">Source</a></dd>
+<dd>Number of persistent neurons. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/synapse.py#L21-L22">Source</a></dd>
 <dt id="synapse-quantizedsynapticefficacybank-values-per-neuron"><code>QuantizedSynapticEfficacyBank.values_per_neuron: int</code></dt>
-<dd>Logical retained-contact multiplier count per neuron. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/synapse.py#L25-L26">Source</a></dd>
+<dd>Logical retained-contact multiplier count per neuron. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/synapse.py#L25-L26">Source</a></dd>
 <dt id="synapse-quantizedsynapticefficacybank-storage-bytes"><code>QuantizedSynapticEfficacyBank.storage_bytes: int</code></dt>
-<dd>Physical bank storage, including quantized values and reconstruction scales. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/synapse.py#L29-L33">Source</a></dd>
+<dd>Physical bank storage, including quantized values and reconstruction scales. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/synapse.py#L29-L33">Source</a></dd>
 </dl>
 
 </section>
@@ -70,7 +70,7 @@ Constructor fields are retained as read-only attributes.
 axosim.synapse.retained_synaptic_efficacies_per_neuron(*, channels_per_role: int, recurrent_stride: int) -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/synapse.py#L36-L50)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/synapse.py#L36-L50)
 
 </div>
 
@@ -101,7 +101,7 @@ Return compact E/I contact slots for the declared routed topology.
 axosim.synapse.quantize_synaptic_efficacies(efficacies: torch.Tensor, *, channels_per_role: int, recurrent_stride: int, baseline: float=1.0) -> QuantizedSynapticEfficacyBank
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/synapse.py#L53-L97)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/synapse.py#L53-L97)
 
 </div>
 
@@ -159,7 +159,7 @@ torch.Size([2, 8]) torch.int8
 axosim.synapse.dequantize_synaptic_efficacies(bank: QuantizedSynapticEfficacyBank) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/synapse.py#L100-L109)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/synapse.py#L100-L109)
 
 </div>
 

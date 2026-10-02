@@ -3,14 +3,14 @@ title: NeuronIO conversion
 description: Signatures, parameters, return contracts, and source for neuronio conversion.
 section: API reference
 apiGroup: Compatibility
-order: 217
+order: 218
 ---
 
 ## Overview
 
 The converter reads raw NeuronIO teacher traces and creates deterministic shards. Standard soma normalization clips at -55 mV and applies (v_mV-bias)*scale with bias=-67.7 and scale=0.1. Preserve conversion metadata: normalized targets cannot recover clipped spike peaks.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="neuronio-raw-rawneuronio">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.neuronio_raw.RawNeuronIO(inputs: np.ndarray, spikes: np.ndarray, soma: np.ndarray, metadata: dict[str, object])
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/neuronio_raw.py#L17-L21)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/neuronio_raw.py#L17-L21)
 
 </div>
 
@@ -57,7 +57,7 @@ Constructor fields are retained as read-only attributes.
 axosim.neuronio_raw.parse_neuronio_pickle(path: str | Path) -> RawNeuronIO
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/neuronio_raw.py#L24-L64)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/neuronio_raw.py#L24-L64)
 
 </div>
 
@@ -86,7 +86,7 @@ Parse a public NeuronIO simulation pickle into `(sim, time, channel)` arrays.
 axosim.neuronio_raw.convert_neuronio_pickles(input_path: str | Path, output_dir: str | Path, *, shard_size: int=128, window_size: int | None=None, window_stride: int | None=None, ignore_start: int=0, y_soma_threshold: float=DEFAULT_Y_SOMA_THRESHOLD, y_train_soma_bias: float=DEFAULT_Y_TRAIN_SOMA_BIAS, y_train_soma_scale: float=DEFAULT_Y_TRAIN_SOMA_SCALE) -> list[Path]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/neuronio_raw.py#L67-L132)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/neuronio_raw.py#L67-L132)
 
 </div>
 
@@ -131,7 +131,7 @@ Convert raw NeuronIO pickle files to deterministic `.npz` shards.
 axosim.neuronio_raw.create_neuronio_input_type(num_input: int) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/neuronio_raw.py#L135-L139)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/neuronio_raw.py#L135-L139)
 
 </div>
 
@@ -163,7 +163,7 @@ Build an E/I sign vector with positive excitatory channels followed by negative 
 axosim.neuronio_raw.normalize_soma(soma: np.ndarray, threshold: float=DEFAULT_Y_SOMA_THRESHOLD, bias: float=DEFAULT_Y_TRAIN_SOMA_BIAS, scale: float=DEFAULT_Y_TRAIN_SOMA_SCALE) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/neuronio_raw.py#L142-L150)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/neuronio_raw.py#L142-L150)
 
 </div>
 

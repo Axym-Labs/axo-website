@@ -8,12 +8,12 @@ function files(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap(item => item.isDirectory() ? files(join(dir, item.name)) : [join(dir, item.name)]);
 }
 const pages = files(dist).filter(path => path.endsWith('.html') && !path.endsWith('/404.html'));
-const required = ['/', '/installation/', '/models/', '/connected-populations/', '/inference/', '/training/', '/populations/', '/sparse-events/', '/adaptation/', '/cuda-graphs/', '/evaluation/', '/datasets/', '/reproducibility/', '/troubleshooting/', '/api/', '/api/connected-population/'];
+const required = ['/', '/installation/', '/models/', '/connected-populations/', '/inference/', '/history-scan/', '/training/', '/populations/', '/sparse-events/', '/adaptation/', '/cuda-graphs/', '/evaluation/', '/datasets/', '/reproducibility/', '/troubleshooting/', '/api/', '/api/connected-population/', '/api/history-scan/'];
 for (const path of required) assert(existsSync(join(dist, path, 'index.html')), `Missing page: ${path}`);
 assert.equal(readFileSync(join(dist, 'CNAME'), 'utf8').trim(), 'axo.axym.org');
 assert(existsSync(join(dist, 'pagefind/pagefind.js')), 'Search index missing');
 assert(statSync(join(dist, 'report/main.pdf')).size > 100000, 'Report missing or empty');
-assert(existsSync(join(dist, 'figures/central-comparison.svg')), 'Central figure missing');
+assert(existsSync(join(dist, 'figures/central-comparison.svg')), 'Comparison figure missing');
 assert(readFileSync(join(dist, 'sitemap.xml'), 'utf8').includes('https://axo.axym.org/api/'), 'API omitted from sitemap');
 const inventory = JSON.parse(readFileSync(join(dist, 'api-inventory.json'), 'utf8'));
 const expectedExports = [
@@ -28,6 +28,7 @@ const expectedExports = [
   'quantize_mixed_neuron_behavior_parameters', 'create_axosim_profile',
   'ConnectedPopulation', 'ExplicitConnectome', 'InputEvents', 'PopulationFrame',
   'ProceduralConnectome', 'create_population',
+  'HistoryScanBackend', 'HistoryScanResult', 'scan_histories',
 ];
 assert.deepEqual(inventory.exports.map(item => item.name).sort(), expectedExports.sort(), 'Public export inventory differs from the supported source surface');
 assert.equal(new Set(inventory.exports.map(item => item.name)).size, expectedExports.length, 'Duplicate export entries');

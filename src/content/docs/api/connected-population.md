@@ -10,7 +10,7 @@ order: 201
 
 create_population constructs an actually connected Lite inference simulator from an explicitly supplied model and graph. Persistent state, thresholded recurrent events, native time and delayed deliveries belong to this object. Read the connected population guide for the complete lifecycle. AxoSimPopulation remains the separate supplied-history autograd interface. Reference and fused-neuron backends support the same explicit or deterministic procedural graphs; the historical specialized quantized large-population runtime has a different topology and timing contract.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="connected-population-inputevents">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.connected_population.InputEvents(neurons: Sequence[int] | torch.Tensor, channels: Sequence[int] | torch.Tensor, values: Sequence[float] | torch.Tensor)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L48-L68)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L48-L68)
 
 </div>
 
@@ -57,7 +57,7 @@ Constructor fields are retained as read-only attributes.
 axosim.connected_population.ExplicitConnectome(sources: Sequence[int] | torch.Tensor, targets: Sequence[int] | torch.Tensor, channels: Sequence[int] | torch.Tensor, delays: Sequence[int] | torch.Tensor, source_roles: Sequence[int] | torch.Tensor, efficacies: Sequence[float] | torch.Tensor)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L72-L110)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L72-L110)
 
 </div>
 
@@ -90,7 +90,7 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="connected-population-explicitconnectome-edge-count"><code>ExplicitConnectome.edge_count: int</code></dt>
-<dd>Number of retained edges, including parallel edges. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L108-L110">Source</a></dd>
+<dd>Number of retained edges, including parallel edges. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L108-L110">Source</a></dd>
 </dl>
 
 </section>
@@ -105,7 +105,7 @@ Constructor fields are retained as read-only attributes.
 axosim.connected_population.ProceduralConnectome(n: int, out_degree: int, input_dim: int, neuron_roles: Sequence[int] | torch.Tensor, channel_roles: Sequence[int] | torch.Tensor, delay_ms: int = 4, seed: int = 0, efficacy: float = 1.0)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L114-L184)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L114-L184)
 
 </div>
 
@@ -142,7 +142,7 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="connected-population-proceduralconnectome-edge-count"><code>ProceduralConnectome.edge_count: int</code></dt>
-<dd>Exact retained edge count; implicit topology does not discard edges. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L168-L170">Source</a></dd>
+<dd>Exact retained edge count; implicit topology does not discard edges. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L168-L170">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -161,7 +161,7 @@ Constructor fields are retained as read-only attributes.
 axosim.connected_population.ProceduralConnectome.materialize() -> ExplicitConnectome
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L172-L184)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L172-L184)
 
 </div>
 
@@ -190,7 +190,7 @@ Allocates O(E) CPU edge-index arrays for the equivalent exact explicit multigrap
 axosim.connected_population.PopulationFrame(time_ms: int, valid: bool, signals: dict[str, torch.Tensor], neuron_ids: dict[str, torch.Tensor])
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L199-L212)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L199-L212)
 
 </div>
 
@@ -227,7 +227,7 @@ Constructor fields are retained as read-only attributes.
 axosim.connected_population.ConnectedPopulation(*, model: AdaptiveSupportP4Surrogate, n: int, connectome: ExplicitConnectome | ProceduralConnectome, morphology_indices: Sequence[int] | torch.Tensor, input_encoding: Literal['signed', 'channel'], channel_roles: Sequence[int] | torch.Tensor | None=None, stream_inputs: StreamInput | None=None, stream_outputs: Mapping[str, Sequence[int] | torch.Tensor | Literal['all']] | None=None, backend: Literal['reference', 'fused']='reference', spike_threshold: float | Sequence[float] | torch.Tensor=0.0, sample_every_ms: int=1, soma_transform: tuple[float, float] | None=None, runtime_coefficients: torch.Tensor | None=None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L221-L905)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L221-L905)
 
 </div>
 
@@ -289,13 +289,13 @@ Use create_population with the same keyword arguments. The reference backend exe
 
 <dl class="api-attributes">
 <dt id="connected-population-connectedpopulation-connectome"><code>ConnectedPopulation.connectome: ExplicitConnectome | ProceduralConnectome</code></dt>
-<dd>Owned graph-schema copy; editing it cannot change validated runtime topology. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L489-L491">Source</a></dd>
+<dd>Owned graph-schema copy; editing it cannot change validated runtime topology. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L489-L491">Source</a></dd>
 <dt id="connected-population-connectedpopulation-morphology-indices"><code>ConnectedPopulation.morphology_indices: torch.Tensor</code></dt>
-<dd>Integer class assignments into the model&#x27;s ordered morphology vocabulary; one per batch item or persistent neuron. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L494-L496">Source</a></dd>
+<dd>Integer class assignments into the model&#x27;s ordered morphology vocabulary; one per batch item or persistent neuron. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L494-L496">Source</a></dd>
 <dt id="connected-population-connectedpopulation-efficacies"><code>ConnectedPopulation.efficacies: torch.Tensor</code></dt>
-<dd>Positive floating-point contact multipliers, shaped by the retained topology. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L499-L501">Source</a></dd>
+<dd>Positive floating-point contact multipliers, shaped by the retained topology. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L499-L501">Source</a></dd>
 <dt id="connected-population-connectedpopulation-thresholds"><code>ConnectedPopulation.thresholds: torch.Tensor</code></dt>
-<dd>Owned ``(n,)`` snapshot of native spike-logit thresholds. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L504-L506">Source</a></dd>
+<dd>Owned ``(n,)`` snapshot of native spike-logit thresholds. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L504-L506">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -321,7 +321,7 @@ Use create_population with the same keyword arguments. The reference backend exe
 axosim.connected_population.ConnectedPopulation.set_efficacies(edge_ids: Sequence[int] | torch.Tensor, values: Sequence[float] | torch.Tensor) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L508-L538)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L508-L538)
 
 </div>
 
@@ -357,7 +357,7 @@ edge_ids is a unique integer selection into E retained edges; values is an equal
 axosim.connected_population.ConnectedPopulation.set_thresholds(values: float | Sequence[float] | torch.Tensor) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L540-L547)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L540-L547)
 
 </div>
 
@@ -391,7 +391,7 @@ values is a finite scalar or (n,) vector in spike-logit coordinates. Changes fut
 axosim.connected_population.ConnectedPopulation.step(inputs: InputEvents | torch.Tensor | None=None) -> PopulationFrame
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L710-L719)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L710-L719)
 
 </div>
 
@@ -425,7 +425,7 @@ Advances one native 1-ms sample. Optional sparse InputEvents or dense inputs (n,
 axosim.connected_population.ConnectedPopulation.run(duration_ms: int) -> Iterator[PopulationFrame]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L721-L739)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L721-L739)
 
 </div>
 
@@ -459,7 +459,7 @@ Consuming the iterator advances exactly duration_ms native steps unless iteratio
 axosim.connected_population.ConnectedPopulation.observe(*, neurons: Sequence[int] | torch.Tensor | None=None, signals: Sequence[str] | None=None) -> PopulationFrame
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L742-L783)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L742-L783)
 
 </div>
 
@@ -495,7 +495,7 @@ Copies selected signals without advancing time. Without arguments, uses the outp
 axosim.connected_population.ConnectedPopulation.state_dict() -> dict[str, object]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L827-L854)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L827-L854)
 
 </div>
 
@@ -522,7 +522,7 @@ Returns owned runtime tensors: learned state, partial patch, forecasts, delayed 
 axosim.connected_population.ConnectedPopulation.load_state_dict(state: Mapping[str, object]) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L857-L901)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L857-L901)
 
 </div>
 
@@ -556,7 +556,7 @@ Checks identity, time/validity, complete tensor schema, shapes, dtypes, finite v
 axosim.connected_population.ConnectedPopulation.reset() -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L903-L905)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L903-L905)
 
 </div>
 
@@ -585,7 +585,7 @@ Restores construction-time state, zero clock, empty delayed queue, initial forec
 axosim.connected_population.create_population(*, model: AdaptiveSupportP4Surrogate, n: int, connectome: ExplicitConnectome | ProceduralConnectome, morphology_indices: Sequence[int] | torch.Tensor, input_encoding: Literal['signed', 'channel'], channel_roles: Sequence[int] | torch.Tensor | None=None, stream_inputs: StreamInput | None=None, stream_outputs: Mapping[str, Sequence[int] | torch.Tensor | Literal['all']] | None=None, backend: Literal['reference', 'fused']='reference', spike_threshold: float | Sequence[float] | torch.Tensor=0.0, sample_every_ms: int=1, soma_transform: tuple[float, float] | None=None, runtime_coefficients: torch.Tensor | None=None) -> ConnectedPopulation
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connected_population.py#L908-L949)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connected_population.py#L908-L949)
 
 </div>
 

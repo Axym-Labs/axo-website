@@ -10,7 +10,7 @@ order: 202
 
 The public differentiable population combines one Lite model with persistent neuron identities, morphology assignments, contact routes, and adaptation banks. AxoSimMamba aliases AxoMamba; AxoSimLite aliases AdaptiveSupportP4Surrogate; AxoSimGRU currently aliases CausalBlockForecastModel. Named GRU profiles are built by create_axosim_profile and return AxoTemporalModel.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="interfaces-axosimpopulation">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.interfaces.AxoSimPopulation(neuron: AxoSimLite, *, morphology_indices: torch.Tensor, contact_branch_indices: torch.Tensor)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L24-L470)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L24-L470)
 
 </div>
 
@@ -47,11 +47,11 @@ neuron is a Lite model. morphology_indices is integer (N,); contact_branch_indic
 
 <dl class="api-attributes">
 <dt id="interfaces-axosimpopulation-population-size"><code>AxoSimPopulation.population_size: int</code></dt>
-<dd>Number of persistent neurons. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L79-L80">Source</a></dd>
+<dd>Number of persistent neurons. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L79-L80">Source</a></dd>
 <dt id="interfaces-axosimpopulation-runtime-coefficients-per-neuron"><code>AxoSimPopulation.runtime_coefficients_per_neuron: int</code></dt>
-<dd>Width of the direct behavior coefficients for one neuron. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L83-L84">Source</a></dd>
+<dd>Width of the direct behavior coefficients for one neuron. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L83-L84">Source</a></dd>
 <dt id="interfaces-axosimpopulation-synaptic-efficacies-per-neuron"><code>AxoSimPopulation.synaptic_efficacies_per_neuron: int</code></dt>
-<dd>Number of independently mutable incoming contacts per neuron. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L87-L88">Source</a></dd>
+<dd>Number of independently mutable incoming contacts per neuron. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L87-L88">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -98,7 +98,7 @@ torch.Size([2, 3, 12, 2])
 axosim.interfaces.AxoSimPopulation.adaptation_parameters() -> Iterator[nn.Parameter]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L90-L93)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L90-L93)
 
 </div>
 
@@ -123,7 +123,7 @@ Yields behavior_adapter, morphology_adapter, and synaptic_log_efficacy in that o
 axosim.interfaces.AxoSimPopulation.trainable_adaptation_parameters() -> Iterator[nn.Parameter]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L95-L100)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L95-L100)
 
 </div>
 
@@ -148,7 +148,7 @@ Yields only adaptation parameters whose requires_grad flag is true.
 axosim.interfaces.AxoSimPopulation.enable_adaptation_training(*, behavior: bool=True, morphology: bool=True, synaptic: bool=True) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L102-L113)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L102-L113)
 
 </div>
 
@@ -184,7 +184,7 @@ Freezes shared Lite parameters, then independently enables or freezes behavior_a
 axosim.interfaces.AxoSimPopulation.enable_full_training() -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L115-L117)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L115-L117)
 
 </div>
 
@@ -211,7 +211,7 @@ Enables requires_grad on every module parameter, including shared neuron weights
 axosim.interfaces.AxoSimPopulation.synaptic_efficacies(synaptic_log_efficacy: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L119-L134)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L119-L134)
 
 </div>
 
@@ -245,7 +245,7 @@ Returns exp(log_efficacy) with shape (N,K). Signed contact event amplitudes carr
 axosim.interfaces.AxoSimPopulation.forward(contact_inputs: torch.Tensor, *, synaptic_log_efficacy: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L198-L211)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L198-L211)
 
 </div>
 
@@ -281,7 +281,7 @@ contact_inputs is (N,T,K). Optional synaptic_log_efficacy is (N,K) and replaces 
 axosim.interfaces.AxoSimPopulation.forward_sparse_contacts(event_summary_indices: torch.Tensor, event_contact_indices: torch.Tensor, event_values: torch.Tensor, *, time_steps: int, synaptic_log_efficacy: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L213-L327)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L213-L327)
 
 </div>
 
@@ -323,7 +323,7 @@ The three event tensors are equal-length one-dimensional arrays. Summary indices
 axosim.interfaces.AxoSimPopulation.forward_batch(contact_inputs: torch.Tensor, *, synaptic_log_efficacy: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L329-L392)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L329-L392)
 
 </div>
 
@@ -359,7 +359,7 @@ contact_inputs is (B,N,T,K). Independent examples share population identities an
 axosim.interfaces.AxoSimPopulation.forward_tokens(tokens: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L394-L418)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L394-L418)
 
 </div>
 
@@ -393,7 +393,7 @@ tokens is (N,blocks,token_dim), already encoded at P4 cadence. Return shape is (
 axosim.interfaces.AxoSimPopulation.forward_token_batch(tokens: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/interfaces.py#L420-L470)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/interfaces.py#L420-L470)
 
 </div>
 

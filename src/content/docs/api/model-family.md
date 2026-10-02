@@ -3,14 +3,14 @@ title: Model profiles
 description: Signatures, parameters, return contracts, and source for model profiles.
 section: API reference
 apiGroup: Models
-order: 203
+order: 204
 ---
 
 ## Overview
 
 Named profiles provide fixed architecture recipes. Construction returns an untrained model. Mamba profiles use AxoMamba; GRU profiles use AxoTemporalModel with a GRU temporal core. Preserve the backend and saved model kind when loading weights.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="model-family-axosimmodelprofile">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.model_family.AxoSimModelProfile(profile_id: str, public_name: str, family: ModelFamily, model_dim: int, state_dim: int, num_layers: int, head_dim: int, mamba_update_normalization: Literal['none', 'fixed_rms'] = 'none')
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/model_family.py#L25-L35)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/model_family.py#L25-L35)
 
 </div>
 
@@ -65,7 +65,7 @@ Constructor fields are retained as read-only attributes.
 axosim.model_family.AXOSIM_MODEL_PROFILES: Mapping[str, AxoSimModelProfile]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/model_family.py#L86-L88)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/model_family.py#L86-L88)
 
 </div>
 
@@ -83,7 +83,7 @@ Read-only mapping from exact profile IDs to architecture recipes. Use create_axo
 axosim.model_family.create_axosim_profile(profile_id: str, *, base_config: AxoMambaConfig | None=None, use_pytorch_fallback: bool=False) -> nn.Module
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/model_family.py#L91-L126)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/model_family.py#L91-L126)
 
 </div>
 

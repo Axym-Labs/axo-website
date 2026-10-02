@@ -3,14 +3,14 @@ title: Behavior banks and population runners
 description: Signatures, parameters, return contracts, and source for behavior banks and population runners.
 section: API reference
 apiGroup: Populations
-order: 212
+order: 213
 ---
 
 ## Overview
 
 Behavior-bank quantization stores component scales and W4/W8 values separately from the shared model. Quantization is a deployment transformation, while training uses floating-point parameters. The low-level GRU population runners and deployment records expose the contracts used for direct runtime construction.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="population-quantizedneuronbehaviorbank">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.population.QuantizedNeuronBehaviorBank(values: torch.Tensor, scales: torch.Tensor, bits: int, logical_parameters_per_neuron: int)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L20-L33)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L20-L33)
 
 </div>
 
@@ -49,7 +49,7 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="population-quantizedneuronbehaviorbank-storage-bytes"><code>QuantizedNeuronBehaviorBank.storage_bytes: int</code></dt>
-<dd>Physical bank storage, including quantized values and reconstruction scales. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L29-L33">Source</a></dd>
+<dd>Physical bank storage, including quantized values and reconstruction scales. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L29-L33">Source</a></dd>
 </dl>
 
 </section>
@@ -64,7 +64,7 @@ Constructor fields are retained as read-only attributes.
 axosim.population.MixedQuantizedNeuronBehaviorBank(values: torch.Tensor, scales: torch.Tensor, byte_slices: dict[str, slice], component_bits: dict[str, int], logical_parameters_per_neuron: int)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L37-L51)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L37-L51)
 
 </div>
 
@@ -93,7 +93,7 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="population-mixedquantizedneuronbehaviorbank-storage-bytes"><code>MixedQuantizedNeuronBehaviorBank.storage_bytes: int</code></dt>
-<dd>Physical bank storage, including quantized values and reconstruction scales. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L47-L51">Source</a></dd>
+<dd>Physical bank storage, including quantized values and reconstruction scales. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L47-L51">Source</a></dd>
 </dl>
 
 </section>
@@ -108,7 +108,7 @@ Constructor fields are retained as read-only attributes.
 axosim.population.quantize_neuron_behavior_parameters(parameters: torch.Tensor, *, adaptation: NeuronBehaviorAdaptation, bits: int) -> QuantizedNeuronBehaviorBank
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L54-L108)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L54-L108)
 
 </div>
 
@@ -143,7 +143,7 @@ parameters is floating-point (N,adaptation.parameter_count). bits is 4 or 8. W4 
 axosim.population.quantize_mixed_neuron_behavior_parameters(parameters: torch.Tensor, *, adaptation: NeuronBehaviorAdaptation, component_bits: dict[str, int]) -> MixedQuantizedNeuronBehaviorBank
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L111-L183)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L111-L183)
 
 </div>
 
@@ -178,7 +178,7 @@ parameters is floating-point (N,adaptation.parameter_count). component_bits decl
 axosim.population.dequantize_neuron_behavior_parameters(bank: QuantizedNeuronBehaviorBank, *, adaptation: NeuronBehaviorAdaptation) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L186-L215)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L186-L215)
 
 </div>
 
@@ -212,7 +212,7 @@ Materialize a low-bit behavior bank for validation or export.
 axosim.population.dequantize_mixed_neuron_behavior_parameters(bank: MixedQuantizedNeuronBehaviorBank, *, adaptation: NeuronBehaviorAdaptation) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L218-L251)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L218-L251)
 
 </div>
 
@@ -246,7 +246,7 @@ Materialize a component-wise W4/W8 adaptation bank.
 axosim.population.pack_neuron_behavior_adapter(adapter: NeuronBehaviorAdapter, *, adaptation: NeuronBehaviorAdaptation) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L341-L393)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L341-L393)
 
 </div>
 
@@ -277,7 +277,7 @@ Pack a trained behavior adapter into the population ABI.
 axosim.population.GRUPopulationRunner(model: AxoTemporalModel, *, population: int, chunk_size: int, compile_step: bool=True, compile_mode: str='reduce-overhead', population_embedding_adapters: torch.Tensor | None=None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1344-L1556)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1344-L1556)
 
 </div>
 
@@ -304,13 +304,13 @@ Compiled persistent-state inference for a shared-weight GRU population.
 
 <dl class="api-attributes">
 <dt id="population-grupopulationrunner-recurrent-state"><code>GRUPopulationRunner.recurrent_state: torch.Tensor</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1444-L1447">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1444-L1447">Source</a></dd>
 <dt id="population-grupopulationrunner-patch-sum"><code>GRUPopulationRunner.patch_sum: torch.Tensor | None</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1450-L1451">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1450-L1451">Source</a></dd>
 <dt id="population-grupopulationrunner-patch-correction"><code>GRUPopulationRunner.patch_correction: torch.Tensor | None</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1454-L1455">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1454-L1455">Source</a></dd>
 <dt id="population-grupopulationrunner-patch-position"><code>GRUPopulationRunner.patch_position: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1458-L1459">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1458-L1459">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -329,7 +329,7 @@ Compiled persistent-state inference for a shared-weight GRU population.
 axosim.population.GRUPopulationRunner.step(event_indices: torch.Tensor, event_values: torch.Tensor, morphology_indices: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1461-L1526)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1461-L1526)
 
 </div>
 
@@ -364,7 +364,7 @@ Advance the population runner by one declared simulation step.
 axosim.population.GRUBranchPopulationRunner(model: AxoTemporalModel, *, population: int, chunk_size: int, compile_step: bool=True, compile_mode: str='reduce-overhead', population_embedding_adapters: torch.Tensor | None=None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1559-L1701)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1559-L1701)
 
 </div>
 
@@ -405,7 +405,7 @@ Bases: `GRUPopulationRunner`.
 axosim.population.GRUBranchPopulationRunner.step(branch_inputs: torch.Tensor, morphology_indices: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1619-L1701)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1619-L1701)
 
 </div>
 
@@ -438,7 +438,7 @@ Advance the population runner by one declared simulation step.
 axosim.population.AdaptedGRUBranchPopulationRunner(model: AxoTemporalModel, *, population: int, chunk_size: int, behavior_parameters: torch.Tensor | QuantizedNeuronBehaviorBank | MixedQuantizedNeuronBehaviorBank, adaptation: NeuronBehaviorAdaptation, compile_step: bool=True, compile_mode: str='max-autotune-no-cudagraphs')
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1704-L1995)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1704-L1995)
 
 </div>
 
@@ -481,7 +481,7 @@ Bases: `GRUBranchPopulationRunner`.
 axosim.population.AdaptedGRUBranchPopulationRunner.step(branch_inputs: torch.Tensor, morphology_indices: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1920-L1995)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1920-L1995)
 
 </div>
 
@@ -514,7 +514,7 @@ Advance the population runner by one declared simulation step.
 axosim.population.GroupedGRUPopulationRunner(model: AxoTemporalModel, *, population: int, groups: int, chunk_size: int, compile_step: bool=True, compile_mode: str='reduce-overhead')
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L1998-L2270)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L1998-L2270)
 
 </div>
 
@@ -541,9 +541,9 @@ Compiled GRU inference with one recurrent parameter set per group.
 
 <dl class="api-attributes">
 <dt id="population-groupedgrupopulationrunner-resident-parameter-count"><code>GroupedGRUPopulationRunner.resident_parameter_count: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L2112-L2116">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L2112-L2116">Source</a></dd>
 <dt id="population-groupedgrupopulationrunner-patch-position"><code>GroupedGRUPopulationRunner.patch_position: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L2119-L2120">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L2119-L2120">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -563,7 +563,7 @@ Compiled GRU inference with one recurrent parameter set per group.
 axosim.population.GroupedGRUPopulationRunner.step(event_indices: torch.Tensor, event_values: torch.Tensor, morphology_indices: torch.Tensor) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L2122-L2191)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L2122-L2191)
 
 </div>
 
@@ -596,7 +596,7 @@ Advance the population runner by one declared simulation step.
 axosim.population.GroupedGRUPopulationRunner.load_group_recurrent_parameters(group: int, source: AxoTemporalModel) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/population.py#L2193-L2229)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/population.py#L2193-L2229)
 
 </div>
 
@@ -632,7 +632,7 @@ Load one group's recurrent weights from a compatible GRU model.
 axosim.deployment.NeuronBehaviorAdaptation(width: int, branches: int, outputs: int, matrix_rank: int, adapt_recurrent: bool, branch_token_offset: bool = False)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L7-L135)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L7-L135)
 
 </div>
 
@@ -663,17 +663,17 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="deployment-neuronbehavioradaptation-tensor-shapes"><code>NeuronBehaviorAdaptation.tensor_shapes: dict[str, tuple[int, ...]]</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L18-L77">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L18-L77">Source</a></dd>
 <dt id="deployment-neuronbehavioradaptation-tensor-slices"><code>NeuronBehaviorAdaptation.tensor_slices: dict[str, slice]</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L80-L89">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L80-L89">Source</a></dd>
 <dt id="deployment-neuronbehavioradaptation-parameter-counts"><code>NeuronBehaviorAdaptation.parameter_counts: dict[str, int]</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L92-L116">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L92-L116">Source</a></dd>
 <dt id="deployment-neuronbehavioradaptation-parameter-count"><code>NeuronBehaviorAdaptation.parameter_count: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L119-L120">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L119-L120">Source</a></dd>
 <dt id="deployment-neuronbehavioradaptation-adapted-components"><code>NeuronBehaviorAdaptation.adapted_components: frozenset[str]</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L123-L124">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L123-L124">Source</a></dd>
 <dt id="deployment-neuronbehavioradaptation-shared-components"><code>NeuronBehaviorAdaptation.shared_components: frozenset[str]</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L127-L135">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L127-L135">Source</a></dd>
 </dl>
 
 </section>
@@ -688,7 +688,7 @@ Constructor fields are retained as read-only attributes.
 axosim.deployment.PopulationDeploymentMeasurement(population: int, adapted_parameters_per_neuron: int, adapted_components: tuple[str, ...], shared_components: tuple[str, ...], unique_adaptation_per_neuron: bool, adaptation_quality_validated: bool, shared_frozen_base: bool, output_materialized: bool, routing_feeds_model: bool, model_latency_ms: float, routing_latency_ms: float | None, complete_stack_latency_ms: float | None, model_peak_bytes: int, routing_peak_bytes: int | None, complete_stack_peak_bytes: int | None, local_source_identity_retained: bool = False, long_range_source_identity_retained: bool = False, morphology_assignment_independent: bool = False, activity_generation_mode: str = 'unknown', activity_dynamics_validated: bool = False, adaptation_execution_mode: str = 'direct', adaptation_reference_envelope_validated: bool = False, forecast_block_size: int = 1, complete_block_latency_ms: float | None = None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L139-L165)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L139-L165)
 
 </div>
 
@@ -763,7 +763,7 @@ Constructor fields are retained as read-only attributes.
 axosim.deployment.PopulationDeploymentTarget(headline_population: int, benchmark_population: int, biological_step_ms: float, adaptation: NeuronBehaviorAdaptation, shared_frozen_base: bool, output_materialization_required: bool, network_routing_required: bool, local_source_identity_required: bool, long_range_source_identity_required: bool, independent_morphology_assignment_required: bool, activity_dynamics_validation_required: bool, quota_activity_allowed: bool, forecast_block_size: int, firing_rate: float, fanout: int)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L169-L376)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L169-L376)
 
 </div>
 
@@ -812,7 +812,7 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="deployment-populationdeploymenttarget-adapted-parameters-per-neuron"><code>PopulationDeploymentTarget.adapted_parameters_per_neuron: int</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L189-L190">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L189-L190">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -832,7 +832,7 @@ Constructor fields are retained as read-only attributes.
 axosim.deployment.PopulationDeploymentTarget.validation_errors(measurement: PopulationDeploymentMeasurement) -> tuple[str, ...]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L192-L340)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L192-L340)
 
 </div>
 
@@ -861,7 +861,7 @@ Return violated deployment requirements for the supplied measurement.
 axosim.deployment.PopulationDeploymentTarget.evaluate(measurement: PopulationDeploymentMeasurement) -> dict[str, int | float | bool]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/deployment.py#L342-L376)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/deployment.py#L342-L376)
 
 </div>
 

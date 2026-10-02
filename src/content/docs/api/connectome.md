@@ -3,14 +3,14 @@ title: Connectome routing
 description: Signatures, parameters, return contracts, and source for connectome routing.
 section: API reference
 apiGroup: Populations
-order: 214
+order: 215
 ---
 
 ## Overview
 
 The routing modules construct procedural contact identities and delayed event delivery. ProceduralMorphologyConnectomeRouter retains morphology-conditioned branch targeting. Population IDs, local/long-range source identities, delay slots, and route topology must agree with the declared workload; procedural routing does not imply an empirical connectome.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="connectome-delaybucket">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.connectome.DelayBucket(delay_steps: int, first_fanout_offset: int, event_count_per_source: int, local_targets: bool)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L24-L35)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L24-L35)
 
 </div>
 
@@ -49,7 +49,7 @@ Constructor fields are retained as read-only attributes.
 
 <dl class="api-attributes">
 <dt id="connectome-delaybucket-fanout-offsets"><code>DelayBucket.fanout_offsets: tuple[int, ...]</code></dt>
-<dd><a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L31-L35">Source</a></dd>
+<dd><a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L31-L35">Source</a></dd>
 </dl>
 
 </section>
@@ -64,7 +64,7 @@ Constructor fields are retained as read-only attributes.
 axosim.connectome.procedural_delay_buckets(*, fanout: int, local_fanout: int, minimum_delay_steps: int=1) -> tuple[DelayBucket, ...]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L38-L71)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L38-L71)
 
 </div>
 
@@ -97,7 +97,7 @@ Partition fanout offsets into local/long-range delay classes.
 axosim.connectome.compact_active_sources(outputs: torch.Tensor, *, threshold: float=0.0) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L74-L86)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L74-L86)
 
 </div>
 
@@ -128,7 +128,7 @@ Return source-sorted int32 indices whose scalar output fires.
 axosim.connectome.build_typed_tile_pools(source_is_inhibitory: torch.Tensor, physical_to_logical: torch.Tensor, *, spatial_tile_neurons: int) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L89-L164)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L89-L164)
 
 </div>
 
@@ -161,7 +161,7 @@ Build invertible logical E/I ranks within every spatial tile.
 axosim.connectome.build_external_count_branch_bank(*, slot_map: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, max_event_count: int=32, channels_per_type: int | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L167-L261)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L167-L261)
 
 </div>
 
@@ -200,7 +200,7 @@ Precompute exact branch currents for a consecutive event pattern.
 axosim.connectome.TrajectoryExternalBranchDrive(*, trajectories: torch.Tensor, branch_bank: torch.Tensor, logical_ids: torch.Tensor, morphology: torch.Tensor, seed: int, excitatory_gain: float, inhibitory_gain: float, slot_map: torch.Tensor | None=None, morphology_gain: torch.Tensor | None=None, feature_gain: torch.Tensor | None=None, synapses_per_branch: int | None=None, block_rows: int=8, block_branches: int=128)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L1514-L1768)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L1514-L1768)
 
 </div>
 
@@ -253,7 +253,7 @@ Exact native-time trajectory drive at the learned branch boundary.
 axosim.connectome.TrajectoryExternalBranchDrive.materialize(step: int, *, output: torch.Tensor | None=None, add_existing: bool=False, existing: torch.Tensor | None=None, recurrent_bits: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L1642-L1768)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L1642-L1768)
 
 </div>
 
@@ -292,7 +292,7 @@ Materialize exact branch currents for one native timestep.
 axosim.connectome.ProceduralBinaryChannelConnectomeRouter(contract: LargePopulationSimulationContract, *, slot_map: torch.Tensor, morphology: torch.Tensor, source_is_inhibitory: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, physical_to_logical: torch.Tensor | None=None, logical_to_physical: torch.Tensor | None=None, route_block_size: int=512, route_num_warps: int=4, branch_block_rows: int=8, branch_block_size: int=128)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L1771-L2083)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L1771-L2083)
 
 </div>
 
@@ -333,7 +333,7 @@ Exact delayed routing in AxoBench's signed binary-channel space.
 
 <dl class="api-attributes">
 <dt id="connectome-proceduralbinarychannelconnectomerouter-queue-bytes"><code>ProceduralBinaryChannelConnectomeRouter.queue_bytes: int</code></dt>
-<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L1952-L1953">Source</a></dd>
+<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L1952-L1953">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -354,7 +354,7 @@ Exact delayed routing in AxoBench's signed binary-channel space.
 axosim.connectome.ProceduralBinaryChannelConnectomeRouter.current_channel_bits(current_slot: int) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L1955-L1957)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L1955-L1957)
 
 </div>
 
@@ -381,7 +381,7 @@ axosim.connectome.ProceduralBinaryChannelConnectomeRouter.current_channel_bits(c
 axosim.connectome.ProceduralBinaryChannelConnectomeRouter.current_inputs(current_slot: int, *, output: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L1959-L2018)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L1959-L2018)
 
 </div>
 
@@ -412,7 +412,7 @@ Convert one exact binary channel slot to learned branch currents.
 axosim.connectome.ProceduralBinaryChannelConnectomeRouter.clear_and_route(active_sources: torch.Tensor, *, current_slot: int, clear_consumed: bool=True) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2020-L2079)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2020-L2079)
 
 </div>
 
@@ -447,7 +447,7 @@ Clear a consumed slot and OR new delayed recurrent channels.
 axosim.connectome.ProceduralExactBranchConnectomeRouter(*args, external_trajectories: torch.Tensor | None=None, external_seed: int=0, external_excitatory_gain: float=1.0, external_inhibitory_gain: float=1.0, max_external_event_count: int=32, **kwargs)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2086-L2277)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2086-L2277)
 
 </div>
 
@@ -478,7 +478,7 @@ Bases: `ProceduralBinaryChannelConnectomeRouter`.
 
 <dl class="api-attributes">
 <dt id="connectome-proceduralexactbranchconnectomerouter-queue-bytes"><code>ProceduralExactBranchConnectomeRouter.queue_bytes: int</code></dt>
-<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2150-L2156">Source</a></dd>
+<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2150-L2156">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -498,7 +498,7 @@ Bases: `ProceduralBinaryChannelConnectomeRouter`.
 axosim.connectome.ProceduralExactBranchConnectomeRouter.current_inputs(current_slot: int, *, output: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2158-L2179)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2158-L2179)
 
 </div>
 
@@ -527,7 +527,7 @@ axosim.connectome.ProceduralExactBranchConnectomeRouter.current_inputs(current_s
 axosim.connectome.ProceduralExactBranchConnectomeRouter.clear_and_route(active_sources: torch.Tensor, *, current_slot: int, current_step: int | None=None, clear_consumed: bool=True) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2181-L2277)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2181-L2277)
 
 </div>
 
@@ -564,7 +564,7 @@ Clear consumed state and route each binary channel at most once.
 axosim.connectome.ProceduralMorphologyConnectomeRouter(contract: LargePopulationSimulationContract, *, slot_map: torch.Tensor, morphology: torch.Tensor, source_is_inhibitory: torch.Tensor, morphology_gain: torch.Tensor, feature_gain: torch.Tensor, synapses_per_branch: int, physical_to_logical: torch.Tensor | None=None, logical_to_physical: torch.Tensor | None=None, route_block_size: int=512, route_num_warps: int=4)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2280-L2606)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2280-L2606)
 
 </div>
 
@@ -615,7 +615,7 @@ Persistent delay-queue router for the scalable connectome control.
 axosim.connectome.ProceduralMorphologyConnectomeRouter.current_inputs(current_slot: int) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2447-L2449)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2447-L2449)
 
 </div>
 
@@ -642,7 +642,7 @@ axosim.connectome.ProceduralMorphologyConnectomeRouter.current_inputs(current_sl
 axosim.connectome.ProceduralMorphologyConnectomeRouter.clear_and_route(active_sources: torch.Tensor, *, current_slot: int, clear_consumed: bool=True, touched_offsets: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2451-L2577)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2451-L2577)
 
 </div>
 
@@ -677,7 +677,7 @@ Clear a consumed queue slot and schedule new delayed events.
 axosim.connectome.ProceduralMorphologyConnectomeRouter.clear_recorded_branches(touched_offsets: torch.Tensor) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2579-L2602)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2579-L2602)
 
 </div>
 
@@ -711,7 +711,7 @@ Clear branch queue destinations recorded by event delivery.
 axosim.connectome.ProceduralUniqueChannelConnectomeRouter(*args, synaptic_efficacy_bank: QuantizedSynapticEfficacyBank | None=None, external_trajectories: torch.Tensor | None=None, external_seed: int=0, external_excitatory_gain: float=1.0, external_inhibitory_gain: float=1.0, max_external_event_count: int=32, allow_repeated_source_target_pairs: bool=False, **kwargs)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2609-L3007)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2609-L3007)
 
 </div>
 
@@ -746,9 +746,9 @@ Bases: `ProceduralMorphologyConnectomeRouter`.
 
 <dl class="api-attributes">
 <dt id="connectome-proceduraluniquechannelconnectomerouter-queue-bytes"><code>ProceduralUniqueChannelConnectomeRouter.queue_bytes: int</code></dt>
-<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2756-L2757">Source</a></dd>
+<dd>Physical storage allocated to the delayed event queue. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2756-L2757">Source</a></dd>
 <dt id="connectome-proceduraluniquechannelconnectomerouter-recorded-offsets-per-source"><code>ProceduralUniqueChannelConnectomeRouter.recorded_offsets_per_source: int</code></dt>
-<dd>Candidate offset slots needed to record one routed source. <a href="https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2760-L2779">Source</a></dd>
+<dd>Candidate offset slots needed to record one routed source. <a href="https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2760-L2779">Source</a></dd>
 </dl>
 
 <p class="api-label">Methods</p>
@@ -767,7 +767,7 @@ Bases: `ProceduralMorphologyConnectomeRouter`.
 axosim.connectome.ProceduralUniqueChannelConnectomeRouter.clear_and_route(active_sources: torch.Tensor, *, current_slot: int, current_step: int | None=None, clear_consumed: bool=True, touched_offsets: torch.Tensor | None=None, unique_rows: torch.Tensor | None=None, unique_row_flags: torch.Tensor | None=None, unique_row_count: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/connectome.py#L2781-L3007)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/connectome.py#L2781-L3007)
 
 </div>
 

@@ -4,14 +4,12 @@
     "Voltage fidelity",
     "Dynamics fidelity",
     "Mean F1 0–5 ms",
-    "F1 @ 5 ms",
     "History throughput"
   ],
   "mappings": [
     "1-exp(-rate/10000000)",
     "exp(-Voltage SERA/350)",
     "exp(-Dynamics SERA/450)",
-    "identity",
     "identity",
     "1-exp(-history rate/1000000)"
   ],
@@ -29,78 +27,68 @@
       "voltage_sera_mv2": 243.91649056238518,
       "dynamics_sera_mv2_per_ms2": 429.12023099573895,
       "mean_f1_0_5ms": 0.48566264070331117,
-      "f1_5ms": 0.6043874784323391,
-      "history_steps_per_second": 3893717.0727733593
+      "history_input_ms_per_second": 3893717.0727733593
     },
     "axosim-gru-medium": {
       "inference_neuron_steps_per_second": 16809548.115202837,
       "voltage_sera_mv2": 241.61011504637912,
       "dynamics_sera_mv2_per_ms2": 429.1291077489296,
-      "mean_f1_0_5ms": 0.5218307006885379,
-      "f1_5ms": 0.6405832320777642
+      "mean_f1_0_5ms": 0.5218307006885379
     },
     "axosim-mamba-small": {
       "inference_neuron_steps_per_second": 18859383.924793877,
       "voltage_sera_mv2": 244.29470849594742,
       "dynamics_sera_mv2_per_ms2": 428.7244101065912,
-      "mean_f1_0_5ms": 0.4535833333333334,
-      "f1_5ms": 0.5569999999999999
+      "mean_f1_0_5ms": 0.4535833333333334
     },
     "axosim-mamba-medium": {
       "inference_neuron_steps_per_second": 4396416.038103703,
       "voltage_sera_mv2": 244.46237165362885,
       "dynamics_sera_mv2_per_ms2": 439.001436750375,
       "mean_f1_0_5ms": 0.5201904276120038,
-      "f1_5ms": 0.6406528946697272,
-      "history_steps_per_second": 2004554.3073899709
+      "history_input_ms_per_second": 2004554.3073899709
     },
     "branch-elm-memory-1": {
       "inference_neuron_steps_per_second": 788195.9579227073,
       "voltage_sera_mv2": 312.2595432096951,
       "dynamics_sera_mv2_per_ms2": 448.63824067746987,
       "mean_f1_0_5ms": 0.053354804079441764,
-      "f1_5ms": 0.07020933977455716,
-      "history_steps_per_second": 28781.907310804723
+      "history_input_ms_per_second": 28781.907310804723
     },
     "branch-elm-memory-10": {
       "inference_neuron_steps_per_second": 716868.9828880873,
       "voltage_sera_mv2": 309.7612353822578,
       "dynamics_sera_mv2_per_ms2": 448.60434838482246,
       "mean_f1_0_5ms": 0.06551901336073997,
-      "f1_5ms": 0.08838643371017471,
-      "history_steps_per_second": 31861.55082705193
+      "history_input_ms_per_second": 31861.55082705193
     },
     "branch-elm-memory-30": {
       "inference_neuron_steps_per_second": 741780.8604078535,
       "voltage_sera_mv2": 307.41245780155975,
       "dynamics_sera_mv2_per_ms2": 448.5676333969412,
       "mean_f1_0_5ms": 0.07691124442393478,
-      "f1_5ms": 0.10198431010613752,
-      "history_steps_per_second": 31294.273449627377
+      "history_input_ms_per_second": 31294.273449627377
     },
     "branch-elm-memory-50": {
       "inference_neuron_steps_per_second": 734514.2382812842,
       "voltage_sera_mv2": 307.1812130903738,
       "dynamics_sera_mv2_per_ms2": 448.5791357759131,
       "mean_f1_0_5ms": 0.0760653126244524,
-      "f1_5ms": 0.10083632019115889,
-      "history_steps_per_second": 31627.409846773666
+      "history_input_ms_per_second": 31627.409846773666
     },
     "branch-elm-memory-100": {
       "inference_neuron_steps_per_second": 711974.8494525923,
       "voltage_sera_mv2": 307.3371177073618,
       "dynamics_sera_mv2_per_ms2": 448.5598508059241,
       "mean_f1_0_5ms": 0.07323292692644832,
-      "f1_5ms": 0.09753765240258189,
-      "history_steps_per_second": 31281.742813022156
+      "history_input_ms_per_second": 31281.742813022156
     },
     "coreneuron": {
       "inference_neuron_steps_per_second": 851.6951032305248,
       "voltage_sera_mv2": 0,
       "dynamics_sera_mv2_per_ms2": 0,
       "mean_f1_0_5ms": 1,
-      "f1_5ms": 1,
-      "history_steps_per_second": 31.036397670254715
+      "history_input_ms_per_second": 31.036397670254715
     }
   },
   "history_timing_contracts": {

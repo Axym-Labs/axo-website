@@ -64,9 +64,8 @@ const values = row => ({
   voltage_sera_mv2:row.metrics.voltage_sera_mv2,
   dynamics_sera_mv2_per_ms2:row.metrics.dynamics_sera_mv2_per_ms2,
   mean_f1_0_5ms:row.metrics.spike_mean_f1_0_5ms,
-  f1_5ms:row.metrics.spike_f1_5ms,
   ...(historyRows.has(row.profile_id || row.candidate_id) ? {
-    history_steps_per_second:historyRows.get(row.profile_id || row.candidate_id).history_steps_per_second,
+    history_input_ms_per_second:historyRows.get(row.profile_id || row.candidate_id).history_steps_per_second,
   } : {}),
 });
 const raw = Object.fromEntries([
@@ -74,16 +73,16 @@ const raw = Object.fromEntries([
   ...branch.results.map(row => [row.candidate_id, values(row)]),
   ['coreneuron', {
     inference_neuron_steps_per_second:coreRate, voltage_sera_mv2:0,
-    dynamics_sera_mv2_per_ms2:0, mean_f1_0_5ms:1, f1_5ms:1,
-    history_steps_per_second:coreHistory.history_steps_per_second,
+    dynamics_sera_mv2_per_ms2:0, mean_f1_0_5ms:1,
+    history_input_ms_per_second:coreHistory.history_steps_per_second,
   }],
 ]);
 const mapped = value => [
   1-Math.exp(-value.inference_neuron_steps_per_second/1e7),
   Math.exp(-value.voltage_sera_mv2/350),
   Math.exp(-value.dynamics_sera_mv2_per_ms2/450),
-  value.mean_f1_0_5ms, value.f1_5ms,
-  1-Math.exp(-value.history_steps_per_second/1e6),
+  value.mean_f1_0_5ms,
+  1-Math.exp(-value.history_input_ms_per_second/1e6),
 ];
 // Fail closed on stale or invented coordinates before rendering either theme.
 const plotted = [];
@@ -91,11 +90,11 @@ for (const match of figureSource.matchAll(/% series: (\S+)\s+\\RadarPolygon[^\n]
   const [,id,path] = match;
   assert(raw[id], `No frozen evidence for plotted series ${id}`);
   const coordinates = [...path.matchAll(/\((-?\d+):([\d.]+)\)/g)];
-  assert.deepEqual(coordinates.map(point => Number(point[1])),[90,30,-30,-90,-150,150],
-    `${id}: six evenly spaced axis angles are required`);
+  assert.deepEqual(coordinates.map(point => Number(point[1])),[90,18,-54,-126,162],
+    `${id}: five evenly spaced axis angles are required`);
   const radii = coordinates.map(point => Number(point[2]));
   const expected = mapped(raw[id]);
-  assert.equal(radii.length,6,`${id}: six axis values are required`);
+  assert.equal(radii.length,5,`${id}: five axis values are required`);
   radii.forEach((value,i) => assert(Math.abs(value-expected[i]) <= 0.00000501,
     `${id}: axis ${i} has ${value}, expected ${expected[i]}`));
   plotted.push(id);
@@ -103,7 +102,7 @@ for (const match of figureSource.matchAll(/% series: (\S+)\s+\\RadarPolygon[^\n]
 assert.deepEqual([...plotted].sort(), [
   'axosim-gru-small','axosim-mamba-medium','branch-elm-memory-1',
   'branch-elm-memory-30','branch-elm-memory-100','coreneuron',
-].sort(), 'Central figure series coverage changed');
+].sort(), 'Comparison figure series coverage changed');
 const learnedRows = [...axosim.results,...branch.results];
 assert(learnedRows.every(row => row.benchmark.contract.batch_size === 32 &&
   row.benchmark.contract.window_steps === 500 &&
@@ -113,7 +112,7 @@ const evaluationTraces = [...axosim.results[0].evaluation_trace_ids].sort();
 assert.equal(evaluationTraces.length,120,'Expected 120 confirmation traces');
 for (const row of learnedRows) {
   assert.deepEqual([...row.evaluation_trace_ids].sort(),evaluationTraces,
-    'Central figure metrics must use the same held-out confirmation traces');
+    'Comparison figure metrics must use the same held-out confirmation traces');
 }
 // This command is an explicit publication sync, not part of the static site
 // build. Recompile first so the downloadable PDF cannot retain stale authors,
@@ -154,14 +153,14 @@ for (const [theme,palette] of Object.entries(themes)) {
   let vector = readFileSync(svg,'utf8');
   const dimensions = vector.match(/viewBox="([^"]+)"/)[1].split(/\s+/).map(Number);
   // Cairo outlines the actual Inter glyphs. No page-sized background is drawn.
-  vector = vector.replace(/(<svg\b[^>]*>)/, `$1\n<title>AxoSim and baseline comparison (${theme} theme)</title>\n<desc>GRU Small and Mamba Medium, three released Branch-ELM sizes, and CoreNEURON; axes show inference throughput, voltage and dynamics fidelity, Mean F1 0–5 ms, F1 at 5 ms, and history throughput. Axis mappings and measurements are documented in the technical report appendix.</desc>`);
+  vector = vector.replace(/(<svg\b[^>]*>)/, `$1\n<title>AxoSim and baseline comparison (${theme} theme)</title>\n<desc>GRU Small and Mamba Medium, three released Branch-ELM sizes, and CoreNEURON; axes show inference throughput, voltage and dynamics fidelity, Mean F1 0–5 ms, and history throughput. Axis mappings and measurements are documented in the technical report appendix.</desc>`);
   writeFileSync(svg,vector);
   variants[theme] = {svg:`/figures/${stem}.svg`,png:`/figures/${stem}.png`,svg_sha256:hash(svg),png_sha256:hash(png),viewBox:dimensions};
 }
 copyFileSync(join(report,'main.pdf'),join(root,'public/report/main.pdf'));
 const data = {
-  axis_order:['Inference throughput','Voltage fidelity','Dynamics fidelity','Mean F1 0–5 ms','F1 @ 5 ms','History throughput'],
-  mappings:['1-exp(-rate/10000000)','exp(-Voltage SERA/350)','exp(-Dynamics SERA/450)','identity','identity','1-exp(-history rate/1000000)'],
+  axis_order:['Inference throughput','Voltage fidelity','Dynamics fidelity','Mean F1 0–5 ms','History throughput'],
+  mappings:['1-exp(-rate/10000000)','exp(-Voltage SERA/350)','exp(-Dynamics SERA/450)','identity','1-exp(-history rate/1000000)'],
   plotted_series:plotted,
   raw_values:raw,
   history_timing_contracts:{learned:history.contract,coreneuron:coreHistory.contract},

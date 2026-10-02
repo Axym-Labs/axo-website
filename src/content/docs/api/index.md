@@ -7,7 +7,7 @@ order: 200
 
 ## Public Python surface
 
-This reference covers all 31 names in `axosim.__all__` at revision `856207f6de56`, plus the public module functions, configuration fields, dataset methods, and CLI options used by the guides. The package lazily imports these names; implementation aliases are stated explicitly.
+This reference covers all 34 names in `axosim.__all__` at revision `0f546adfd8fc`, plus the public module functions, configuration fields, dataset methods, and CLI options used by the guides. The package lazily imports these names; implementation aliases are stated explicitly.
 
 | Import from axosim | Implementation | Reference |
 | --- | --- | --- |
@@ -22,6 +22,8 @@ This reference covers all 31 names in `axosim.__all__` at revision `856207f6de56
 | `AxoSimPopulation` | `axosim.interfaces.AxoSimPopulation` | [Open](/api/interfaces/) |
 | `CudaGraphAdaptationStep` | `axosim.adaptation.CudaGraphAdaptationStep` | [Open](/api/adaptation/) |
 | `HomeostaticThresholdController` | `axosim.activity.HomeostaticThresholdController` | [Open](/api/activity/) |
+| `HistoryScanBackend` | `axosim.history_scan.HistoryScanBackend` | [Open](/api/history-scan/) |
+| `HistoryScanResult` | `axosim.history_scan.HistoryScanResult` | [Open](/api/history-scan/) |
 | `AXOSIM_MODEL_PROFILES` | `axosim.model_family.AXOSIM_MODEL_PROFILES` | [Open](/api/model-family/) |
 | `BranchELM` | `axosim.model.BranchELM` | [Open](/api/model/) |
 | `BranchELMConfig` | `axosim.model.BranchELMConfig` | [Open](/api/model/) |
@@ -42,6 +44,7 @@ This reference covers all 31 names in `axosim.__all__` at revision `856207f6de56
 | `PopulationFrame` | `axosim.connected_population.PopulationFrame` | [Open](/api/connected-population/) |
 | `ProceduralConnectome` | `axosim.connected_population.ProceduralConnectome` | [Open](/api/connected-population/) |
 | `create_population` | `axosim.connected_population.create_population` | [Open](/api/connected-population/) |
+| `scan_histories` | `axosim.history_scan.scan_histories` | [Open](/api/history-scan/) |
 
 `HomeostaticThresholdController` is experimental. Configuration recipes and workload constants describe construction or execution contracts; they are not benchmark measurements. Historical checkpoint classes remain documented because the loader supports them.
 
@@ -49,6 +52,7 @@ This reference covers all 31 names in `axosim.__all__` at revision `856207f6de56
 
 - [Connected population lifecycle](/api/connected-population/)
 - [Population interfaces](/api/interfaces/)
+- [Supplied-history scan](/api/history-scan/)
 - [Model profiles](/api/model-family/)
 - [Mamba models and configuration](/api/mamba/)
 - [GRU temporal models](/api/temporal-core/)
@@ -78,4 +82,4 @@ This reference covers all 31 names in `axosim.__all__` at revision `856207f6de56
 
 ## Source and inventory
 
-Every source link is pinned to [revision 856207f6de56](https://github.com/Axym-Labs/axosim/tree/856207f6de56dbf8e3f754a142581a7c050eeac6). Repository access is currently required to open the AxoSim and AxoBench source links because these repositories are private. The [machine-readable API inventory](/api-inventory.json) records source locations, exact signatures, parameters/defaults, fields, methods, exported aliases, and CLI options. It is generated using AST parsing without importing PyTorch.
+Every source link is pinned to [revision 0f546adfd8fc](https://github.com/Axym-Labs/axosim/tree/0f546adfd8fc8530ff8ec0952ce7a1367616cf24). Repository access is currently required to open the AxoSim and AxoBench source links because these repositories are private. The [machine-readable API inventory](/api-inventory.json) records source locations, exact signatures, parameters/defaults, fields, methods, exported aliases, and CLI options. It is generated using AST parsing without importing PyTorch.

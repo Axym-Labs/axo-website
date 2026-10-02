@@ -66,7 +66,7 @@ The generator's `--help` lists its exact options. The public
 `api-inventory.json` records symbol and CLI coverage. Inherited PyTorch methods
 use PyTorch's normal interface rather than duplicated framework documentation.
 
-To rebuild the downloadable report and export its TikZ central figure as
+To rebuild the downloadable report and export its TikZ comparison figure as
 transparent light/dark SVGs and PNGs, install Tectonic and Poppler, then run:
 
 ```sh

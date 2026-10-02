@@ -3,14 +3,14 @@ title: CUDA Graph adaptation
 description: Signatures, parameters, return contracts, and source for cuda graph adaptation.
 section: API reference
 apiGroup: Training and evaluation
-order: 210
+order: 211
 ---
 
 ## Overview
 
 CudaGraphAdaptationStep captures one fixed-shape forward, loss, backward, optional gradient transform, and optimizer update. It restores module and optimizer state after warmup and capture. Replay copies source tensors into retained static buffers. CUDA inputs and optimizer parameters are required; shape, dtype, parameter groups, and allocations must remain compatible.
 
-Source revision: `856207f6de56`. [Public export index](/api/).
+Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
 <section class="api-symbol" id="adaptation-cudagraphadaptationstep">
 
@@ -22,7 +22,7 @@ Source revision: `856207f6de56`. [Public export index](/api/).
 axosim.adaptation.CudaGraphAdaptationStep(module: nn.Module, optimizer: torch.optim.Optimizer, static_inputs: torch.Tensor, static_targets: torch.Tensor, graph: torch.cuda.CUDAGraph, static_loss: torch.Tensor)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/adaptation.py#L55-L169)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/adaptation.py#L55-L169)
 
 </div>
 
@@ -67,7 +67,7 @@ Constructor fields are retained as attributes.
 axosim.adaptation.CudaGraphAdaptationStep.capture(module: nn.Module, optimizer: torch.optim.Optimizer, example_inputs: torch.Tensor, example_targets: torch.Tensor, loss_function: TensorLoss, *, warmup_steps: int=3, gradient_transform: GradientTransform | None=None) -> 'CudaGraphAdaptationStep'
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/adaptation.py#L66-L141)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/adaptation.py#L66-L141)
 
 </div>
 
@@ -113,7 +113,7 @@ module and optimizer parameters must be CUDA-resident; example_inputs and exampl
 axosim.adaptation.CudaGraphAdaptationStep.__call__(inputs: torch.Tensor, targets: torch.Tensor, *, synchronize: bool=False) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/856207f6de56dbf8e3f754a142581a7c050eeac6/src/axosim/adaptation.py#L143-L169)
+[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/adaptation.py#L143-L169)
 
 </div>
 

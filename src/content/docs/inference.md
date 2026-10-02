@@ -88,7 +88,32 @@ print(streamed.shape)
 max_difference = (streamed - prediction).abs().max().item()
 ```
 
-The resulting sequence has the same batch and time dimensions. Inspect `max_difference` to compare streaming with the full-sequence prediction under the same dtype and initial state; the appropriate numerical tolerance depends on the backend and precision. This check is useful before replacing sequence execution with streaming in a service. Streaming signatures and supported options differ by implementation; consult [Mamba](/api/mamba/), [GRU temporal models](/api/temporal-core/), or [block forecasts](/api/block-forecast/). Population forward methods initialize the Lite hidden state for each supplied sequence, as described in [build populations](/populations/).
+The resulting sequence has the same batch and time dimensions. Inspect `max_difference` to compare streaming with the full-sequence prediction under the same dtype and initial state; the appropriate numerical tolerance depends on the backend and precision. This check is useful before replacing sequence execution with streaming in a service. Streaming signatures and supported options differ by implementation; consult [Mamba](/api/mamba/), [GRU temporal models](/api/temporal-core/), or [block forecasts](/api/block-forecast/). Population forward methods initialize the Lite hidden state for each supplied sequence, as described in [supplied population histories](/populations/).
+
+Reuse that same state when the next samples belong to the same streams. This continuation processes four additional samples without clearing the preceding history:
+
+```python
+# Continue after the streaming example above; keep the existing state object.
+next_inputs = torch.zeros(
+    inputs.shape[0], 4, model.num_input,
+    device=inputs.device, dtype=inputs.dtype,
+)
+with torch.inference_mode():
+    continuation = torch.cat(
+        [model.streaming_step(
+            next_inputs[:, t], state, morphology_indices=morphology_indices
+         ) for t in range(next_inputs.shape[1])],
+        dim=1,
+    )
+assert continuation.shape == (inputs.shape[0], 4, model.num_output)
+print(continuation.shape)
+```
+
+For a two-output checkpoint, this prints `torch.Size([8, 4, 2])`. Allocate a fresh state for a new independent trace; a new full-history forward call also starts from its initial temporal state.
+
+## Process a complete supplied history
+
+For a Mamba model with all native inputs already available, use [supplied-history scan](/history-scan/). Its common `(neurons, time, input_channels)` interface covers one neuron and populations sharing weights, and reports whether the official fused CUDA scan or the explicitly permitted sequential reference executed. Every scan call starts a fresh history; use the streaming state above when subsequent samples continue the same streams.
 
 ## Next steps
 

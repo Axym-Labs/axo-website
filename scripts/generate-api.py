@@ -4,6 +4,7 @@
 Only AST parsing and argparse construction are used; no torch/GPU dependency.
 Pass --source to select a local AxoSim checkout. Generated files are
 the module/API pages and public/api-inventory.json; guide prose is handwritten.
+Reviewed custom references retain their prose while source links are regenerated.
 """
 from __future__ import annotations
 
@@ -12,6 +13,7 @@ import ast
 from copy import deepcopy
 from html import escape
 import json
+import re
 import subprocess
 from pathlib import Path
 
@@ -19,6 +21,7 @@ from pathlib import Path
 PAGES = [
     ("connected-population", "Connected population lifecycle", ["connected_population"], "create_population constructs an actually connected Lite inference simulator from an explicitly supplied model and graph. Persistent state, thresholded recurrent events, native time and delayed deliveries belong to this object. Read the connected population guide for the complete lifecycle. AxoSimPopulation remains the separate supplied-history autograd interface. Reference and fused-neuron backends support the same explicit or deterministic procedural graphs; the historical specialized quantized large-population runtime has a different topology and timing contract."),
     ("interfaces", "Population interfaces", ["interfaces"], "The public differentiable population combines one Lite model with persistent neuron identities, morphology assignments, contact routes, and adaptation banks. AxoSimMamba aliases AxoMamba; AxoSimLite aliases AdaptiveSupportP4Surrogate; AxoSimGRU currently aliases CausalBlockForecastModel. Named GRU profiles are built by create_axosim_profile and return AxoTemporalModel."),
+    ("history-scan", "Supplied-history scan", ["history_scan"], "Process supplied Mamba1 histories for one neuron or a population sharing weights. The public scan reports its fused or sequential execution path and preserves full-history gradients."),
     ("model-family", "Model profiles", ["model_family"], "Named profiles provide fixed architecture recipes. Construction returns an untrained model. Mamba profiles use AxoMamba; GRU profiles use AxoTemporalModel with a GRU temporal core. Preserve the backend and saved model kind when loading weights."),
     ("mamba", "Mamba models and configuration", ["axomamba", "mamba_official"], "AxoMamba is the public Mamba implementation and inherits BranchOfficialMamba. AxoMambaConfig inherits all BranchOfficialMambaConfig fields. The default_axomamba_config factory supplies the promoted recipe, which differs from the dataclass's raw field defaults. AxoPyTorchMamba is a test-oriented fallback with a different checkpoint format."),
     ("temporal-core", "GRU temporal models", ["temporal_core"], "AxoTemporalModel wraps the common backbone with a selected temporal core. Named public GRU profiles use this class. Full-sequence forward calls reset temporal state; streaming calls use an explicitly allocated persistent state. Low-level temporal cores and behavior adapters are included below for direct construction."),
@@ -49,6 +52,11 @@ API_GROUPS = {
     **dict.fromkeys(("model", "neuronio"), "Compatibility"),
     **dict.fromkeys(("cli", "setup-cli", "axobench-cli", "setup"), "CLI"),
 }
+API_GROUPS["history-scan"] = "Populations"
+
+# These scientific contracts are reviewed prose, not generated paraphrases.
+# Their signatures are inventoried from AST and every source link is pinned below.
+CUSTOM_REFERENCE_PAGES = {"history-scan"}
 
 CONTRACTS = {
     "connected_population.create_population": "The model is mandatory and must be AxoSimLite (AdaptiveSupportP4Surrogate). Morphology indices have shape (n,) and address the model's declared vocabulary. One native step is 1 ms, and recurrent delays must be integer >=4 ms; graph delays are never adjusted. 'signed' applies the source role to recurrent event amplitude; 'channel' uses nonnegative counts with inhibition encoded by channel identity/features. External amplitudes are already in that convention. Every outgoing edge of a source must declare the same role, and channel_roles validates destination-channel compatibility when supplied. Model weights, graph topology, morphology assignments and initial banks are copied rather than borrowed. The connected threshold/event loop is inference-only.",
@@ -1057,7 +1065,28 @@ def main():
                                 item["parameters"] = param_records(method, DEFAULT_CONSTANTS.get(module))
                     lines.extend(class_document(module, n, item, repository, commit))
                 inventory["symbols"].append(item)
-        (output / (slug+".md")).write_text("\n".join(lines))
+        if slug in CUSTOM_REFERENCE_PAGES:
+            template = Path(__file__).resolve().parents[1] / "src/content/docs/api" / (slug+".md")
+            reviewed = template.read_text()
+            reviewed = re.sub(r"^order: \d+$", f"order: {200+offset}", reviewed, flags=re.MULTILINE)
+            for module in modules:
+                for node in trees[module].body:
+                    if not isinstance(node, (ast.ClassDef, ast.FunctionDef)) or not public_node(node):
+                        continue
+                    anchor = object_anchor(module, node.name)
+                    pattern = rf'(<section\b[^>]*id="{re.escape(anchor)}"[^>]*>)([\s\S]*?)(</section>)'
+                    sections = list(re.finditer(pattern, reviewed))
+                    if len(sections) != 1:
+                        raise ValueError(f"{slug}: exactly one reviewed section is required for {node.name}")
+                    section = sections[0]
+                    body, replaced = re.subn(r"\[Source\]\([^\n)]+\)",
+                        f"[Source]({source_link(repository, commit, module, node)})", section[2])
+                    if replaced != 1:
+                        raise ValueError(f"{slug}.{node.name}: exactly one source link is required")
+                    reviewed = reviewed[:section.start()] + section[1] + body + section[3] + reviewed[section.end():]
+            (output / (slug+".md")).write_text(reviewed)
+        else:
+            (output / (slug+".md")).write_text("\n".join(lines))
     presets = constants(trees["experiments"]).get("_PRESETS", {})
     for slug, title, module, command, order in [
         ("cli", "AxoSim CLI", "cli", "axosim", 240),
