@@ -46,13 +46,18 @@ assert.equal(digest(join(dist,'report/central-figure-values.json')),provenance.f
 for (const variant of Object.values(provenance.variants)) {
   assert.equal(digest(join(dist,variant.png)),variant.png_sha256,'Figure PNG provenance mismatch');
 }
-assert.equal(digest(join(dist,'favicon.svg')),digest(join(dist,'brand/axym-logo.svg')),'Navbar and favicon must use the same mark');
-assert(existsSync(join(dist,'favicon.ico')), 'Multi-size favicon missing');
+assert(!existsSync(join(dist,'brand/axym-logo.svg')), 'Axym logo asset must not be deployed');
+assert(!existsSync(join(dist,'brand/axym-logo-192.png')), 'Axym touch logo must not be deployed');
+assert(!existsSync(join(dist,'favicon.svg')), 'Axym logo favicon must not be deployed');
+assert(!existsSync(join(dist,'favicon.ico')), 'Axym logo favicon must not be deployed');
 let codeBlocks = 0;
 const errors = [];
 for (const file of pages) {
   const html = readFileSync(file, 'utf8');
   const route = '/' + file.slice(dist.length+1).replace(/index\.html$/, '');
+  assert(!html.includes('axym-logo'), `${route}: Axym logo remains in rendered HTML`);
+  assert(!html.includes('rel="icon"'), `${route}: logo favicon remains in rendered HTML`);
+  assert(!html.includes('rel="apple-touch-icon"'), `${route}: touch logo remains in rendered HTML`);
   assert.equal((html.match(/<h1\b/g)||[]).length, 1, `${route}: expected one h1`);
   assert(html.includes('data-pagefind-body'), `${route}: not indexed`);
   assert(html.includes(`href="https://axo.axym.org${route}"`), `${route}: canonical mismatch`);

@@ -22,7 +22,7 @@ try {
   assert(await page.locator('.site-navbar .theme-toggle').isVisible());
   assert.equal(await page.locator('.site-navbar a.source-code').innerText(), 'Source Code');
   assert.equal(await page.locator('.site-navbar a.source-code').getAttribute('href'), 'https://github.com/Axym-Labs/axosim');
-  assert(await page.locator('.site-navbar img.axym-logo').evaluate(img => img.naturalWidth > 0));
+  assert.equal(await page.locator('.site-navbar img').count(), 0, 'Navbar must remain text-only');
   const firstGroup = page.locator('.nav-group').first();
   assert.equal(await firstGroup.locator('h2').count(), 0, 'Getting-started links should not have a category heading');
   assert(await firstGroup.locator('a[href="/models/"]').isVisible());

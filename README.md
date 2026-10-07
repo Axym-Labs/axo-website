@@ -79,16 +79,6 @@ and records the raw values in `public/report/central-figure-values.json`.
 Normal website builds use checked-in assets and need neither TeX nor private
 repositories.
 
-The shared pixel mark and multi-size favicon are reproducible without network
-access:
-
-```sh
-node scripts/generate-brand.mjs
-```
-
-Its original glyphs, MNIST sample, palette, and shared Axym-site asset paths are
-documented in `public/brand/README.md`.
-
 ## GitHub Pages and the custom domain
 
 The repository is **Axym-Labs/axo-website**. Internal requirements, migration

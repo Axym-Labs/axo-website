@@ -19,7 +19,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, pre:focus-visible, s
 .navbar-brand, .brand-link, .navbar-actions { display: flex; align-items: center; }
 .navbar-brand { gap: 14px; min-width: 0; }
 .brand-link { gap: 11px; }
-.axym-logo { display: block; flex-shrink: 0; border-radius: 3px; }
 .navbar-actions { margin-left: auto; gap: 25px; white-space: nowrap; font-size: 13px; }
 .navbar-actions a { color: var(--muted); }
 .navbar-actions a:hover { color: var(--text); }
@@ -189,7 +188,6 @@ h1 { font-size: 36px; line-height: 1.18; letter-spacing: -.7px; margin: 0 0 15px
   .navbar-brand { gap: 5px; }
   .brand-link { gap: 8px; }
   .wordmark { font-size: 21px; }
-  .axym-logo { width: 26px; height: 26px; }
   .navbar-actions { gap: 5px; }
   .navbar-actions .labs-link { font-size: 12px; }
   .labs-word { display: none; }
