@@ -26,9 +26,11 @@ try {
   const firstGroup = page.locator('.nav-group').first();
   assert.equal(await firstGroup.locator('h2').count(), 0, 'Getting-started links should not have a category heading');
   assert(await firstGroup.locator('a[href="/models/"]').isVisible());
-  assert.equal(await firstGroup.locator('a.demo-link').getAttribute('href'), 'https://axym.org/work/axosim-fly-geometry/');
-  assert.equal(await page.locator('.resource-links a').filter({hasText: 'Demo'}).getAttribute('href'), 'https://axym.org/work/axosim-fly-geometry/');
-  results.push('Full-width navbar, right-side source/theme controls, unheaded start links, model selection and published demo.');
+  assert.equal(await firstGroup.locator('a.report-link').getAttribute('href'), '/report/main.pdf');
+  assert.equal(await firstGroup.locator('a.demo-link').first().getAttribute('href'), 'https://axym.org/work/axosim-fly-geometry/');
+  assert.equal(await firstGroup.locator('a.interactive-demo-link').getAttribute('href'), 'https://axym.org/work/axosim-connectome-demo/');
+  assert.equal(await page.locator('.resource-links a').count(), 0, 'Landing buttons must not duplicate sidebar or navbar links');
+  results.push('Full-width navbar, right-side source/theme controls, unheaded start links with report, research update and interactive demo, no duplicate landing buttons.');
 
   const compatibility = page.locator('.api-group').filter({has: page.locator('summary', {hasText: /^Compatibility$/})});
   assert.equal(await compatibility.count(), 1);

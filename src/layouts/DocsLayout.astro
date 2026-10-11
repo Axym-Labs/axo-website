@@ -14,7 +14,8 @@ interface Props {
 const { entry, entries, headings } = Astro.props;
 const groups = [...new Set(entries.map(item => item.data.section))];
 const apiGroups = ['Models', 'Populations', 'Training and evaluation', 'Data', 'Compatibility', 'CLI'];
-const demoUrl = 'https://axym.org/work/axosim-fly-geometry/';
+const researchUrl = 'https://axym.org/work/axosim-fly-geometry/';
+const demoUrl = 'https://axym.org/work/axosim-connectome-demo/';
 const url = (id: string) => id === 'overview' ? '/' : id === 'api/index' ? '/api/' : `/${id}/`;
 const index = entries.findIndex(item => item.id === entry.id);
 const previous = entries[index - 1];
@@ -89,7 +90,11 @@ const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 
           </> : entries.filter(item => item.data.section === group).map(item => (
               <a href={url(item.id)} aria-current={item.id === entry.id ? 'page' : undefined}>{item.data.title}</a>
             ))}
-          {group === 'Get started' && <a class="demo-link" href={demoUrl}>Connectome demo <span aria-hidden="true">↗</span></a>}
+          {group === 'Get started' && <>
+            <a class="report-link" href="/report/main.pdf">Technical report</a>
+            <a class="demo-link" href={researchUrl}>Connectome update <span aria-hidden="true">↗</span></a>
+            <a class="demo-link interactive-demo-link" href={demoUrl}>Connectome demo <span aria-hidden="true">↗</span></a>
+          </>}
         </section>)}
       </nav>
     </aside>
