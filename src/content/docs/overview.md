@@ -14,12 +14,6 @@ AxoSim approximates the response of detailed biological neurons to synaptic inpu
 
 <p class="figure-caption">The axes show (i) inference throughput, counting 1-ms neuron predictions per second; (ii) voltage fidelity from somatic-voltage SERA; (iii) dynamics fidelity from native-time voltage-change SERA; (iv) spike Mean F1, averaged over 0–5 ms matching tolerances; and (v) history throughput, counting input milliseconds processed per second for one supplied 2-second history. CoreNEURON is the ground-truth detailed simulator, and Branch-ELM is the learned-surrogate predecessor of AxoSim. AxoSim–GRU Small and Mamba Medium are compared with three released Branch-ELM sizes; larger radii indicate better performance. Raw measurements, fixed mappings and runtime contracts appear in the appendix of the <a href="/report/main.pdf">technical report</a>.</p>
 
-## Benchmark with AxoBench
-
-AxoBench provides the datasets and the evaluation protocol for single-neuron fidelity. Its detailed-teacher simulations come in three releases: [single-neuron traces](/axobench/single-neuron/) from five layer-5 pyramidal morphologies, [population contexts](/axobench/population/) whose inputs were recorded in connected AxoSim networks, and [paired interventions](/axobench/interventions/) that change one input sample in a defined way. The core metrics are Voltage SERA, spike Mean F1 over 0–5 ms tolerances, the subthreshold voltage RMSE, and Response SERA.
-
-The evaluator accepts any NumPy prediction function. It calibrates the spike threshold on traces that are not scored, reports 24 fixed diagnostic rows alongside the metrics, and compares a candidate with a cached baseline on identical traces with bootstrap intervals. Start with [choose a dataset](/datasets/), then [benchmark a model](/axobench/benchmarking/).
-
 ## Start with a neuron model
 
 Use [model selection](/models/) to choose a temporal architecture and backend, then [load a checkpoint](/inference/) to predict spike logits and somatic voltage. The common single-neuron contract is an input tensor shaped `(batch, time, input channels)` and an output tensor shaped `(batch, time, 2)`.
@@ -31,6 +25,18 @@ The trained architectures extend the branching mechanism of Branch-ELM. Signed i
 The [population interface](/populations/) combines a compact AxoSim-Lite neuron model with morphology identities, dendritic contact routes, and independently mutable synaptic efficacies. [Sparse events](/sparse-events/) preserve contact identity without allocating a dense contact history. [Inference-time adaptation](/adaptation/) selects behavior, morphology, and synaptic parameter groups while differentiating through the supplied sequence.
 
 The optimized runtime evaluated in the report simulates **65,536 neurons with 4,000 retained contacts per neuron at 3.38× real time** on an RTX 5090. Full BPTT reaches real time for **20,000 neurons with 2,000 retained contacts**. These measurements describe the frozen benchmark implementation. Use [`create_population`](/connected-populations/) for connected rollout, or [`AxoSimPopulation`](/populations/) to fit supplied Lite histories. [Reproducibility and deployment](/reproducibility/) explains how to recover the reported evidence and which execution paths are covered by the measurements.
+
+## Benchmark with AxoBench
+
+AxoBench provides the datasets, metrics, and evaluation protocol for single-neuron fidelity. It accepts any NumPy prediction function and depends only on NumPy, Matplotlib, and Requests.
+
+- **Datasets.** Detailed-teacher simulations in three releases: [single-neuron traces](/axobench/single-neuron/) from five layer-5 pyramidal morphologies, [population contexts](/axobench/population/) whose inputs were recorded in connected AxoSim networks, and [paired interventions](/axobench/interventions/) that change one input sample in a defined way. [NeuronIO](/axobench/neuronio/) simulations convert to the same format.
+- **Metrics.** The [core metrics](/axobench/metrics/) are Voltage SERA, spike Mean F1 over 0–5 ms tolerances, the subthreshold voltage RMSE, and Response SERA.
+- **Evaluation.** The [evaluator](/axobench/benchmarking/) calibrates the spike threshold on traces that are not scored and compares a candidate with a cached baseline on identical traces, with paired bootstrap intervals.
+- **Diagnostics.** Every report ends with a fixed 24-row [attention panel](/axobench/diagnostics/#read-the-attention-panel). Controlled defects test how each metric responds, and diagnostic rows export to JSON, JSONL, or CSV.
+- **Plots.** [`axobench diagnostic-plots`](/axobench-api/cli/#diagnostic-plots) writes the diagnostic figures and tables from saved audit summaries as SVG, PDF, and PNG.
+
+Start with [choose a dataset](/datasets/), then [benchmark a model](/axobench/benchmarking/).
 
 ## Follow the lifecycle
 
