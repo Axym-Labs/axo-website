@@ -29,6 +29,7 @@ const expectedExports = [
   'ConnectedPopulation', 'ExplicitConnectome', 'InputEvents', 'PopulationFrame',
   'ProceduralConnectome', 'create_population',
   'HistoryScanBackend', 'HistoryScanResult', 'scan_histories',
+  'all_to_all', 'concatenate', 'fixed_indegree', 'fixed_probability', 'from_list', 'one_to_one',
 ];
 assert.deepEqual(inventory.exports.map(item => item.name).sort(), expectedExports.sort(), 'Public export inventory differs from the supported source surface');
 assert.equal(new Set(inventory.exports.map(item => item.name)).size, expectedExports.length, 'Duplicate export entries');

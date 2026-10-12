@@ -3,14 +3,14 @@ title: Mamba models and configuration
 description: Signatures, parameters, return contracts, and source for mamba models and configuration.
 section: API reference
 apiGroup: Models
-order: 205
+order: 206
 ---
 
 ## Overview
 
 AxoMamba is the public Mamba implementation and inherits BranchOfficialMamba. AxoMambaConfig inherits all BranchOfficialMambaConfig fields. The default_axomamba_config factory supplies the promoted recipe, which differs from the dataclass's raw field defaults. AxoPyTorchMamba is a test-oriented fallback with a different checkpoint format.
 
-Source revision: `0f546adfd8fc`. [Public export index](/api/).
+Source revision: `caef7be03abd`. [Public export index](/api/).
 
 <section class="api-symbol" id="axomamba-axomambaconfig">
 
@@ -19,10 +19,10 @@ Source revision: `0f546adfd8fc`. [Public export index](/api/).
 <div class="api-signature">
 
 ```python
-axosim.axomamba.AxoMambaConfig(num_input: int = 1278, num_output: int = 2, num_branch: int = 45, num_synapse_per_branch: int = 100, input_to_synapse_routing: str | None = 'neuronio_routing', model_dim: int = 64, num_layers: int = 2, block_repeats: int = 1, state_dim: int = 16, conv_kernel: int = 4, expansion: int = 2, block_type: str = 'mamba1', head_dim: int = 64, num_groups: int = 1, chunk_size: int = 256, block_norm: bool = True, final_norm: bool = True, dropout: float = 0.0, residual_scale_init: float = 0.1, mamba_update_normalization: str = 'none', separate_heads: bool = False, soma_filter: bool = False, soma_filter_tau: float = 25.0, soma_filter_kernel: int = 129, learn_soma_filter_decay: bool = True, soma_multiplicative_gate: bool = False, soma_multiplicative_scale_init: float = 0.1, soma_peak_correction: bool = False, soma_peak_correction_scale_init: float = 0.1, soma_highpass_correction: bool = False, soma_highpass_correction_scale_init: float = 0.1, spike_voltage_coupling_scale: float = 0.0, morphology_ids: list[str] | None = None, morphology_embedding_scale: float | None = None, population_adapter_morphology_id: str | None = None, synapse_gain_scale: float | None = None, morphology_synapse_gain_scale: float | None = None, share_morphology_synapse_gain: bool = False, morphology_synapse_gain_rank: int = 0, morphology_synapse_feature_dim: int = 0, morphology_synapse_feature_hidden: int = 0, morphology_synapse_feature_scale: float | None = None, morphology_synapse_feature_storage_dtype: str = 'float32', local_tcn_scale: float | None = None, local_tcn_mode: str = 'dilated', local_tcn_position: str = 'parallel', share_local_tcn_pointwise: bool = False, local_tcn_pointwise_adapter_rank: int = 0, local_tcn_pointwise_rank: int = 0, local_tcn_output_rank: int = 0, mamba_projection_rank: int = 0, branch_gain: bool = False, branch_nonlinearity: str = 'none', branch_nonlinearity_scale_init: float = 0.1, branch_subunits: int = 0, branch_subunit_routing: str = 'contiguous', branch_subunit_scale: float = 1.0, branch_bilinear_rank: int = 0, branch_bilinear_scale: float | None = None, branch_trace_taus: list[float] | None = None, branch_trace_kernel: int = 65, hidden_trace_taus: list[float] | None = None, hidden_trace_kernel: int = 129, temporal_refine_kernel: int = 0, integrative_mixer: bool = False, integrative_mixer_short_kernel: int = 9, integrative_mixer_long_kernel: int = 65, integrative_mixer_position: str = 'pre', integrative_mixer_long_path_bias: float = 0.5)
+axosim.axomamba.AxoMambaConfig(num_input: int = 1278, num_output: int = 2, num_branch: int = 45, num_synapse_per_branch: int = 100, input_to_synapse_routing: str | None = 'neuronio_routing', model_dim: int = 64, num_layers: int = 2, block_repeats: int = 1, state_dim: int = 16, conv_kernel: int = 4, expansion: int = 2, block_type: str = 'mamba1', head_dim: int = 64, num_groups: int = 1, chunk_size: int = 256, block_norm: bool = True, final_norm: bool = True, dropout: float = 0.0, residual_scale_init: float = 0.1, mamba_update_normalization: str = 'none', separate_heads: bool = False, soma_filter: bool = False, soma_filter_tau: float = 25.0, soma_filter_kernel: int = 129, learn_soma_filter_decay: bool = True, soma_multiplicative_gate: bool = False, soma_multiplicative_scale_init: float = 0.1, soma_peak_correction: bool = False, soma_peak_correction_scale_init: float = 0.1, soma_highpass_correction: bool = False, soma_highpass_correction_scale_init: float = 0.1, spike_voltage_coupling_scale: float = 0.0, spike_voltage_coupling_detach: bool = False, morphology_ids: list[str] | None = None, morphology_embedding_scale: float | None = None, population_adapter_morphology_id: str | None = None, synapse_gain_scale: float | None = None, morphology_synapse_gain_scale: float | None = None, share_morphology_synapse_gain: bool = False, morphology_synapse_gain_rank: int = 0, morphology_synapse_feature_dim: int = 0, morphology_synapse_feature_hidden: int = 0, morphology_synapse_feature_scale: float | None = None, morphology_synapse_feature_storage_dtype: str = 'float32', local_tcn_scale: float | None = None, local_tcn_mode: str = 'dilated', local_tcn_position: str = 'parallel', share_local_tcn_pointwise: bool = False, local_tcn_pointwise_adapter_rank: int = 0, local_tcn_pointwise_rank: int = 0, local_tcn_output_rank: int = 0, mamba_projection_rank: int = 0, branch_gain: bool = False, branch_nonlinearity: str = 'none', branch_nonlinearity_scale_init: float = 0.1, branch_subunits: int = 0, branch_subunit_routing: str = 'contiguous', branch_subunit_scale: float = 1.0, branch_bilinear_rank: int = 0, branch_bilinear_scale: float | None = None, branch_trace_taus: list[float] | None = None, branch_trace_kernel: int = 65, hidden_trace_taus: list[float] | None = None, hidden_trace_kernel: int = 129, temporal_refine_kernel: int = 0, integrative_mixer: bool = False, integrative_mixer_short_kernel: int = 9, integrative_mixer_long_kernel: int = 65, integrative_mixer_position: str = 'pre', integrative_mixer_long_path_bias: float = 0.5)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L20-L21)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L20-L21)
 
 </div>
 
@@ -99,6 +99,8 @@ Inherits all fields and raw defaults from `BranchOfficialMambaConfig`. `default_
 <dd><span class="api-default">default=0.1.</span></dd>
 <dt><code>spike_voltage_coupling_scale</code> <span class="api-type">float</span></dt>
 <dd><span class="api-default">default=0.0.</span></dd>
+<dt><code>spike_voltage_coupling_detach</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">default=False.</span> Keep the forward spike-voltage coupling but stop spike-loss gradients from reaching the voltage path through it.</dd>
 <dt><code>morphology_ids</code> <span class="api-type">list[str] | None</span></dt>
 <dd><span class="api-default">default=None.</span> Ordered morphology identity vocabulary.</dd>
 <dt><code>morphology_embedding_scale</code> <span class="api-type">float | None</span></dt>
@@ -191,7 +193,7 @@ Constructor fields are retained as read-only attributes.
 axosim.axomamba.default_axomamba_config(**overrides: Any) -> AxoMambaConfig
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L24-L83)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L24-L83)
 
 </div>
 
@@ -223,7 +225,7 @@ Build the default AxoSim Mamba recipe and apply keyword overrides.
 axosim.axomamba.structured_compact_axomamba_config(**overrides: Any) -> AxoMambaConfig
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L86-L96)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L86-L96)
 
 </div>
 
@@ -255,7 +257,7 @@ Build the structured compact recipe and apply keyword overrides.
 axosim.axomamba.regression_axomamba_config(**overrides: Any) -> AxoMambaConfig
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L99-L108)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L99-L108)
 
 </div>
 
@@ -287,7 +289,7 @@ Build the voltage-focused recipe and apply keyword overrides.
 axosim.axomamba.population_axomamba_config(**overrides: Any) -> AxoMambaConfig
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L111-L125)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L111-L125)
 
 </div>
 
@@ -319,7 +321,7 @@ Build the population-domain recipe and apply keyword overrides.
 axosim.axomamba.spike_axomamba_config(**overrides: Any) -> AxoMambaConfig
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L128-L139)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L128-L139)
 
 </div>
 
@@ -351,7 +353,7 @@ Build the spike-focused recipe and apply keyword overrides.
 axosim.axomamba.load_axomamba_config(path: str | Path | None=None, **overrides: Any) -> AxoMambaConfig
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L142-L148)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L142-L148)
 
 </div>
 
@@ -385,7 +387,7 @@ Read a JSON architecture configuration and apply keyword overrides; without a pa
 axosim.axomamba.coerce_axomamba_config(config: AxoMambaConfig | BranchOfficialMambaConfig | Mapping[str, Any] | None) -> AxoMambaConfig
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L151-L158)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L151-L158)
 
 </div>
 
@@ -417,7 +419,7 @@ Convert a configuration object or mapping to AxoMambaConfig; None selects the de
 axosim.axomamba.AxoMamba(config: AxoMambaConfig | BranchOfficialMambaConfig | Mapping[str, Any] | None=None, *, mamba_classes: tuple[type, type | None] | None=None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L161-L170)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L161-L170)
 
 </div>
 
@@ -448,7 +450,7 @@ Full-sequence and streaming methods are inherited from `BranchOfficialMamba` bel
 axosim.axomamba.AxoPyTorchMamba(config: AxoMambaConfig | BranchOfficialMambaConfig | Mapping[str, Any] | None=None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L173-L182)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L173-L182)
 
 </div>
 
@@ -477,7 +479,7 @@ Full-sequence and streaming methods are inherited from `BranchOfficialMamba` bel
 axosim.axomamba.create_axomamba(config: AxoMambaConfig | BranchOfficialMambaConfig | Mapping[str, Any] | None=None, *, use_pytorch_fallback: bool=False) -> AxoMamba
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axomamba.py#L185-L192)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axomamba.py#L185-L192)
 
 </div>
 
@@ -508,10 +510,10 @@ Construct a newly initialized AxoMamba, using the fused backend unless the PyTor
 <div class="api-signature">
 
 ```python
-axosim.mamba_official.BranchOfficialMambaConfig(num_input: int = 1278, num_output: int = 2, num_branch: int = 45, num_synapse_per_branch: int = 100, input_to_synapse_routing: str | None = 'neuronio_routing', model_dim: int = 64, num_layers: int = 2, block_repeats: int = 1, state_dim: int = 16, conv_kernel: int = 4, expansion: int = 2, block_type: str = 'mamba1', head_dim: int = 64, num_groups: int = 1, chunk_size: int = 256, block_norm: bool = True, final_norm: bool = True, dropout: float = 0.0, residual_scale_init: float = 0.1, mamba_update_normalization: str = 'none', separate_heads: bool = False, soma_filter: bool = False, soma_filter_tau: float = 25.0, soma_filter_kernel: int = 129, learn_soma_filter_decay: bool = True, soma_multiplicative_gate: bool = False, soma_multiplicative_scale_init: float = 0.1, soma_peak_correction: bool = False, soma_peak_correction_scale_init: float = 0.1, soma_highpass_correction: bool = False, soma_highpass_correction_scale_init: float = 0.1, spike_voltage_coupling_scale: float = 0.0, morphology_ids: list[str] | None = None, morphology_embedding_scale: float | None = None, population_adapter_morphology_id: str | None = None, synapse_gain_scale: float | None = None, morphology_synapse_gain_scale: float | None = None, share_morphology_synapse_gain: bool = False, morphology_synapse_gain_rank: int = 0, morphology_synapse_feature_dim: int = 0, morphology_synapse_feature_hidden: int = 0, morphology_synapse_feature_scale: float | None = None, morphology_synapse_feature_storage_dtype: str = 'float32', local_tcn_scale: float | None = None, local_tcn_mode: str = 'dilated', local_tcn_position: str = 'parallel', share_local_tcn_pointwise: bool = False, local_tcn_pointwise_adapter_rank: int = 0, local_tcn_pointwise_rank: int = 0, local_tcn_output_rank: int = 0, mamba_projection_rank: int = 0, branch_gain: bool = False, branch_nonlinearity: str = 'none', branch_nonlinearity_scale_init: float = 0.1, branch_subunits: int = 0, branch_subunit_routing: str = 'contiguous', branch_subunit_scale: float = 1.0, branch_bilinear_rank: int = 0, branch_bilinear_scale: float | None = None, branch_trace_taus: list[float] | None = None, branch_trace_kernel: int = 65, hidden_trace_taus: list[float] | None = None, hidden_trace_kernel: int = 129, temporal_refine_kernel: int = 0, integrative_mixer: bool = False, integrative_mixer_short_kernel: int = 9, integrative_mixer_long_kernel: int = 65, integrative_mixer_position: str = 'pre', integrative_mixer_long_path_bias: float = 0.5)
+axosim.mamba_official.BranchOfficialMambaConfig(num_input: int = 1278, num_output: int = 2, num_branch: int = 45, num_synapse_per_branch: int = 100, input_to_synapse_routing: str | None = 'neuronio_routing', model_dim: int = 64, num_layers: int = 2, block_repeats: int = 1, state_dim: int = 16, conv_kernel: int = 4, expansion: int = 2, block_type: str = 'mamba1', head_dim: int = 64, num_groups: int = 1, chunk_size: int = 256, block_norm: bool = True, final_norm: bool = True, dropout: float = 0.0, residual_scale_init: float = 0.1, mamba_update_normalization: str = 'none', separate_heads: bool = False, soma_filter: bool = False, soma_filter_tau: float = 25.0, soma_filter_kernel: int = 129, learn_soma_filter_decay: bool = True, soma_multiplicative_gate: bool = False, soma_multiplicative_scale_init: float = 0.1, soma_peak_correction: bool = False, soma_peak_correction_scale_init: float = 0.1, soma_highpass_correction: bool = False, soma_highpass_correction_scale_init: float = 0.1, spike_voltage_coupling_scale: float = 0.0, spike_voltage_coupling_detach: bool = False, morphology_ids: list[str] | None = None, morphology_embedding_scale: float | None = None, population_adapter_morphology_id: str | None = None, synapse_gain_scale: float | None = None, morphology_synapse_gain_scale: float | None = None, share_morphology_synapse_gain: bool = False, morphology_synapse_gain_rank: int = 0, morphology_synapse_feature_dim: int = 0, morphology_synapse_feature_hidden: int = 0, morphology_synapse_feature_scale: float | None = None, morphology_synapse_feature_storage_dtype: str = 'float32', local_tcn_scale: float | None = None, local_tcn_mode: str = 'dilated', local_tcn_position: str = 'parallel', share_local_tcn_pointwise: bool = False, local_tcn_pointwise_adapter_rank: int = 0, local_tcn_pointwise_rank: int = 0, local_tcn_output_rank: int = 0, mamba_projection_rank: int = 0, branch_gain: bool = False, branch_nonlinearity: str = 'none', branch_nonlinearity_scale_init: float = 0.1, branch_subunits: int = 0, branch_subunit_routing: str = 'contiguous', branch_subunit_scale: float = 1.0, branch_bilinear_rank: int = 0, branch_bilinear_scale: float | None = None, branch_trace_taus: list[float] | None = None, branch_trace_kernel: int = 65, hidden_trace_taus: list[float] | None = None, hidden_trace_kernel: int = 129, temporal_refine_kernel: int = 0, integrative_mixer: bool = False, integrative_mixer_short_kernel: int = 9, integrative_mixer_long_kernel: int = 65, integrative_mixer_position: str = 'pre', integrative_mixer_long_path_bias: float = 0.5)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/mamba_official.py#L29-L98)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/mamba_official.py#L29-L99)
 
 </div>
 
@@ -584,6 +586,8 @@ Architecture and optional branch, morphology, temporal-correction, and readout s
 <dd><span class="api-default">default=0.1.</span></dd>
 <dt><code>spike_voltage_coupling_scale</code> <span class="api-type">float</span></dt>
 <dd><span class="api-default">default=0.0.</span></dd>
+<dt><code>spike_voltage_coupling_detach</code> <span class="api-type">bool</span></dt>
+<dd><span class="api-default">default=False.</span> Keep the forward spike-voltage coupling but stop spike-loss gradients from reaching the voltage path through it.</dd>
 <dt><code>morphology_ids</code> <span class="api-type">list[str] | None</span></dt>
 <dd><span class="api-default">default=None.</span> Ordered morphology identity vocabulary.</dd>
 <dt><code>morphology_embedding_scale</code> <span class="api-type">float | None</span></dt>
@@ -676,7 +680,7 @@ Constructor fields are retained as read-only attributes.
 axosim.mamba_official.BranchMambaStreamingState(mamba_states: list[tuple[torch.Tensor, torch.Tensor]], local_tcn_histories: list[torch.Tensor], morphology_feature_gains: torch.Tensor | None = None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/mamba_official.py#L102-L107)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/mamba_official.py#L103-L108)
 
 </div>
 
@@ -709,7 +713,7 @@ Constructor fields are retained as attributes.
 axosim.mamba_official.BranchOfficialMamba(config: BranchOfficialMambaConfig, *, mamba_classes: tuple[type[nn.Module], type[nn.Module] | None] | None=None)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/mamba_official.py#L110-L1808)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/mamba_official.py#L111-L1813)
 
 </div>
 
@@ -745,7 +749,7 @@ Bases: `nn.Module`.
 axosim.mamba_official.BranchOfficialMamba.forward(x: torch.Tensor, *, morphology_indices: torch.Tensor | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/mamba_official.py#L678-L689)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/mamba_official.py#L679-L690)
 
 </div>
 
@@ -781,7 +785,7 @@ x is (B,T,num_input), and optional morphology_indices is integer (B,). Morpholog
 axosim.mamba_official.BranchOfficialMamba.allocate_streaming_state(batch_size: int, *, device: torch.device | str | None=None, dtype: torch.dtype | None=None) -> BranchMambaStreamingState
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/mamba_official.py#L954-L994)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/mamba_official.py#L955-L995)
 
 </div>
 
@@ -819,7 +823,7 @@ Allocates a persistent streaming-state record for the requested batch_size, devi
 axosim.mamba_official.BranchOfficialMamba.streaming_step(x: torch.Tensor, state: BranchMambaStreamingState, *, morphology_indices: torch.Tensor | None=None, chunk_size: int | None=None) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/mamba_official.py#L996-L1087)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/mamba_official.py#L997-L1088)
 
 </div>
 
@@ -859,7 +863,7 @@ Advances the supplied mutable streaming state by one native input step. The guid
 axosim.mamba_official.BranchOfficialMamba.streaming_step_events(event_indices: torch.Tensor, event_values: torch.Tensor, state: BranchMambaStreamingState, *, morphology_indices: torch.Tensor | None=None, chunk_size: int | None=None, output_buffer: torch.Tensor | None=None, retain_base_soma_prediction: bool=True) -> torch.Tensor
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/mamba_official.py#L1310-L1451)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/mamba_official.py#L1311-L1452)
 
 </div>
 
@@ -902,7 +906,7 @@ Advance one timestep from padded sparse channel/value event rows.
 axosim.mamba_official.BranchPyTorchMamba(config: BranchOfficialMambaConfig)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/mamba_official.py#L1810-L1818)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/mamba_official.py#L1815-L1823)
 
 </div>
 

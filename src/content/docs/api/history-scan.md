@@ -3,7 +3,7 @@ title: Supplied-history scan
 description: Process complete Mamba input histories with explicit fused or sequential backend reporting.
 section: API reference
 apiGroup: Populations
-order: 203
+order: 204
 ---
 
 ## Overview
@@ -29,7 +29,7 @@ axosim.scan_histories(
 ) -> HistoryScanResult
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/history_scan.py#L30-L94)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/history_scan.py#L30-L94)
 
 </div>
 
@@ -96,7 +96,7 @@ Errors raised by the model or dependencies during forward are propagated. See [i
 axosim.HistoryScanBackend(name: str, parallel: bool, reason: str)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/history_scan.py#L14-L19)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/history_scan.py#L14-L19)
 
 </div>
 
@@ -127,7 +127,7 @@ All constructor fields are required. The dataclass's attributes cannot be reassi
 axosim.HistoryScanResult(prediction: torch.Tensor, backend: HistoryScanBackend)
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/history_scan.py#L23-L27)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/history_scan.py#L23-L27)
 
 </div>
 

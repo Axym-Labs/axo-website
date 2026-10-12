@@ -7,7 +7,7 @@ order: 200
 
 ## Public Python surface
 
-This reference covers all 34 names in `axosim.__all__` at revision `0f546adfd8fc`, plus the public module functions, configuration fields, dataset methods, and CLI options used by the guides. The package lazily imports these names; implementation aliases are stated explicitly.
+This reference covers all 40 names in `axosim.__all__` at revision `caef7be03abd`, plus the public module functions, configuration fields, dataset methods, and CLI options used by the guides. The package lazily imports these names; implementation aliases are stated explicitly.
 
 | Import from axosim | Implementation | Reference |
 | --- | --- | --- |
@@ -45,12 +45,19 @@ This reference covers all 34 names in `axosim.__all__` at revision `0f546adfd8fc
 | `ProceduralConnectome` | `axosim.connected_population.ProceduralConnectome` | [Open](/api/connected-population/) |
 | `create_population` | `axosim.connected_population.create_population` | [Open](/api/connected-population/) |
 | `scan_histories` | `axosim.history_scan.scan_histories` | [Open](/api/history-scan/) |
+| `all_to_all` | `axosim.connectors.all_to_all` | [Open](/api/connectors/) |
+| `concatenate` | `axosim.connectors.concatenate` | [Open](/api/connectors/) |
+| `fixed_indegree` | `axosim.connectors.fixed_indegree` | [Open](/api/connectors/) |
+| `fixed_probability` | `axosim.connectors.fixed_probability` | [Open](/api/connectors/) |
+| `from_list` | `axosim.connectors.from_list` | [Open](/api/connectors/) |
+| `one_to_one` | `axosim.connectors.one_to_one` | [Open](/api/connectors/) |
 
 `HomeostaticThresholdController` is experimental. Configuration recipes and workload constants describe construction or execution contracts; they are not benchmark measurements. Historical checkpoint classes remain documented because the loader supports them.
 
 ## Modules and configuration
 
 - [Connected population lifecycle](/api/connected-population/)
+- [Connectivity builders](/api/connectors/)
 - [Population interfaces](/api/interfaces/)
 - [Supplied-history scan](/api/history-scan/)
 - [Model profiles](/api/model-family/)
@@ -82,4 +89,4 @@ This reference covers all 34 names in `axosim.__all__` at revision `0f546adfd8fc
 
 ## Source and inventory
 
-Every source link is pinned to [revision 0f546adfd8fc](https://github.com/Axym-Labs/axosim/tree/0f546adfd8fc8530ff8ec0952ce7a1367616cf24). Repository access is currently required to open the AxoSim and AxoBench source links because these repositories are private. The [machine-readable API inventory](/api-inventory.json) records source locations, exact signatures, parameters/defaults, fields, methods, exported aliases, and CLI options. It is generated using AST parsing without importing PyTorch.
+Every source link is pinned to [revision caef7be03abd](https://github.com/Axym-Labs/axosim/tree/caef7be03abdbde76ab00080ba7c4866da81278e). Repository access is currently required to open the AxoSim and AxoBench source links because these repositories are private. The [machine-readable API inventory](/api-inventory.json) records source locations, exact signatures, parameters/defaults, fields, methods, exported aliases, and CLI options. It is generated using AST parsing without importing PyTorch.

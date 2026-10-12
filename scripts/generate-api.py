@@ -20,6 +20,7 @@ from pathlib import Path
 
 PAGES = [
     ("connected-population", "Connected population lifecycle", ["connected_population"], "create_population constructs an actually connected Lite inference simulator from an explicitly supplied model and graph. Persistent state, thresholded recurrent events, native time and delayed deliveries belong to this object. Read the connected population guide for the complete lifecycle. AxoSimPopulation remains the separate supplied-history autograd interface. Reference and fused-neuron backends support the same explicit or deterministic procedural graphs; the historical specialized quantized large-population runtime has a different topology and timing contract."),
+    ("connectors", "Connectivity builders", ["connectors"], "PyNN-style builders wire one population of n neurons, optionally restricted to pre source and post target IDs, and return an ordinary validated ExplicitConnectome for create_population. Each edge takes its source neuron's role (neuron_roles, +1 or -1; None makes every neuron excitatory) and a destination channel drawn uniformly from the checkpoint channels with that role (channel_roles), unless explicit channels are given. Efficacies and delays are constants, one value per edge, or callables fn(sources, targets, generator); delays are integer native milliseconds of at least MIN_DELAY_MS = 4, the Lite P4 recurrent minimum. One seeded generator is drawn in a fixed order (topology, channels, efficacies, delays), so a seed reproduces the exact graph, and edge IDs follow the returned edge order. Shared keyword arguments are neuron_roles, channel_roles, channels, efficacies, and delays. The builders are exported from axosim; MIN_DELAY_MS is imported from axosim.connectors."),
     ("interfaces", "Population interfaces", ["interfaces"], "The public differentiable population combines one Lite model with persistent neuron identities, morphology assignments, contact routes, and adaptation banks. AxoSimMamba aliases AxoMamba; AxoSimLite aliases AdaptiveSupportP4Surrogate; AxoSimGRU currently aliases CausalBlockForecastModel. Named GRU profiles are built by create_axosim_profile and return AxoTemporalModel."),
     ("history-scan", "Supplied-history scan", ["history_scan"], "Process supplied Mamba1 histories for one neuron or a population sharing weights. The public scan reports its fused or sequential execution path and preserves full-history gradients."),
     ("model-family", "Model profiles", ["model_family"], "Named profiles provide fixed architecture recipes. Construction returns an untrained model. Mamba profiles use AxoMamba; GRU profiles use AxoTemporalModel with a GRU temporal core. Preserve the backend and saved model kind when loading weights."),
@@ -46,7 +47,7 @@ PAGES = [
 
 API_GROUPS = {
     **dict.fromkeys(("model-family", "mamba", "temporal-core", "block-forecast", "lite", "checkpoint"), "Models"),
-    **dict.fromkeys(("connected-population", "interfaces", "population", "simulation-contract", "synapse", "connectome", "activity"), "Populations"),
+    **dict.fromkeys(("connected-population", "connectors", "interfaces", "population", "simulation-contract", "synapse", "connectome", "activity"), "Populations"),
     **dict.fromkeys(("adaptation", "training", "metrics", "inference-benchmark"), "Training and evaluation"),
     **dict.fromkeys(("data", "axobench"), "Data"),
     **dict.fromkeys(("model", "neuronio"), "Compatibility"),
@@ -596,6 +597,50 @@ _CONNECTED_PARAMETERS = {
     "runtime_coefficients": "Optional finite (n,model.cache_width) packed coefficients. Otherwise compile the model's morphology behavior rows, or use zeros when adaptation is disabled.",
 }
 PARAM_HELP["connected_population.create_population"] = _CONNECTED_PARAMETERS
+
+PARAM_HELP.setdefault("temporal_core.AxoTemporalCoreConfig", {}).update({
+    "gru_layers": "Residual GRU layers; more than one builds a StackedResidualGRUTemporalCore, which does not support streaming inference.",
+    "dropout": "Training dropout on the GRU residual correction, in [0, 1).",
+})
+PARAM_HELP.setdefault("temporal_core.ResidualGRUTemporalCore", {}).update({
+    "dropout": "Training dropout on the residual correction, in [0, 1).",
+})
+PARAM_HELP.setdefault("temporal_core.StackedResidualGRUTemporalCore.forward", {}).update({
+    "kwargs": "Keyword arguments passed to the first layer only.",
+})
+PARAM_HELP.setdefault("temporal_core.StackedResidualGRUTemporalCore", {}).update({
+    "layers": "Residual GRU layers applied in sequence; adapter deltas apply to the first layer only.",
+})
+for _config in ("mamba_official.BranchOfficialMambaConfig", "axomamba.AxoMambaConfig"):
+    PARAM_HELP.setdefault(_config, {}).update({
+        "spike_voltage_coupling_detach": "Keep the forward spike-voltage coupling but stop spike-loss gradients from reaching the voltage path through it.",
+    })
+
+_CONNECTOR_PARAMETERS = {
+    "n": "Positive population size; neuron IDs are 0..n-1.",
+    "seed": "Integer seed of the one generator drawn for topology, channels, efficacies, and delays, in that order; equal seeds give identical graphs.",
+    "allow_self": "Keep edges from a neuron to itself.",
+    "pre": "Source neuron IDs; None uses all n neurons.",
+    "post": "Target neuron IDs; None uses all n neurons.",
+    "kwargs": "Shared edge options: neuron_roles ((n,) +1/-1, default all excitatory), channel_roles (the checkpoint's (input_dim,) +1/-1 vector, required unless channels is given), channels, efficacies (default 1.0), and delays (default 4 ms). Values are a constant, one per edge, or a callable fn(sources, targets, generator).",
+    "p": "Connection probability in [0, 1], or a callable p(sources, targets) returning one probability per candidate pair, evaluated in chunks; for example a distance-dependent kernel over neuron positions.",
+    "k": "Nonnegative number of sources per post neuron.",
+    "with_replacement": "Draw sources with replacement; repeated draws become parallel edges. Without replacement the k sources of a target are distinct.",
+    "edges": "Rows (source, target[, efficacy[, delay]]) in edge order; integer neuron IDs in [0, n).",
+    "efficacies": "Nonnegative edge magnitudes: a constant, one value per edge, or a callable; exclusive with an efficacy column. None means 1.0.",
+    "delays": "Integer native delays of at least 4 ms: a constant, one value per edge, or a callable; exclusive with a delay column. None means 4 ms.",
+    "connectomes": "ExplicitConnectome parts; the outgoing edges of each neuron must share one role across parts.",
+}
+for _builder in ("all_to_all", "one_to_one", "fixed_probability", "fixed_indegree", "from_list", "concatenate"):
+    PARAM_HELP[f"connectors.{_builder}"] = _CONNECTOR_PARAMETERS
+RETURN_HELP.update({
+    "connectors.all_to_all": [("connectome", "ExplicitConnectome", "One edge per (pre, post) pair, source-major, without self-edges unless allow_self.")],
+    "connectors.one_to_one": [("connectome", "ExplicitConnectome", "Edges pre[i] -> post[i]; pre and post must have equal length.")],
+    "connectors.fixed_probability": [("connectome", "ExplicitConnectome", "Independently kept pairs in source-major order, without parallel edges.")],
+    "connectors.fixed_indegree": [("connectome", "ExplicitConnectome", "Exactly k edges into every post neuron, ordered by target, then source.")],
+    "connectors.from_list": [("connectome", "ExplicitConnectome", "The listed edges in the given order.")],
+    "connectors.concatenate": [("connectome", "ExplicitConnectome", "All edges joined; the edge IDs of part i follow those of the parts before it.")],
+})
 PARAM_HELP["connected_population.ConnectedPopulation"] = _CONNECTED_PARAMETERS
 
 CLASS_ATTRIBUTES = {
@@ -1013,6 +1058,11 @@ def main():
         if isinstance(n, ast.ImportFrom) and n.module and n.module.startswith("axosim."):
             for alias in n.names:
                 import_map[alias.asname or alias.name] = (n.module.removeprefix("axosim."), alias.name)
+    # Names loaded with importlib in __getattr__ resolve through their module's __all__.
+    for module, tree in trees.items():
+        for name in constants(tree).get("__all__", []) if module != "__init__" else []:
+            if name in exports and name not in import_map:
+                import_map[name] = (module, name)
     interface_aliases = {}
     for n in trees["interfaces"].body:
         if isinstance(n, ast.ImportFrom):

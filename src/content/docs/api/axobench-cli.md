@@ -67,4 +67,4 @@ Every command and subcommand accepts `-h` or `--help`. The option reference belo
 <dd>Compatibility option hidden from default help.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axobench_iteration.py#L205)
+[Parser source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axobench_iteration.py#L205)

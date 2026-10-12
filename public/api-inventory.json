@@ -2,7 +2,7 @@
   "schema_version": 1,
   "source": {
     "repository": "https://github.com/Axym-Labs/axosim",
-    "commit": "0f546adfd8fc8530ff8ec0952ce7a1367616cf24"
+    "commit": "caef7be03abdbde76ab00080ba7c4866da81278e"
   },
   "exports": [
     {
@@ -208,6 +208,42 @@
       "module": "history_scan",
       "implementation": "scan_histories",
       "page": "api/history-scan"
+    },
+    {
+      "name": "all_to_all",
+      "module": "connectors",
+      "implementation": "all_to_all",
+      "page": "api/connectors"
+    },
+    {
+      "name": "concatenate",
+      "module": "connectors",
+      "implementation": "concatenate",
+      "page": "api/connectors"
+    },
+    {
+      "name": "fixed_indegree",
+      "module": "connectors",
+      "implementation": "fixed_indegree",
+      "page": "api/connectors"
+    },
+    {
+      "name": "fixed_probability",
+      "module": "connectors",
+      "implementation": "fixed_probability",
+      "page": "api/connectors"
+    },
+    {
+      "name": "from_list",
+      "module": "connectors",
+      "implementation": "from_list",
+      "page": "api/connectors"
+    },
+    {
+      "name": "one_to_one",
+      "module": "connectors",
+      "implementation": "one_to_one",
+      "page": "api/connectors"
     }
   ],
   "pages": [
@@ -221,6 +257,12 @@
       "slug": "api/connected-population",
       "modules": [
         "connected_population"
+      ]
+    },
+    {
+      "slug": "api/connectors",
+      "modules": [
+        "connectors"
       ]
     },
     {
@@ -1196,6 +1238,301 @@
       "methods": []
     },
     {
+      "module": "connectors",
+      "name": "all_to_all",
+      "kind": "function",
+      "page": "api/connectors",
+      "line": 58,
+      "end_line": 74,
+      "signature": "all_to_all(n: int, *, seed: int=0, allow_self: bool=False, pre=None, post=None, **kwargs) -> ExplicitConnectome",
+      "parameters": [
+        {
+          "name": "n",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "seed",
+          "type": "int",
+          "default": "0",
+          "kind": "keyword_only",
+          "resolved_default": 0
+        },
+        {
+          "name": "allow_self",
+          "type": "bool",
+          "default": "False",
+          "kind": "keyword_only",
+          "resolved_default": false
+        },
+        {
+          "name": "pre",
+          "type": null,
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "post",
+          "type": null,
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "kwargs",
+          "type": null,
+          "default": null,
+          "kind": "variadic_keyword"
+        }
+      ],
+      "fields": [],
+      "methods": []
+    },
+    {
+      "module": "connectors",
+      "name": "one_to_one",
+      "kind": "function",
+      "page": "api/connectors",
+      "line": 77,
+      "end_line": 84,
+      "signature": "one_to_one(n: int, *, seed: int=0, pre=None, post=None, **kwargs) -> ExplicitConnectome",
+      "parameters": [
+        {
+          "name": "n",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "seed",
+          "type": "int",
+          "default": "0",
+          "kind": "keyword_only",
+          "resolved_default": 0
+        },
+        {
+          "name": "pre",
+          "type": null,
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "post",
+          "type": null,
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "kwargs",
+          "type": null,
+          "default": null,
+          "kind": "variadic_keyword"
+        }
+      ],
+      "fields": [],
+      "methods": []
+    },
+    {
+      "module": "connectors",
+      "name": "fixed_probability",
+      "kind": "function",
+      "page": "api/connectors",
+      "line": 87,
+      "end_line": 126,
+      "signature": "fixed_probability(n: int, p: float | Callable[[torch.Tensor, torch.Tensor], torch.Tensor], *, seed: int=0, allow_self: bool=False, pre=None, post=None, **kwargs) -> ExplicitConnectome",
+      "parameters": [
+        {
+          "name": "n",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "p",
+          "type": "float | Callable[[torch.Tensor, torch.Tensor], torch.Tensor]",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "seed",
+          "type": "int",
+          "default": "0",
+          "kind": "keyword_only",
+          "resolved_default": 0
+        },
+        {
+          "name": "allow_self",
+          "type": "bool",
+          "default": "False",
+          "kind": "keyword_only",
+          "resolved_default": false
+        },
+        {
+          "name": "pre",
+          "type": null,
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "post",
+          "type": null,
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "kwargs",
+          "type": null,
+          "default": null,
+          "kind": "variadic_keyword"
+        }
+      ],
+      "fields": [],
+      "methods": []
+    },
+    {
+      "module": "connectors",
+      "name": "fixed_indegree",
+      "kind": "function",
+      "page": "api/connectors",
+      "line": 129,
+      "end_line": 170,
+      "signature": "fixed_indegree(n: int, k: int, *, seed: int=0, allow_self: bool=False, with_replacement: bool=False, pre=None, post=None, **kwargs) -> ExplicitConnectome",
+      "parameters": [
+        {
+          "name": "n",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "k",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "seed",
+          "type": "int",
+          "default": "0",
+          "kind": "keyword_only",
+          "resolved_default": 0
+        },
+        {
+          "name": "allow_self",
+          "type": "bool",
+          "default": "False",
+          "kind": "keyword_only",
+          "resolved_default": false
+        },
+        {
+          "name": "with_replacement",
+          "type": "bool",
+          "default": "False",
+          "kind": "keyword_only",
+          "resolved_default": false
+        },
+        {
+          "name": "pre",
+          "type": null,
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "post",
+          "type": null,
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "kwargs",
+          "type": null,
+          "default": null,
+          "kind": "variadic_keyword"
+        }
+      ],
+      "fields": [],
+      "methods": []
+    },
+    {
+      "module": "connectors",
+      "name": "from_list",
+      "kind": "function",
+      "page": "api/connectors",
+      "line": 173,
+      "end_line": 215,
+      "signature": "from_list(n: int, edges, *, efficacies: EdgeValues | None=None, delays: EdgeValues | None=None, seed: int=0, **kwargs) -> ExplicitConnectome",
+      "parameters": [
+        {
+          "name": "n",
+          "type": "int",
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "edges",
+          "type": null,
+          "default": null,
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "efficacies",
+          "type": "EdgeValues | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "delays",
+          "type": "EdgeValues | None",
+          "default": "None",
+          "kind": "keyword_only",
+          "resolved_default": null
+        },
+        {
+          "name": "seed",
+          "type": "int",
+          "default": "0",
+          "kind": "keyword_only",
+          "resolved_default": 0
+        },
+        {
+          "name": "kwargs",
+          "type": null,
+          "default": null,
+          "kind": "variadic_keyword"
+        }
+      ],
+      "fields": [],
+      "methods": []
+    },
+    {
+      "module": "connectors",
+      "name": "concatenate",
+      "kind": "function",
+      "page": "api/connectors",
+      "line": 218,
+      "end_line": 238,
+      "signature": "concatenate(*connectomes: ExplicitConnectome) -> ExplicitConnectome",
+      "parameters": [
+        {
+          "name": "connectomes",
+          "type": "ExplicitConnectome",
+          "default": null,
+          "kind": "variadic_positional"
+        }
+      ],
+      "fields": [],
+      "methods": []
+    },
+    {
       "module": "interfaces",
       "name": "AxoSimPopulation",
       "kind": "class",
@@ -1741,8 +2078,8 @@
       "name": "AXOSIM_MODEL_PROFILES",
       "kind": "constant",
       "page": "api/model-family",
-      "line": 86,
-      "end_line": 88,
+      "line": 89,
+      "end_line": 91,
       "signature": "AXOSIM_MODEL_PROFILES: Mapping[str, AxoSimModelProfile] = MappingProxyType({profile.profile_id: profile for profile in _PROFILES})",
       "parameters": [],
       "fields": [],
@@ -1753,8 +2090,8 @@
       "name": "create_axosim_profile",
       "kind": "function",
       "page": "api/model-family",
-      "line": 91,
-      "end_line": 126,
+      "line": 94,
+      "end_line": 130,
       "signature": "create_axosim_profile(profile_id: str, *, base_config: AxoMambaConfig | None=None, use_pytorch_fallback: bool=False) -> nn.Module",
       "parameters": [
         {
@@ -1788,7 +2125,7 @@
       "page": "api/mamba",
       "line": 20,
       "end_line": 21,
-      "signature": "AxoMambaConfig(num_input: int = 1278, num_output: int = 2, num_branch: int = 45, num_synapse_per_branch: int = 100, input_to_synapse_routing: str | None = 'neuronio_routing', model_dim: int = 64, num_layers: int = 2, block_repeats: int = 1, state_dim: int = 16, conv_kernel: int = 4, expansion: int = 2, block_type: str = 'mamba1', head_dim: int = 64, num_groups: int = 1, chunk_size: int = 256, block_norm: bool = True, final_norm: bool = True, dropout: float = 0.0, residual_scale_init: float = 0.1, mamba_update_normalization: str = 'none', separate_heads: bool = False, soma_filter: bool = False, soma_filter_tau: float = 25.0, soma_filter_kernel: int = 129, learn_soma_filter_decay: bool = True, soma_multiplicative_gate: bool = False, soma_multiplicative_scale_init: float = 0.1, soma_peak_correction: bool = False, soma_peak_correction_scale_init: float = 0.1, soma_highpass_correction: bool = False, soma_highpass_correction_scale_init: float = 0.1, spike_voltage_coupling_scale: float = 0.0, morphology_ids: list[str] | None = None, morphology_embedding_scale: float | None = None, population_adapter_morphology_id: str | None = None, synapse_gain_scale: float | None = None, morphology_synapse_gain_scale: float | None = None, share_morphology_synapse_gain: bool = False, morphology_synapse_gain_rank: int = 0, morphology_synapse_feature_dim: int = 0, morphology_synapse_feature_hidden: int = 0, morphology_synapse_feature_scale: float | None = None, morphology_synapse_feature_storage_dtype: str = 'float32', local_tcn_scale: float | None = None, local_tcn_mode: str = 'dilated', local_tcn_position: str = 'parallel', share_local_tcn_pointwise: bool = False, local_tcn_pointwise_adapter_rank: int = 0, local_tcn_pointwise_rank: int = 0, local_tcn_output_rank: int = 0, mamba_projection_rank: int = 0, branch_gain: bool = False, branch_nonlinearity: str = 'none', branch_nonlinearity_scale_init: float = 0.1, branch_subunits: int = 0, branch_subunit_routing: str = 'contiguous', branch_subunit_scale: float = 1.0, branch_bilinear_rank: int = 0, branch_bilinear_scale: float | None = None, branch_trace_taus: list[float] | None = None, branch_trace_kernel: int = 65, hidden_trace_taus: list[float] | None = None, hidden_trace_kernel: int = 129, temporal_refine_kernel: int = 0, integrative_mixer: bool = False, integrative_mixer_short_kernel: int = 9, integrative_mixer_long_kernel: int = 65, integrative_mixer_position: str = 'pre', integrative_mixer_long_path_bias: float = 0.5) -> None",
+      "signature": "AxoMambaConfig(num_input: int = 1278, num_output: int = 2, num_branch: int = 45, num_synapse_per_branch: int = 100, input_to_synapse_routing: str | None = 'neuronio_routing', model_dim: int = 64, num_layers: int = 2, block_repeats: int = 1, state_dim: int = 16, conv_kernel: int = 4, expansion: int = 2, block_type: str = 'mamba1', head_dim: int = 64, num_groups: int = 1, chunk_size: int = 256, block_norm: bool = True, final_norm: bool = True, dropout: float = 0.0, residual_scale_init: float = 0.1, mamba_update_normalization: str = 'none', separate_heads: bool = False, soma_filter: bool = False, soma_filter_tau: float = 25.0, soma_filter_kernel: int = 129, learn_soma_filter_decay: bool = True, soma_multiplicative_gate: bool = False, soma_multiplicative_scale_init: float = 0.1, soma_peak_correction: bool = False, soma_peak_correction_scale_init: float = 0.1, soma_highpass_correction: bool = False, soma_highpass_correction_scale_init: float = 0.1, spike_voltage_coupling_scale: float = 0.0, spike_voltage_coupling_detach: bool = False, morphology_ids: list[str] | None = None, morphology_embedding_scale: float | None = None, population_adapter_morphology_id: str | None = None, synapse_gain_scale: float | None = None, morphology_synapse_gain_scale: float | None = None, share_morphology_synapse_gain: bool = False, morphology_synapse_gain_rank: int = 0, morphology_synapse_feature_dim: int = 0, morphology_synapse_feature_hidden: int = 0, morphology_synapse_feature_scale: float | None = None, morphology_synapse_feature_storage_dtype: str = 'float32', local_tcn_scale: float | None = None, local_tcn_mode: str = 'dilated', local_tcn_position: str = 'parallel', share_local_tcn_pointwise: bool = False, local_tcn_pointwise_adapter_rank: int = 0, local_tcn_pointwise_rank: int = 0, local_tcn_output_rank: int = 0, mamba_projection_rank: int = 0, branch_gain: bool = False, branch_nonlinearity: str = 'none', branch_nonlinearity_scale_init: float = 0.1, branch_subunits: int = 0, branch_subunit_routing: str = 'contiguous', branch_subunit_scale: float = 1.0, branch_bilinear_rank: int = 0, branch_bilinear_scale: float | None = None, branch_trace_taus: list[float] | None = None, branch_trace_kernel: int = 65, hidden_trace_taus: list[float] | None = None, hidden_trace_kernel: int = 129, temporal_refine_kernel: int = 0, integrative_mixer: bool = False, integrative_mixer_short_kernel: int = 9, integrative_mixer_long_kernel: int = 65, integrative_mixer_position: str = 'pre', integrative_mixer_long_path_bias: float = 0.5) -> None",
       "parameters": [
         {
           "name": "num_input",
@@ -1980,6 +2317,12 @@
           "name": "spike_voltage_coupling_scale",
           "type": "float",
           "default": "0.0",
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "spike_voltage_coupling_detach",
+          "type": "bool",
+          "default": "False",
           "kind": "positional_or_keyword"
         },
         {
@@ -2370,6 +2713,11 @@
           "name": "spike_voltage_coupling_scale",
           "type": "float",
           "default": "0.0"
+        },
+        {
+          "name": "spike_voltage_coupling_detach",
+          "type": "bool",
+          "default": "False"
         },
         {
           "name": "morphology_ids",
@@ -2829,8 +3177,8 @@
       "kind": "class",
       "page": "api/mamba",
       "line": 29,
-      "end_line": 98,
-      "signature": "BranchOfficialMambaConfig(num_input: int = 1278, num_output: int = 2, num_branch: int = 45, num_synapse_per_branch: int = 100, input_to_synapse_routing: str | None = 'neuronio_routing', model_dim: int = 64, num_layers: int = 2, block_repeats: int = 1, state_dim: int = 16, conv_kernel: int = 4, expansion: int = 2, block_type: str = 'mamba1', head_dim: int = 64, num_groups: int = 1, chunk_size: int = 256, block_norm: bool = True, final_norm: bool = True, dropout: float = 0.0, residual_scale_init: float = 0.1, mamba_update_normalization: str = 'none', separate_heads: bool = False, soma_filter: bool = False, soma_filter_tau: float = 25.0, soma_filter_kernel: int = 129, learn_soma_filter_decay: bool = True, soma_multiplicative_gate: bool = False, soma_multiplicative_scale_init: float = 0.1, soma_peak_correction: bool = False, soma_peak_correction_scale_init: float = 0.1, soma_highpass_correction: bool = False, soma_highpass_correction_scale_init: float = 0.1, spike_voltage_coupling_scale: float = 0.0, morphology_ids: list[str] | None = None, morphology_embedding_scale: float | None = None, population_adapter_morphology_id: str | None = None, synapse_gain_scale: float | None = None, morphology_synapse_gain_scale: float | None = None, share_morphology_synapse_gain: bool = False, morphology_synapse_gain_rank: int = 0, morphology_synapse_feature_dim: int = 0, morphology_synapse_feature_hidden: int = 0, morphology_synapse_feature_scale: float | None = None, morphology_synapse_feature_storage_dtype: str = 'float32', local_tcn_scale: float | None = None, local_tcn_mode: str = 'dilated', local_tcn_position: str = 'parallel', share_local_tcn_pointwise: bool = False, local_tcn_pointwise_adapter_rank: int = 0, local_tcn_pointwise_rank: int = 0, local_tcn_output_rank: int = 0, mamba_projection_rank: int = 0, branch_gain: bool = False, branch_nonlinearity: str = 'none', branch_nonlinearity_scale_init: float = 0.1, branch_subunits: int = 0, branch_subunit_routing: str = 'contiguous', branch_subunit_scale: float = 1.0, branch_bilinear_rank: int = 0, branch_bilinear_scale: float | None = None, branch_trace_taus: list[float] | None = None, branch_trace_kernel: int = 65, hidden_trace_taus: list[float] | None = None, hidden_trace_kernel: int = 129, temporal_refine_kernel: int = 0, integrative_mixer: bool = False, integrative_mixer_short_kernel: int = 9, integrative_mixer_long_kernel: int = 65, integrative_mixer_position: str = 'pre', integrative_mixer_long_path_bias: float = 0.5) -> None",
+      "end_line": 99,
+      "signature": "BranchOfficialMambaConfig(num_input: int = 1278, num_output: int = 2, num_branch: int = 45, num_synapse_per_branch: int = 100, input_to_synapse_routing: str | None = 'neuronio_routing', model_dim: int = 64, num_layers: int = 2, block_repeats: int = 1, state_dim: int = 16, conv_kernel: int = 4, expansion: int = 2, block_type: str = 'mamba1', head_dim: int = 64, num_groups: int = 1, chunk_size: int = 256, block_norm: bool = True, final_norm: bool = True, dropout: float = 0.0, residual_scale_init: float = 0.1, mamba_update_normalization: str = 'none', separate_heads: bool = False, soma_filter: bool = False, soma_filter_tau: float = 25.0, soma_filter_kernel: int = 129, learn_soma_filter_decay: bool = True, soma_multiplicative_gate: bool = False, soma_multiplicative_scale_init: float = 0.1, soma_peak_correction: bool = False, soma_peak_correction_scale_init: float = 0.1, soma_highpass_correction: bool = False, soma_highpass_correction_scale_init: float = 0.1, spike_voltage_coupling_scale: float = 0.0, spike_voltage_coupling_detach: bool = False, morphology_ids: list[str] | None = None, morphology_embedding_scale: float | None = None, population_adapter_morphology_id: str | None = None, synapse_gain_scale: float | None = None, morphology_synapse_gain_scale: float | None = None, share_morphology_synapse_gain: bool = False, morphology_synapse_gain_rank: int = 0, morphology_synapse_feature_dim: int = 0, morphology_synapse_feature_hidden: int = 0, morphology_synapse_feature_scale: float | None = None, morphology_synapse_feature_storage_dtype: str = 'float32', local_tcn_scale: float | None = None, local_tcn_mode: str = 'dilated', local_tcn_position: str = 'parallel', share_local_tcn_pointwise: bool = False, local_tcn_pointwise_adapter_rank: int = 0, local_tcn_pointwise_rank: int = 0, local_tcn_output_rank: int = 0, mamba_projection_rank: int = 0, branch_gain: bool = False, branch_nonlinearity: str = 'none', branch_nonlinearity_scale_init: float = 0.1, branch_subunits: int = 0, branch_subunit_routing: str = 'contiguous', branch_subunit_scale: float = 1.0, branch_bilinear_rank: int = 0, branch_bilinear_scale: float | None = None, branch_trace_taus: list[float] | None = None, branch_trace_kernel: int = 65, hidden_trace_taus: list[float] | None = None, hidden_trace_kernel: int = 129, temporal_refine_kernel: int = 0, integrative_mixer: bool = False, integrative_mixer_short_kernel: int = 9, integrative_mixer_long_kernel: int = 65, integrative_mixer_position: str = 'pre', integrative_mixer_long_path_bias: float = 0.5) -> None",
       "parameters": [
         {
           "name": "num_input",
@@ -3022,6 +3370,12 @@
           "name": "spike_voltage_coupling_scale",
           "type": "float",
           "default": "0.0",
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "spike_voltage_coupling_detach",
+          "type": "bool",
+          "default": "False",
           "kind": "positional_or_keyword"
         },
         {
@@ -3409,6 +3763,11 @@
           "default": "0.0"
         },
         {
+          "name": "spike_voltage_coupling_detach",
+          "type": "bool",
+          "default": "False"
+        },
+        {
           "name": "morphology_ids",
           "type": "list[str] | None",
           "default": "None"
@@ -3603,8 +3962,8 @@
       "name": "BranchMambaStreamingState",
       "kind": "class",
       "page": "api/mamba",
-      "line": 102,
-      "end_line": 107,
+      "line": 103,
+      "end_line": 108,
       "signature": "BranchMambaStreamingState(mamba_states: list[tuple[torch.Tensor, torch.Tensor]], local_tcn_histories: list[torch.Tensor], morphology_feature_gains: torch.Tensor | None = None) -> None",
       "parameters": [
         {
@@ -3652,8 +4011,8 @@
       "name": "BranchOfficialMamba",
       "kind": "class",
       "page": "api/mamba",
-      "line": 110,
-      "end_line": 1808,
+      "line": 111,
+      "end_line": 1813,
       "signature": "BranchOfficialMamba(self, config: BranchOfficialMambaConfig, *, mamba_classes: tuple[type[nn.Module], type[nn.Module] | None] | None=None) -> None",
       "parameters": [
         {
@@ -3691,8 +4050,8 @@
               "resolved_default": null
             }
           ],
-          "line": 113,
-          "end_line": 588,
+          "line": 114,
+          "end_line": 589,
           "return_type": "None",
           "decorators": []
         },
@@ -3715,8 +4074,8 @@
               "resolved_default": null
             }
           ],
-          "line": 678,
-          "end_line": 689,
+          "line": 679,
+          "end_line": 690,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -3746,8 +4105,8 @@
               "resolved_default": null
             }
           ],
-          "line": 954,
-          "end_line": 994,
+          "line": 955,
+          "end_line": 995,
           "return_type": "BranchMambaStreamingState",
           "decorators": []
         },
@@ -3783,8 +4142,8 @@
               "resolved_default": null
             }
           ],
-          "line": 996,
-          "end_line": 1087,
+          "line": 997,
+          "end_line": 1088,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -3840,8 +4199,8 @@
               "resolved_default": true
             }
           ],
-          "line": 1310,
-          "end_line": 1451,
+          "line": 1311,
+          "end_line": 1452,
           "return_type": "torch.Tensor",
           "decorators": []
         }
@@ -3855,8 +4214,8 @@
       "name": "BranchPyTorchMamba",
       "kind": "class",
       "page": "api/mamba",
-      "line": 1810,
-      "end_line": 1818,
+      "line": 1815,
+      "end_line": 1823,
       "signature": "BranchPyTorchMamba(self, config: BranchOfficialMambaConfig) -> None",
       "parameters": [
         {
@@ -3880,8 +4239,8 @@
               "kind": "positional_or_keyword"
             }
           ],
-          "line": 1813,
-          "end_line": 1818,
+          "line": 1818,
+          "end_line": 1823,
           "return_type": "None",
           "decorators": []
         }
@@ -3978,8 +4337,8 @@
       "kind": "class",
       "page": "api/temporal-core",
       "line": 28,
-      "end_line": 85,
-      "signature": "AxoTemporalCoreConfig(kind: TemporalCoreKind, gru_hidden_units: int | None = None, branch_memory_units: int = 30, branch_hidden_units: int = 64, branch_synapse_decay: float = 0.85, branch_memory_decay: float = 0.9, residual_scale_init: float = 0.1, keep_local_tcn: bool = False, patch_size: int = 1, behavior_adapter_morphology_id: str | None = None, behavior_adapter_rank: int = 0, behavior_adapter_branch_token_offset: bool = False) -> None",
+      "end_line": 91,
+      "signature": "AxoTemporalCoreConfig(kind: TemporalCoreKind, gru_hidden_units: int | None = None, branch_memory_units: int = 30, branch_hidden_units: int = 64, branch_synapse_decay: float = 0.85, branch_memory_decay: float = 0.9, residual_scale_init: float = 0.1, keep_local_tcn: bool = False, gru_layers: int = 1, dropout: float = 0.0, patch_size: int = 1, behavior_adapter_morphology_id: str | None = None, behavior_adapter_rank: int = 0, behavior_adapter_branch_token_offset: bool = False) -> None",
       "parameters": [
         {
           "name": "kind",
@@ -4027,6 +4386,18 @@
           "name": "keep_local_tcn",
           "type": "bool",
           "default": "False",
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "gru_layers",
+          "type": "int",
+          "default": "1",
+          "kind": "positional_or_keyword"
+        },
+        {
+          "name": "dropout",
+          "type": "float",
+          "default": "0.0",
           "kind": "positional_or_keyword"
         },
         {
@@ -4096,6 +4467,16 @@
           "default": "False"
         },
         {
+          "name": "gru_layers",
+          "type": "int",
+          "default": "1"
+        },
+        {
+          "name": "dropout",
+          "type": "float",
+          "default": "0.0"
+        },
+        {
           "name": "patch_size",
           "type": "int",
           "default": "1"
@@ -4125,8 +4506,8 @@
       "name": "NeuronBehaviorAdapter",
       "kind": "class",
       "page": "api/temporal-core",
-      "line": 88,
-      "end_line": 205,
+      "line": 94,
+      "end_line": 211,
       "signature": "NeuronBehaviorAdapter(self, *, branches: int, width: int, outputs: int, morphology_index: int, rank: int=0, branch_token_offset: bool=False) -> None",
       "parameters": [
         {
@@ -4214,8 +4595,8 @@
               "resolved_default": false
             }
           ],
-          "line": 91,
-          "end_line": 159,
+          "line": 97,
+          "end_line": 165,
           "return_type": "None",
           "decorators": []
         },
@@ -4224,8 +4605,8 @@
           "kind": "property",
           "signature": "NeuronBehaviorAdapter.parameter_counts: dict[str, int]",
           "parameters": [],
-          "line": 162,
-          "end_line": 201,
+          "line": 168,
+          "end_line": 207,
           "return_type": "dict[str, int]",
           "decorators": [
             "property"
@@ -4236,8 +4617,8 @@
           "kind": "property",
           "signature": "NeuronBehaviorAdapter.parameter_count: int",
           "parameters": [],
-          "line": 204,
-          "end_line": 205,
+          "line": 210,
+          "end_line": 211,
           "return_type": "int",
           "decorators": [
             "property"
@@ -4250,12 +4631,75 @@
     },
     {
       "module": "temporal_core",
+      "name": "StackedResidualGRUTemporalCore",
+      "kind": "class",
+      "page": "api/temporal-core",
+      "line": 214,
+      "end_line": 229,
+      "signature": "StackedResidualGRUTemporalCore(self, layers: list[nn.Module]) -> None",
+      "parameters": [
+        {
+          "name": "layers",
+          "type": "list[nn.Module]",
+          "default": null,
+          "kind": "positional_or_keyword"
+        }
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "name": "__init__",
+          "kind": "method",
+          "signature": "__init__(self, layers: list[nn.Module]) -> None",
+          "parameters": [
+            {
+              "name": "layers",
+              "type": "list[nn.Module]",
+              "default": null,
+              "kind": "positional_or_keyword"
+            }
+          ],
+          "line": 221,
+          "end_line": 224,
+          "return_type": "None",
+          "decorators": []
+        },
+        {
+          "name": "forward",
+          "kind": "method",
+          "signature": "forward(self, hidden: torch.Tensor, **kwargs) -> torch.Tensor",
+          "parameters": [
+            {
+              "name": "hidden",
+              "type": "torch.Tensor",
+              "default": null,
+              "kind": "positional_or_keyword"
+            },
+            {
+              "name": "kwargs",
+              "type": null,
+              "default": null,
+              "kind": "variadic_keyword"
+            }
+          ],
+          "line": 226,
+          "end_line": 229,
+          "return_type": "torch.Tensor",
+          "decorators": []
+        }
+      ],
+      "bases": [
+        "nn.Module"
+      ]
+    },
+    {
+      "module": "temporal_core",
       "name": "ResidualGRUTemporalCore",
       "kind": "class",
       "page": "api/temporal-core",
-      "line": 208,
-      "end_line": 328,
-      "signature": "ResidualGRUTemporalCore(self, width: int, *, hidden_units: int | None=None, residual_scale_init: float) -> None",
+      "line": 232,
+      "end_line": 354,
+      "signature": "ResidualGRUTemporalCore(self, width: int, *, hidden_units: int | None=None, residual_scale_init: float, dropout: float=0.0) -> None",
       "parameters": [
         {
           "name": "width",
@@ -4275,6 +4719,13 @@
           "type": "float",
           "default": null,
           "kind": "keyword_only"
+        },
+        {
+          "name": "dropout",
+          "type": "float",
+          "default": "0.0",
+          "kind": "keyword_only",
+          "resolved_default": 0.0
         }
       ],
       "fields": [],
@@ -4282,7 +4733,7 @@
         {
           "name": "__init__",
           "kind": "method",
-          "signature": "__init__(self, width: int, *, hidden_units: int | None=None, residual_scale_init: float) -> None",
+          "signature": "__init__(self, width: int, *, hidden_units: int | None=None, residual_scale_init: float, dropout: float=0.0) -> None",
           "parameters": [
             {
               "name": "width",
@@ -4302,10 +4753,17 @@
               "type": "float",
               "default": null,
               "kind": "keyword_only"
+            },
+            {
+              "name": "dropout",
+              "type": "float",
+              "default": "0.0",
+              "kind": "keyword_only",
+              "resolved_default": 0.0
             }
           ],
-          "line": 211,
-          "end_line": 238,
+          "line": 235,
+          "end_line": 264,
           "return_type": "None",
           "decorators": []
         },
@@ -4342,8 +4800,8 @@
               "resolved_default": null
             }
           ],
-          "line": 240,
-          "end_line": 253,
+          "line": 266,
+          "end_line": 279,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -4380,8 +4838,8 @@
               "resolved_default": null
             }
           ],
-          "line": 255,
-          "end_line": 286,
+          "line": 281,
+          "end_line": 312,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -4390,8 +4848,8 @@
           "kind": "property",
           "signature": "ResidualGRUTemporalCore.recurrent_state_elements: int",
           "parameters": [],
-          "line": 327,
-          "end_line": 328,
+          "line": 353,
+          "end_line": 354,
           "return_type": "int",
           "decorators": [
             "property"
@@ -4407,8 +4865,8 @@
       "name": "BranchELMTemporalCore",
       "kind": "class",
       "page": "api/temporal-core",
-      "line": 331,
-      "end_line": 393,
+      "line": 357,
+      "end_line": 419,
       "signature": "BranchELMTemporalCore(self, width: int, *, memory_units: int, hidden_units: int, synapse_decay: float, memory_decay: float, residual_scale_init: float) -> None",
       "parameters": [
         {
@@ -4492,8 +4950,8 @@
               "kind": "keyword_only"
             }
           ],
-          "line": 334,
-          "end_line": 359,
+          "line": 360,
+          "end_line": 385,
           "return_type": "None",
           "decorators": []
         },
@@ -4509,8 +4967,8 @@
               "kind": "positional_or_keyword"
             }
           ],
-          "line": 361,
-          "end_line": 362,
+          "line": 387,
+          "end_line": 388,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -4526,8 +4984,8 @@
               "kind": "positional_or_keyword"
             }
           ],
-          "line": 364,
-          "end_line": 389,
+          "line": 390,
+          "end_line": 415,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -4536,8 +4994,8 @@
           "kind": "property",
           "signature": "BranchELMTemporalCore.recurrent_state_elements: int",
           "parameters": [],
-          "line": 392,
-          "end_line": 393,
+          "line": 418,
+          "end_line": 419,
           "return_type": "int",
           "decorators": [
             "property"
@@ -4553,8 +5011,8 @@
       "name": "CausalPatchedTemporalCore",
       "kind": "class",
       "page": "api/temporal-core",
-      "line": 396,
-      "end_line": 455,
+      "line": 422,
+      "end_line": 481,
       "signature": "CausalPatchedTemporalCore(self, core: nn.Module, *, width: int, patch_size: int) -> None",
       "parameters": [
         {
@@ -4602,8 +5060,8 @@
               "kind": "keyword_only"
             }
           ],
-          "line": 399,
-          "end_line": 411,
+          "line": 425,
+          "end_line": 437,
           "return_type": "None",
           "decorators": []
         },
@@ -4625,8 +5083,8 @@
               "kind": "variadic_keyword"
             }
           ],
-          "line": 413,
-          "end_line": 448,
+          "line": 439,
+          "end_line": 474,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -4635,8 +5093,8 @@
           "kind": "property",
           "signature": "CausalPatchedTemporalCore.recurrent_state_elements: int",
           "parameters": [],
-          "line": 451,
-          "end_line": 455,
+          "line": 477,
+          "end_line": 481,
           "return_type": "int",
           "decorators": [
             "property"
@@ -4652,8 +5110,8 @@
       "name": "AxoTemporalModel",
       "kind": "class",
       "page": "api/temporal-core",
-      "line": 458,
-      "end_line": 1163,
+      "line": 484,
+      "end_line": 1202,
       "signature": "AxoTemporalModel(self, source: BranchOfficialMamba, temporal_config: AxoTemporalCoreConfig) -> None",
       "parameters": [
         {
@@ -4689,8 +5147,8 @@
               "kind": "positional_or_keyword"
             }
           ],
-          "line": 461,
-          "end_line": 522,
+          "line": 487,
+          "end_line": 561,
           "return_type": "None",
           "decorators": []
         },
@@ -4699,8 +5157,8 @@
           "kind": "property",
           "signature": "AxoTemporalModel.config",
           "parameters": [],
-          "line": 525,
-          "end_line": 526,
+          "line": 564,
+          "end_line": 565,
           "return_type": null,
           "decorators": [
             "property"
@@ -4711,8 +5169,8 @@
           "kind": "property",
           "signature": "AxoTemporalModel.num_input: int",
           "parameters": [],
-          "line": 529,
-          "end_line": 530,
+          "line": 568,
+          "end_line": 569,
           "return_type": "int",
           "decorators": [
             "property"
@@ -4723,8 +5181,8 @@
           "kind": "property",
           "signature": "AxoTemporalModel.num_output: int",
           "parameters": [],
-          "line": 533,
-          "end_line": 534,
+          "line": 572,
+          "end_line": 573,
           "return_type": "int",
           "decorators": [
             "property"
@@ -4735,8 +5193,8 @@
           "kind": "property",
           "signature": "AxoTemporalModel.num_branch: int",
           "parameters": [],
-          "line": 537,
-          "end_line": 538,
+          "line": 576,
+          "end_line": 577,
           "return_type": "int",
           "decorators": [
             "property"
@@ -4747,8 +5205,8 @@
           "kind": "property",
           "signature": "AxoTemporalModel.base_soma_prediction: torch.Tensor | None",
           "parameters": [],
-          "line": 541,
-          "end_line": 542,
+          "line": 580,
+          "end_line": 581,
           "return_type": "torch.Tensor | None",
           "decorators": [
             "property"
@@ -4773,8 +5231,8 @@
               "resolved_default": null
             }
           ],
-          "line": 544,
-          "end_line": 652,
+          "line": 583,
+          "end_line": 691,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -4804,8 +5262,8 @@
               "resolved_default": null
             }
           ],
-          "line": 654,
-          "end_line": 729,
+          "line": 693,
+          "end_line": 768,
           "return_type": "AxoTemporalStreamingState",
           "decorators": []
         },
@@ -4834,8 +5292,8 @@
               "resolved_default": null
             }
           ],
-          "line": 731,
-          "end_line": 769,
+          "line": 770,
+          "end_line": 808,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -4891,8 +5349,8 @@
               "resolved_default": true
             }
           ],
-          "line": 771,
-          "end_line": 921,
+          "line": 810,
+          "end_line": 960,
           "return_type": "torch.Tensor",
           "decorators": []
         },
@@ -4908,8 +5366,8 @@
               "kind": "keyword_only"
             }
           ],
-          "line": 1127,
-          "end_line": 1135,
+          "line": 1166,
+          "end_line": 1174,
           "return_type": "int",
           "decorators": []
         },
@@ -4918,8 +5376,8 @@
           "kind": "method",
           "signature": "component_manifest(self) -> dict[str, object]",
           "parameters": [],
-          "line": 1137,
-          "end_line": 1163,
+          "line": 1176,
+          "end_line": 1202,
           "return_type": "dict[str, object]",
           "decorators": []
         }
@@ -4933,8 +5391,8 @@
       "name": "create_temporal_model",
       "kind": "function",
       "page": "api/temporal-core",
-      "line": 1166,
-      "end_line": 1174,
+      "line": 1205,
+      "end_line": 1213,
       "signature": "create_temporal_model(source: BranchOfficialMamba, temporal_config: AxoTemporalCoreConfig) -> BranchOfficialMamba | AxoTemporalModel",
       "parameters": [
         {
@@ -4958,8 +5416,8 @@
       "name": "migrate_legacy_gru_state_dict",
       "kind": "function",
       "page": "api/temporal-core",
-      "line": 1177,
-      "end_line": 1195,
+      "line": 1216,
+      "end_line": 1234,
       "signature": "migrate_legacy_gru_state_dict(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]",
       "parameters": [
         {

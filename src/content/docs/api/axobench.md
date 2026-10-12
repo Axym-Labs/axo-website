@@ -3,14 +3,14 @@ title: AxoBench prediction adapters
 description: Signatures, parameters, return contracts, and source for axobench prediction adapters.
 section: API reference
 apiGroup: Data
-order: 222
+order: 223
 ---
 
 ## Overview
 
 Prediction adapters reconstruct checkpoint models, select morphology identities, and return NumPy arrays in AxoBench's expected coordinates. The current AxoBench package is an additional dependency for the CLI evaluator. The source supports native and streaming predictor options in Python; the CLI exposes its declared subset.
 
-Source revision: `0f546adfd8fc`. [Public export index](/api/).
+Source revision: `caef7be03abd`. [Public export index](/api/).
 
 <section class="api-symbol" id="axobench-iteration-make-official-elm-predictor">
 
@@ -22,7 +22,7 @@ Source revision: `0f546adfd8fc`. [Public export index](/api/).
 axosim.axobench_iteration.make_official_elm_predictor(config_path: str | Path, checkpoint_path: str | Path, *, device: str='auto', dtype: str | torch.dtype='float32') -> tuple[Callable[[np.ndarray], np.ndarray], dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axobench_iteration.py#L22-L83)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axobench_iteration.py#L22-L83)
 
 </div>
 
@@ -62,7 +62,7 @@ Load an upstream Branch-ELM checkpoint on the shared AxoBench contract.
 axosim.axobench_iteration.make_checkpoint_predictor(checkpoint: str | Path, *, device: str='auto', dtype: str | torch.dtype='float32', streaming: bool=False, streaming_chunk_size: int | None=None) -> tuple[Callable[[np.ndarray], np.ndarray], dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axosim/blob/0f546adfd8fc8530ff8ec0952ce7a1367616cf24/src/axosim/axobench_iteration.py#L86-L189)
+[Source](https://github.com/Axym-Labs/axosim/blob/caef7be03abdbde76ab00080ba7c4866da81278e/src/axosim/axobench_iteration.py#L86-L189)
 
 </div>
 

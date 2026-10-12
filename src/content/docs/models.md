@@ -58,9 +58,9 @@ A model profile selects architecture parameters; a checkpoint supplies fitted we
 | `axosim-gru-medium` | 128 | 32 | 2 | 128 |
 | `axosim-mamba-small` | 32 | 8 | 2 | 32 |
 | `axosim-mamba-medium` | 176 | 44 | 4 | 88 |
-| `axosim-mamba-large` | 488 | 124 | 8 | 124 |
+| `axosim-mamba-large` | 314 | 80 | 20 | 80 |
 
-These are the exact fields in the [profile registry](/api/model-family/). For GRU, the recurrent hidden width equals `model_dim`; `state_dim` describes the common backbone configuration rather than the GRU hidden state.
+These are the exact fields in the [profile registry](/api/model-family/). The Large profile also sets `mamba_update_normalization="fixed_rms"`, which normalizes the branch updates of its 20 layers. For GRU, the recurrent hidden width equals `model_dim`; `state_dim` describes the common backbone configuration rather than the GRU hidden state.
 
 </details>
 
