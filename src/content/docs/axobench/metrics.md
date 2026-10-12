@@ -7,7 +7,7 @@ order: 140
 
 ## Metric set
 
-AxoBench 0.2.0 reports four core metrics. Each isolates a different error, and no single one captures every biologically relevant difference between a model and its teacher.
+AxoBench 0.2.1 reports four core metrics, the same set as 0.2.0. Each isolates a different error, and no single one captures every biologically relevant difference between a model and its teacher.
 
 | Metric | Measures | Better |
 | --- | --- | --- |
@@ -16,7 +16,7 @@ AxoBench 0.2.0 reports four core metrics. Each isolates a different error, and n
 | [Subthreshold voltage RMSE](#subthreshold-voltage-rmse) | Voltage offset, gain, and post-spike error outside action potentials | Lower, mV |
 | [Response SERA](#response-sera) | Error in the voltage change caused by an input intervention | Lower, mV²/spike |
 
-[Dynamics SERA](#dynamics-sera) and the subthreshold skill are secondary rows. All metrics are computed on the scored traces after the first `ignore_start` steps, as described in [benchmarking](/axobench/benchmarking/#calibration-and-scoring).
+[Dynamics SERA](#dynamics-sera), the subthreshold skill, and the [dataset-relative SERA skill rows](/axobench/skill/) are secondary rows. All metrics are computed on the scored traces after the first `ignore_start` steps, as described in [benchmarking](/axobench/benchmarking/#calibration-and-scoring).
 
 ## Voltage coordinates
 
@@ -58,11 +58,11 @@ Relevance is fitted on the pooled teacher responses of a condition, so large tea
 
 ## Dynamics SERA
 
-Dynamics SERA applies the Voltage SERA construction to the one-step voltage change, in mV/ms, with relevance fitted on the teacher's rate of change. It is reported per teacher spike in mV²/ms² and is a secondary metric in AxoBench 0.2.0.
+Dynamics SERA applies the Voltage SERA construction to the one-step voltage change, in mV/ms, with relevance fitted on the teacher's rate of change. It is reported per teacher spike in mV²/ms² and has been a secondary metric since AxoBench 0.2.0. Its skill against a constant voltage is the `dynamics_sera_skill` row.
 
 ## Relation to the technical report
 
-The AxoSim [technical report](/report/main.pdf) uses an earlier definition: SERA as a support-normalized integral over 101 relevance thresholds, in mV², with Dynamics SERA in the core set. AxoBench 0.2.0 values are per teacher spike and use the IRon-default relevance, so they are not comparable with the report's SERA values. Report the AxoBench version with every value.
+The AxoSim [technical report](/report/main.pdf) uses an earlier definition: SERA as a support-normalized integral over 101 relevance thresholds, in mV², with Dynamics SERA in the core set. Since version 0.2.0, AxoBench values are per teacher spike and use the IRon-default relevance, so they are not comparable with the report's SERA values. Report the AxoBench version with every value.
 
 ## Compute metrics on arrays
 
@@ -95,4 +95,4 @@ The spike train and the clipped subthreshold voltage are exact, but Voltage SERA
 
 ## Next steps
 
-Use [diagnostics](/axobench/diagnostics/) to test how these metrics respond to controlled defects, or see the [metric API](/axobench-api/metrics/) for every function and its arguments.
+Express SERA as [dataset-relative skill](/axobench/skill/), break errors down with the [error anatomy](/axobench/error-anatomy/), use [diagnostics](/axobench/diagnostics/) to test how these metrics respond to controlled defects, or see the [metric API](/axobench-api/metrics/) for every function and its arguments.

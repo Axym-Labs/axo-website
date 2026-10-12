@@ -7,9 +7,9 @@ order: 90
 
 ## Use the AxoBench metric protocol
 
-AxoBench defines the metric protocol used to evaluate AxoSim checkpoints. Its core metrics in version 0.2.0 are Voltage SERA, spike Mean F1 over 0–5 ms tolerances, the subthreshold voltage RMSE, and Response SERA; SERA is the IRon-default squared error-relevance area per teacher spike, in mV²/spike. Dynamics SERA remains a secondary row. [Core metrics](/axobench/metrics/) gives the definitions and [benchmarking](/axobench/benchmarking/) the protocol. AxoBench owns calibration, diagnostics, and paired comparisons, while AxoSim supplies the checkpoint loader and prediction adapter.
+AxoBench defines the metric protocol used to evaluate AxoSim checkpoints. Its core metrics, unchanged in version 0.2.1, are Voltage SERA, spike Mean F1 over 0–5 ms tolerances, the subthreshold voltage RMSE, and Response SERA; SERA is the IRon-default squared error-relevance area per teacher spike, in mV²/spike. Dynamics SERA and the [dataset-relative skill rows](/axobench/skill/) are secondary rows. [Core metrics](/axobench/metrics/) gives the definitions and [benchmarking](/axobench/benchmarking/) the protocol. AxoBench owns calibration, diagnostics, and paired comparisons, while AxoSim supplies the checkpoint loader and prediction adapter.
 
-Install AxoBench 0.2.0 or newer in the same environment as AxoSim, as described in [benchmarking](/axobench/benchmarking/#install-axobench). Provide an evaluation root with the single-neuron `val` split and, optionally, the paired interventions under `interventions/`, as assembled in [choose a dataset](/datasets/#assemble-an-evaluation-root), and a trusted checkpoint.
+Install AxoBench in the same environment as AxoSim with the `bench` extra, `python -m pip install 'axosim[bench]'`, and upgrade it to 0.2.1 for the skill rows and the error anatomy, as described in [benchmarking](/axobench/benchmarking/#install-axobench). Provide an evaluation root with the single-neuron `val` split and, optionally, the paired interventions under `interventions/`, as assembled in [choose a dataset](/datasets/#assemble-an-evaluation-root), and a trusted checkpoint.
 
 ## Evaluate and save a cache
 
@@ -51,4 +51,4 @@ The evaluator defaults to 120 validation traces and 40 pairs per intervention co
 
 ## Next steps
 
-Preserve the cache, report, checkpoint hash, and dataset manifest using [reproducibility](/reproducibility/).
+Explain a saved cache with the [error anatomy](/axobench/error-anatomy/#run-from-the-command-line). Preserve the cache, report, checkpoint hash, and dataset manifest using [reproducibility](/reproducibility/).

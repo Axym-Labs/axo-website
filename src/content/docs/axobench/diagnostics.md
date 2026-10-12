@@ -127,6 +127,10 @@ Pass a threshold calibrated on separate traces. `run_v1_benchmark_bundle(model_f
 
 Every row has the columns `diagnostic`, `suite`, `model_id`, `teacher_id`, `morphology_id`, `split`, `condition`, `intervention`, `trace_id`, `state`, `metric`, `value`, `unit`, and `n`, plus the target view, `ignore_start`, and calibrated threshold. `write_diagnostic_rows` writes `.json`, `.jsonl`, or `.csv`, and `write_diagnostic_summary` writes a Markdown or JSON summary. The rows load directly into a dataframe.
 
+## Break errors down
+
+The attention panel and the diagnostic rows flag where a model fails. The [error anatomy](/axobench/error-anatomy/), new in AxoBench 0.2.1, explains a model's core-metric errors on the evaluator's own scored traces: hits, misses, and false spikes with their timing errors; the spike-triggered voltage of teacher and model; subthreshold error by time since and until a teacher spike; and skill by firing rate, frequency band, and morphology. Run it on a saved evaluation cache with `axobench error-anatomy`.
+
 ## Select diagnostic suites
 
 A suite is a named set of diagnostics; a row is kept when its diagnostic belongs to one of the requested suites.
@@ -146,6 +150,10 @@ A suite is a named set of diagnostics; a row is kept when its diagnostic belongs
 
 `axobench dataset-schema --kind diagnostics` prints the complete catalog, including audit diagnostics derived from saved comparison artifacts and the plotters attached to each diagnostic.
 
+## Plot diagnostics
+
+`axobench diagnostic-plots` writes the audit figures and tables from saved audit summaries, as SVG, PDF, and PNG by default; the [CLI reference](/axobench-api/cli/#diagnostic-plots) lists its inputs. `axobench error-anatomy` writes the error-anatomy figure. AxoBench 0.2.1 draws all figures in one paper style, `apply_paper_plot_style`: STIX serif text at 7 to 8 pt, despined axes without grid, and the Okabe–Ito palette, sized for one or two columns. Set `AXOBENCH_PAPER_STYLE` to a Matplotlib style file to apply your own style first. The error-anatomy figure is also written as a standalone pgfplots `.tex` file for [LaTeX documents](/axobench/error-anatomy/#export-for-latex).
+
 ## Next steps
 
-Return to [benchmarking](/axobench/benchmarking/) for the evaluation protocol, or see the [diagnostics API](/axobench-api/diagnostics/) for every argument.
+Explain a model's errors with the [error anatomy](/axobench/error-anatomy/), return to [benchmarking](/axobench/benchmarking/) for the evaluation protocol, or see the [diagnostics API](/axobench-api/diagnostics/) for every argument.

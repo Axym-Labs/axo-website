@@ -10,10 +10,10 @@ order: 145
 AxoBench needs Python 3.10 or newer and depends only on NumPy, Matplotlib, and Requests; it does not import a model framework.
 
 ```bash
-python -m pip install "axobench>=0.2.0"
+python -m pip install "axobench>=0.2.1"
 ```
 
-These pages describe AxoBench 0.2.0. It defines SERA as the IRon-default relevance area per teacher spike and replaces Dynamics SERA in the core set with the subthreshold voltage RMSE; earlier versions report different quantities under similar names. Record the installed version, for example with `importlib.metadata.version("axobench")`, alongside every result. A source checkout installs with `python -m pip install -e .`; the source repository currently requires access.
+These pages describe AxoBench 0.2.1. Since 0.2.0, it defines SERA as the IRon-default relevance area per teacher spike and replaces Dynamics SERA in the core set with the subthreshold voltage RMSE; earlier versions report different quantities under similar names. Record the installed version, for example with `importlib.metadata.version("axobench")`, alongside every result. A source checkout installs with `python -m pip install -e .`; the source repository currently requires access.
 
 ## Supply a prediction function
 
@@ -144,6 +144,10 @@ The terminal report has a header with the model, sample counts, calibrated thres
 | `response_sera_iron_per_spike_mv2` | mV²/spike | Core: [Response SERA](/axobench/metrics/#response-sera), pooled over conditions |
 | `subthreshold_skill` | skill | Secondary: improvement over the per-trace mean voltage |
 | `dynamics_sera_iron_per_spike_mv2_per_ms2` | mV²/ms²/spike | Secondary: [Dynamics SERA](/axobench/metrics/#dynamics-sera) |
+| `voltage_sera_skill` | skill | Secondary: Voltage SERA skill against a [constant voltage](/axobench/skill/#the-constant-reference) |
+| `voltage_sera_ceiling_skill` | skill | Secondary: skill of the teacher clipped at −55 mV, the [AP-free ceiling](/axobench/skill/#the-ap-free-ceiling) |
+| `voltage_sera_skill_of_ceiling` | ratio | Secondary: Voltage SERA skill as a [fraction of the ceiling](/axobench/skill/#skill-as-a-fraction-of-the-ceiling) |
+| `dynamics_sera_skill` | skill | Secondary: Dynamics SERA skill against the constant voltage |
 
 The returned dictionary also contains the full F1 curve with precision, recall, and event counts per tolerance, one record per intervention condition, every diagnostic with its trigger and basis, and the selection settings. `write_evaluation_report` writes it as strict JSON or as tidy CSV rows of type `metric`, `diagnostic`, and `intervention`, selected by the file suffix.
 
@@ -200,4 +204,4 @@ State the AxoBench version, dataset and split, sample limits and start, morpholo
 
 ## Next steps
 
-Read the [metric definitions](/axobench/metrics/), inspect the [attention panel and diagnostics](/axobench/diagnostics/), or look up exact signatures in the [AxoBench API](/axobench-api/).
+Read the [metric definitions](/axobench/metrics/), explain a model's errors with the [error anatomy](/axobench/error-anatomy/), inspect the [attention panel and diagnostics](/axobench/diagnostics/), or look up exact signatures in the [AxoBench API](/axobench-api/).

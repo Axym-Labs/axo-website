@@ -92,6 +92,10 @@ h1 { font-size: 36px; line-height: 1.18; letter-spacing: -.7px; margin: 0 0 15px
 .overview-figure { margin: 25px 0 17px; padding: 8px 0; }
 .overview-figure .figure-dark, [data-theme='dark'] .overview-figure .figure-light { display: none; }
 [data-theme='dark'] .overview-figure .figure-dark { display: block; }
+/* Figures drawn on white keep a light card in both themes. */
+.figure-card { margin: 25px 0 14px; padding: 14px; background: #fff; border: 1px solid var(--border); border-radius: 8px; }
+.figure-card a, .figure-card img { display: block; width: 100%; }
+[data-theme='dark'] .figure-card { border-color: #fff; }
 .prose .figure-caption { margin: 0 0 28px; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .resource-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 33px; }
 .resource-links a { padding: 7px 13px; border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 14px; text-decoration: none; background: var(--canvas); }
@@ -215,6 +219,7 @@ h1 { font-size: 36px; line-height: 1.18; letter-spacing: -.7px; margin: 0 0 15px
   .prose h2 { font-size: 23px; }
   .prose pre { padding: 16px; font-size: 12px; }
   .overview-figure { padding: 6px 0; }
+  .figure-card { padding: 6px; }
   .model-catalog { grid-template-columns: 1fr; gap: 30px; }
   .prose .model-art { height: 174px; }
   .model-card > p { min-height: 0; }

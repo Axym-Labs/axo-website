@@ -67,7 +67,7 @@ Validate the eager path first and compare successive eager and captured updates 
 
 Verify the voltage target coordinates before comparing predictions with millivolt traces. The standard NeuronIO conversion includes clipping and normalization; applying its inverse transform twice changes the voltage error. Calibrate spike thresholds only on the declared development or calibration partition.
 
-These messages identify incompatible prediction/target shapes or absent morphology context. A wrong voltage conversion can also change metrics without raising an exception. Use the [AxoBench evaluation path](/evaluation/) to preserve the metric protocol. AxoBench 0.2.0 reports SERA per teacher spike in mV²/spike, while the technical report's SERA and Root-SERA use an earlier definition; confirm the metric ID, units, and AxoBench version before comparing values. The shape template is checked in [AxoBench](https://github.com/Axym-Labs/axobench/blob/6c10504e0c7d52ae4c9921b28186be7b72a8407a/src/axobench/benchmark/iteration_evaluator.py#L607).
+These messages identify incompatible prediction/target shapes or absent morphology context. A wrong voltage conversion can also change metrics without raising an exception. Use the [AxoBench evaluation path](/evaluation/) to preserve the metric protocol. AxoBench 0.2.0 and later report SERA per teacher spike in mV²/spike, while the technical report's SERA and Root-SERA use an earlier definition; confirm the metric ID, units, and AxoBench version before comparing values. The shape template is checked in [AxoBench](https://github.com/Axym-Labs/axobench/blob/6c10504e0c7d52ae4c9921b28186be7b72a8407a/src/axobench/benchmark/iteration_evaluator.py#L607).
 
 ## Evaluation caches cannot be paired
 

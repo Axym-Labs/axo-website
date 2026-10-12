@@ -8,7 +8,7 @@ function files(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap(item => item.isDirectory() ? files(join(dir, item.name)) : [join(dir, item.name)]);
 }
 const pages = files(dist).filter(path => path.endsWith('.html') && !path.endsWith('/404.html'));
-const required = ['/', '/installation/', '/models/', '/connected-populations/', '/inference/', '/history-scan/', '/training/', '/populations/', '/sparse-events/', '/adaptation/', '/cuda-graphs/', '/evaluation/', '/datasets/', '/reproducibility/', '/troubleshooting/', '/api/', '/api/connected-population/', '/api/history-scan/'];
+const required = ['/', '/installation/', '/models/', '/connected-populations/', '/inference/', '/history-scan/', '/training/', '/populations/', '/sparse-events/', '/adaptation/', '/cuda-graphs/', '/evaluation/', '/datasets/', '/reproducibility/', '/troubleshooting/', '/api/', '/api/connected-population/', '/api/history-scan/', '/api/connectors/', '/axobench/error-anatomy/', '/axobench/skill/'];
 for (const path of required) assert(existsSync(join(dist, path, 'index.html')), `Missing page: ${path}`);
 assert.equal(readFileSync(join(dist, 'CNAME'), 'utf8').trim(), 'axo.axym.org');
 assert(existsSync(join(dist, 'pagefind/pagefind.js')), 'Search index missing');
