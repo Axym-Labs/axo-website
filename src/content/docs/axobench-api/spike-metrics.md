@@ -10,7 +10,7 @@ order: 304
 
 Spike events, thresholds, one-to-one event matching, and F1 over timing tolerances, together with the coincidence factor and the historical timestep AUC and voltage RMSE. Spike arrays are (trace, time) or (time,); values above 0.5 count as events.
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="metrics-spike-event-peaks">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.metrics.spike_event_peaks(scores: np.ndarray, *, refractory_steps: int=2, min_score: float=-np.inf) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L68-L95)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L68-L95)
 
 </div>
 
@@ -58,7 +58,7 @@ Candidate spike events: local maxima of each trace's score, kept greedily from t
 axobench.metrics.spike_events(scores: np.ndarray, threshold: float, *, refractory_steps: int | None=2) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L98-L108)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L98-L108)
 
 </div>
 
@@ -94,7 +94,7 @@ Binary spike events: score peaks at or above the threshold, or every supra-thres
 axobench.metrics.prevalence_matched_threshold(scores: np.ndarray, positive_count: int) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L56-L65)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L56-L65)
 
 </div>
 
@@ -128,7 +128,7 @@ Threshold at which the number of timesteps scoring at or above it reaches positi
 axobench.metrics.event_count_matched_threshold(scores: np.ndarray, positive_count: int, *, refractory_steps: int | None=2) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L111-L121)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L111-L121)
 
 </div>
 
@@ -154,6 +154,42 @@ Threshold at which spike_events yields positive_count events.
 
 </section>
 
+<section class="api-symbol" id="metrics-spike-event-matches">
+
+## spike_event_matches
+
+<div class="api-signature">
+
+```python
+axobench.metrics.spike_event_matches(predicted_spikes: np.ndarray, target_spikes: np.ndarray, *, tolerance_steps: int) -> np.ndarray
+```
+
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L124-L159)
+
+</div>
+
+One-to-one event matches under a symmetric timing tolerance. Within each trace, events are paired in time order when they lie within the tolerance, and each event is matched at most once.
+
+<p class="api-label">Parameters</p>
+
+<dl class="api-parameters">
+<dt><code>predicted_spikes</code> <span class="api-type">np.ndarray</span></dt>
+<dd><span class="api-default">required.</span> Predicted events, (trace, time).</dd>
+<dt><code>target_spikes</code> <span class="api-type">np.ndarray</span></dt>
+<dd><span class="api-default">required.</span> Teacher events of the same shape.</dd>
+<dt><code>tolerance_steps</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">keyword-only, required.</span> Non-negative matching tolerance in steps.</dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+<dl class="api-parameters">
+<dt><code>matches</code> <span class="api-type">np.ndarray</span></dt>
+<dd>Integer (matches, 3) array of trace, predicted step, and teacher step.</dd>
+</dl>
+
+</section>
+
 <section class="api-symbol" id="metrics-spike-event-confusion">
 
 ## spike_event_confusion
@@ -164,7 +200,7 @@ Threshold at which spike_events yields positive_count events.
 axobench.metrics.spike_event_confusion(predicted_spikes: np.ndarray, target_spikes: np.ndarray, *, tolerance_steps: int) -> dict[str, int]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L124-L156)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L162-L174)
 
 </div>
 
@@ -200,7 +236,7 @@ One-to-one event confusion under a symmetric timing tolerance. Within each trace
 axobench.metrics.spike_f1_curve(spike_scores: np.ndarray, target_spikes: np.ndarray, *, threshold: float=0.0, tolerances_steps: tuple[int, ...] | list[int]=(0, 1, 2, 3, 4, 5), refractory_steps: int | None=2) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L196-L265)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L214-L283)
 
 </div>
 
@@ -240,7 +276,7 @@ Event F1 at each timing tolerance, the arithmetic Mean F1, and the trapezoidal F
 axobench.metrics.coincidence_factor(predicted_spikes: np.ndarray, target_spikes: np.ndarray, *, delta_steps: int=2) -> dict[str, float | int]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L159-L193)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L177-L211)
 
 </div>
 
@@ -276,7 +312,7 @@ Coincidence factor Gamma (Kistler et al. 1997; Jolivet et al. 2008): coincidence
 axobench.metrics.binary_auc(scores: np.ndarray, labels: np.ndarray) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L25-L49)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L25-L49)
 
 </div>
 
@@ -310,7 +346,7 @@ Rank-based ROC AUC with averaged tied ranks over all flattened entries.
 axobench.metrics.spike_auc(prediction: np.ndarray, target: np.ndarray) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L52-L53)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L52-L53)
 
 </div>
 
@@ -344,7 +380,7 @@ Timestep ROC AUC of channel 0 of a prediction against channel 0 of a target, the
 axobench.metrics.soma_rmse(prediction: np.ndarray, target: np.ndarray) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/metrics.py#L19-L22)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/metrics.py#L19-L22)
 
 </div>
 

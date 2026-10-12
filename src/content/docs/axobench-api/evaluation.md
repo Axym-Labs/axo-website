@@ -10,7 +10,7 @@ order: 301
 
 The model-iteration evaluator selects validation traces and intervention pairs, calls a prediction function in batches, calibrates the spike threshold on a held-out block, and returns a fixed report of metrics and 24 attention rows. evaluate_predictions applies the same protocol to stored arrays. The guide [Benchmarking with AxoBench](/axobench/benchmarking/) describes the protocol.
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="benchmark-iteration-evaluator-evaluationconfig">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.benchmark.iteration_evaluator.EvaluationConfig(soma_scale: float = 0.1, soma_bias_mv: float = -67.7, ignore_start: int = 500, timestep_ms: float = 1.0, calibration_fraction: float = 0.25, default_spike_threshold: float = 0.5, f1_tolerances_steps: tuple[int, ...] = (0, 1, 2, 3, 4, 5), selected_f1_steps: tuple[int, int] = (0, 5), physiological_voltage_bounds_mv: tuple[float, float] = (-120.0, 60.0), physiological_slew_bound_mv_per_ms: float = 120.0, refractory_period_ms: float = 2.0, state_error_ratio_watch: float = 1.1, state_error_floor_mv: float = 0.5)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L109-L141)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L122-L154)
 
 </div>
 
@@ -75,7 +75,7 @@ Constructor fields are retained as read-only attributes.
 axobench.benchmark.iteration_evaluator.PairedInterventionPredictions(name: str, baseline_prediction: np.ndarray, intervention_prediction: np.ndarray, baseline_target: np.ndarray, intervention_target: np.ndarray, baseline_raw_soma_mv: np.ndarray | None = None, intervention_raw_soma_mv: np.ndarray | None = None, morphology_ids: list[str] | np.ndarray | None = None)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L145-L155)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L158-L168)
 
 </div>
 
@@ -118,7 +118,7 @@ Constructor fields are retained as read-only attributes.
 axobench.benchmark.iteration_evaluator.evaluate_model(model_fn: Callable[[np.ndarray], np.ndarray], *, dataset_root: str | Path, model_id: str='model', max_samples: int | None=None, batch_size: int=DEFAULT_BATCH_SIZE, max_intervention_samples: int | None=None, max_interventions: int=8, intervention_workers: int=DEFAULT_INTERVENTION_WORKERS, intervention_names: Iterable[str] | None=None, multiple_morphologies: bool=False, morphology_id: str | None=None, validation_sample_start: int=0, cache_shards: int=1, config: EvaluationConfig | None=None) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L172-L298)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L185-L311)
 
 </div>
 
@@ -176,7 +176,7 @@ Run batched inference on an evaluation root and return the evaluation report. Se
 axobench.benchmark.iteration_evaluator.evaluate_predictions(prediction: np.ndarray, target: np.ndarray, *, inputs: np.ndarray | None=None, raw_soma_mv: np.ndarray | None=None, trace_ids: list[str] | None=None, interventions: Iterable[PairedInterventionPredictions]=(), config: EvaluationConfig | None=None, model_id: str='model') -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L612-L800)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L625-L843)
 
 </div>
 
@@ -207,7 +207,81 @@ Evaluate stored predictions. The first round(calibration_fraction * traces) trac
 
 <dl class="api-parameters">
 <dt><code>report</code> <span class="api-type">dict[str, Any]</span></dt>
-<dd>model_id, samples, calibration_samples, scored_samples, spike_threshold, spike_f1_curve, subthreshold_ap_window, metrics (id, value, unit, meaning, core), diagnostics (24 rows with area, id, attention, value, unit, primary, trigger, basis), and interventions.</dd>
+<dd>model_id, samples, calibration_samples, scored_samples, spike_threshold, spike_f1_curve, subthreshold_ap_window, metrics (id, value, unit, meaning, core; seven core and six secondary rows, including the SERA skill rows), diagnostics (24 rows with area, id, attention, value, unit, primary, trigger, basis), and interventions.</dd>
+</dl>
+
+</section>
+
+<section class="api-symbol" id="benchmark-iteration-evaluator-calibrate-spike-threshold">
+
+## calibrate_spike_threshold
+
+<div class="api-signature">
+
+```python
+axobench.benchmark.iteration_evaluator.calibrate_spike_threshold(prediction: np.ndarray, target: np.ndarray, config: EvaluationConfig) -> tuple[int, float]
+```
+
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L1612-L1628)
+
+</div>
+
+Calibration trace count and spike threshold of evaluate_predictions. The first round(calibration_fraction * traces) traces, at least one and leaving at least one to score, set the threshold whose supra-threshold step count over their scored steps matches their teacher spike count.
+
+<p class="api-label">Parameters</p>
+
+<dl class="api-parameters">
+<dt><code>prediction</code> <span class="api-type">np.ndarray</span></dt>
+<dd><span class="api-default">required.</span> Model outputs shaped (trace, time, 2), in calibration-then-scoring order.</dd>
+<dt><code>target</code> <span class="api-type">np.ndarray</span></dt>
+<dd><span class="api-default">required.</span> Teacher targets in the same order.</dd>
+<dt><code>config</code> <span class="api-type">EvaluationConfig</span></dt>
+<dd><span class="api-default">required.</span> Evaluation settings; calibration_fraction and ignore_start are used.</dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+<dl class="api-parameters">
+<dt><code>result</code> <span class="api-type">tuple[int, float]</span></dt>
+<dd>Number of calibration traces and the calibrated threshold.</dd>
+</dl>
+
+</section>
+
+<section class="api-symbol" id="benchmark-iteration-evaluator-sera-reference-voltage">
+
+## sera_reference_voltage
+
+<div class="api-signature">
+
+```python
+axobench.benchmark.iteration_evaluator.sera_reference_voltage(target: np.ndarray, raw_soma_mv: np.ndarray | None, n_calibration: int, config: EvaluationConfig) -> float
+```
+
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L1631-L1650)
+
+</div>
+
+Constant reference voltage of the SERA skill scores: the mean teacher voltage clipped at -55 mV over the scored steps of the calibration traces, so no scored trace enters it.
+
+<p class="api-label">Parameters</p>
+
+<dl class="api-parameters">
+<dt><code>target</code> <span class="api-type">np.ndarray</span></dt>
+<dd><span class="api-default">required.</span> Teacher targets shaped (trace, time, 2), in calibration-then-scoring order.</dd>
+<dt><code>raw_soma_mv</code> <span class="api-type">np.ndarray | None</span></dt>
+<dd><span class="api-default">required.</span> Optional unclipped teacher voltage (trace, time); otherwise the voltage is reconstructed from the target.</dd>
+<dt><code>n_calibration</code> <span class="api-type">int</span></dt>
+<dd><span class="api-default">required.</span> Number of leading calibration traces.</dd>
+<dt><code>config</code> <span class="api-type">EvaluationConfig</span></dt>
+<dd><span class="api-default">required.</span> Evaluation settings; ignore_start and the voltage coordinate are used.</dd>
+</dl>
+
+<p class="api-label">Returns</p>
+
+<dl class="api-parameters">
+<dt><code>reference_mv</code> <span class="api-type">float</span></dt>
+<dd>Reference voltage in mV.</dd>
 </dl>
 
 </section>
@@ -222,7 +296,7 @@ Evaluate stored predictions. The first round(calibration_fraction * traces) trac
 axobench.benchmark.iteration_evaluator.default_iteration_sample_limits(*, multiple_morphologies: bool=False) -> tuple[int, int]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L597-L609)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L610-L622)
 
 </div>
 
@@ -254,7 +328,7 @@ Default ordinary and per-condition intervention sample limits for a morphology m
 axobench.benchmark.iteration_evaluator.format_evaluation_report(report: dict[str, Any]) -> str
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L1188-L1249)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L1229-L1290)
 
 </div>
 
@@ -286,7 +360,7 @@ Render the bounded plain-text report: header, core and secondary metrics, action
 axobench.benchmark.iteration_evaluator.write_evaluation_report(report: dict[str, Any], path: str | Path) -> Path
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L1263-L1305)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L1304-L1346)
 
 </div>
 

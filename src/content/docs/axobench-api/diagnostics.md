@@ -10,7 +10,7 @@ order: 311
 
 Dataframe-first diagnostic rows for teacher QC, model diagnostics, paired interventions, morphology routing, and morphology contrasts, with runners that read an evaluation root and a bundle that writes all of them. Every row carries the columns in DIAGNOSTIC_ROW_COLUMNS. A row is kept when its diagnostic belongs to one of the suites in the context. See [diagnostics](/axobench/diagnostics/).
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="benchmark-diagnostic-rows-diagnosticcontext">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.benchmark.diagnostic_rows.DiagnosticContext(suites: tuple[str, ...] = ('paper-summary',), model_id: str = DEFAULT_MODEL_ID, teacher_id: str = DEFAULT_TEACHER_ID, morphology_id: str = 'unknown', split: str = 'val', condition: str = 'val', intervention: str | None = None, trace_id: str | None = None, target_view: str = 'neuronio_clipped_normalized', soma_scale: float = 0.1, soma_bias_mv: float = DEFAULT_Y_TRAIN_SOMA_BIAS, ignore_start: int = 500, calibrated_spike_threshold: float | None = None)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/diagnostic_rows.py#L31-L46)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/diagnostic_rows.py#L31-L46)
 
 </div>
 
@@ -75,7 +75,7 @@ Constructor fields are retained as read-only attributes.
 axobench.benchmark.diagnostic_rows.evaluate_model_diagnostic_rows(model_fn: Callable[[np.ndarray], np.ndarray], inputs: np.ndarray, targets: np.ndarray, *, context: DiagnosticContext | None=None, trace_ids: list[str] | None=None, raw_soma_mv: np.ndarray | None=None) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/diagnostic_rows.py#L49-L103)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/diagnostic_rows.py#L49-L103)
 
 </div>
 
@@ -117,7 +117,7 @@ Evaluate a model on supplied arrays and return rows for trace fidelity, state-co
 axobench.benchmark.diagnostic_rows.teacher_qc_diagnostic_rows(inputs: np.ndarray, targets: np.ndarray, *, context: DiagnosticContext | None=None, raw_soma_mv: np.ndarray | None=None, trace_ids: list[str] | None=None) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/diagnostic_rows.py#L170-L185)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/diagnostic_rows.py#L170-L185)
 
 </div>
 
@@ -157,7 +157,7 @@ Teacher distribution rows and, with raw voltage, clipping-distortion rows. Expor
 axobench.benchmark.diagnostic_rows.paired_intervention_diagnostic_rows(baseline_inputs: np.ndarray, baseline_targets: np.ndarray, intervention_inputs: np.ndarray, intervention_targets: np.ndarray, *, model_fn: Callable[[np.ndarray], np.ndarray] | None=None, context: DiagnosticContext | None=None, trace_ids: list[str] | None=None) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/diagnostic_rows.py#L188-L291)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/diagnostic_rows.py#L188-L291)
 
 </div>
 
@@ -201,7 +201,7 @@ Teacher response rows for paired inputs and, with a model, model response rows: 
 axobench.benchmark.diagnostic_rows.morphology_routing_qc_rows(*, context: DiagnosticContext | None=None) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/diagnostic_rows.py#L385-L432)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/diagnostic_rows.py#L385-L432)
 
 </div>
 
@@ -233,7 +233,7 @@ Rows of branch counts and shape ratios for the v1 morphology registry. Exported 
 axobench.benchmark.diagnostic_rows.morphology_contrast_diagnostic_rows(source_rows: Iterable[dict[str, Any]], *, context: DiagnosticContext | None=None, min_morphologies: int=2) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/diagnostic_rows.py#L294-L382)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/diagnostic_rows.py#L294-L382)
 
 </div>
 
@@ -269,7 +269,7 @@ Mean, standard deviation, range, minimum, and maximum across morphologies of eve
 axobench.benchmark.diagnostic_rows.validate_diagnostic_rows(rows: Iterable[dict[str, Any]]) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/diagnostic_rows.py#L435-L443)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/diagnostic_rows.py#L435-L443)
 
 </div>
 
@@ -294,7 +294,7 @@ Raise ValueError if a row lacks a column of DIAGNOSTIC_ROW_COLUMNS. Exported fro
 axobench.benchmark.diagnostic_rows.write_diagnostic_rows(rows: Iterable[dict[str, Any]], path: str | Path) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/diagnostic_rows.py#L446-L471)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/diagnostic_rows.py#L446-L471)
 
 </div>
 
@@ -321,7 +321,7 @@ Validate and write rows as .json, .jsonl, or .csv. Exported from `axobench.bench
 axobench.benchmark.runner.run_teacher_qc_on_selector(selector: DatasetSelector, *, context: DiagnosticContext | None=None, raw_soma_mv: np.ndarray | None=None, max_samples: int | None=None, output: str | Path | None=None, cache_shards: int=1) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/runner.py#L215-L238)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/runner.py#L215-L238)
 
 </div>
 
@@ -363,7 +363,7 @@ Teacher QC rows for the first max_samples traces of a selector, in index order. 
 axobench.benchmark.runner.run_model_diagnostics_on_selector(model_fn: Callable[[np.ndarray], np.ndarray], selector: DatasetSelector, *, context: DiagnosticContext | None=None, max_samples: int | None=None, output: str | Path | None=None, cache_shards: int=1) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/runner.py#L64-L93)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/runner.py#L64-L93)
 
 </div>
 
@@ -405,7 +405,7 @@ Model diagnostic rows for the first max_samples traces of a selector, with raw v
 axobench.benchmark.runner.run_paired_intervention_on_selector(selector: DatasetSelector, *, model_fn: Callable[[np.ndarray], np.ndarray] | None=None, context: DiagnosticContext | None=None, max_samples: int | None=None, output: str | Path | None=None) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/runner.py#L123-L159)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/runner.py#L123-L159)
 
 </div>
 
@@ -445,7 +445,7 @@ Paired intervention rows for the first max_samples pairs of a condition director
 axobench.benchmark.runner.run_paired_intervention_on_npz(path: str | Path, *, model_fn: Callable[[np.ndarray], np.ndarray] | None=None, context: DiagnosticContext | None=None, max_samples: int | None=None, output: str | Path | None=None) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/runner.py#L96-L120)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/runner.py#L96-L120)
 
 </div>
 
@@ -485,7 +485,7 @@ Paired intervention rows for one pair file. Exported from `axobench.benchmark`.
 axobench.benchmark.bundle.run_v1_benchmark_bundle(*, dataset_root: str | Path, output_dir: str | Path, base_context: DiagnosticContext | None=None, model_fn: Callable[[np.ndarray], np.ndarray] | None=None, model_id: str | None=None, intervention_pair_paths: Iterable[str | Path]=(), suite: SuiteProfile='paper-summary', max_val_samples: int | None=None, max_intervention_samples: int | None=None, cache_shards: int=1, write_summaries: bool=True) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/bundle.py#L43-L207)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/bundle.py#L43-L207)
 
 </div>
 
@@ -537,7 +537,7 @@ Write teacher QC rows for val, morphology routing rows, intervention rows per co
 axobench.benchmark.reports.summarize_diagnostic_rows(rows: list[dict[str, Any]]) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/reports.py#L15-L32)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/reports.py#L15-L32)
 
 </div>
 
@@ -569,7 +569,7 @@ Compact summary of rows: counts, diagnostics, suites, models, teachers, morpholo
 axobench.benchmark.reports.write_diagnostic_summary(rows: list[dict[str, Any]], path: str | Path) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/reports.py#L35-L48)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/reports.py#L35-L48)
 
 </div>
 

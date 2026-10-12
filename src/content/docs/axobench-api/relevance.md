@@ -10,7 +10,7 @@ order: 305
 
 The relevance function and squared error-relevance area of the IRon R package (Ribeiro and Moniz, 2020) with its default settings: adjusted-boxplot fences (Hubert and Vandervieren, 2008) with an exact medcouple, relevance 1 at the fences and 0 at the median, and a trapezoidal area over thresholds with step 0.001.
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="relevance-iron-relevance">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.relevance.iron_relevance(target: np.ndarray, *, reference: np.ndarray | None=None) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/relevance.py#L167-L178)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/relevance.py#L167-L178)
 
 </div>
 
@@ -56,7 +56,7 @@ IRon default relevance phi of each value, with control points from the reference
 axobench.relevance.iron_threshold_weights(relevance: np.ndarray, *, step: float=0.001) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/relevance.py#L194-L206)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/relevance.py#L194-L206)
 
 </div>
 
@@ -90,7 +90,7 @@ Per-sample weights A(phi) such that iron_sera(e, phi) equals the sum of e**2 * A
 axobench.relevance.iron_sera(error: np.ndarray, relevance: np.ndarray, *, step: float=0.001) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/relevance.py#L181-L191)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/relevance.py#L181-L191)
 
 </div>
 
@@ -126,7 +126,7 @@ IRon sera: the trapezoidal area over thresholds t of SER(t), the summed squared 
 axobench.relevance.adjusted_box_fences(values: np.ndarray, *, coef: float=1.5, a: float=-4.0, b: float=3.0) -> tuple[float, float, float]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/relevance.py#L113-L124)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/relevance.py#L113-L124)
 
 </div>
 
@@ -164,7 +164,7 @@ Lower fence, median, and upper fence of the adjusted boxplot, as robustbase::adj
 axobench.relevance.medcouple(values: np.ndarray) -> float
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/relevance.py#L36-L90)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/relevance.py#L36-L90)
 
 </div>
 
@@ -196,7 +196,7 @@ Exact medcouple, a robust skewness measure (Brys, Hubert and Struyf, 2004), comp
 axobench.relevance.fivenum(values: np.ndarray) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/relevance.py#L25-L33)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/relevance.py#L25-L33)
 
 </div>
 

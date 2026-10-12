@@ -10,7 +10,7 @@ order: 307
 
 V1DatasetLayout resolves the split and intervention directories of an evaluation root. The schema module records the v1 split names, intervention conditions, morphology registry, target views, and diagnostic suite catalog.
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="benchmark-selectors-v1datasetlayout">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.benchmark.selectors.V1DatasetLayout(root: str | Path)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/selectors.py#L29-L79)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/selectors.py#L29-L79)
 
 </div>
 
@@ -55,7 +55,7 @@ Resolver for the v1 layout: <root>/<split> for ordinary splits and <root>/interv
 axobench.benchmark.selectors.V1DatasetLayout.split(name: DatasetCategory='val') -> DatasetSelector
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/selectors.py#L35-L38)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/selectors.py#L35-L38)
 
 </div>
 
@@ -87,7 +87,7 @@ Selector for an ordinary split.
 axobench.benchmark.selectors.V1DatasetLayout.intervention(name: str) -> DatasetSelector
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/selectors.py#L40-L53)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/selectors.py#L40-L53)
 
 </div>
 
@@ -119,7 +119,7 @@ Selector for an intervention condition; unknown names are accepted if their dire
 axobench.benchmark.selectors.V1DatasetLayout.default_validation() -> DatasetSelector
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/selectors.py#L55-L56)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/selectors.py#L55-L56)
 
 </div>
 
@@ -144,7 +144,7 @@ Selector for val.
 axobench.benchmark.selectors.V1DatasetLayout.available_interventions() -> tuple[str, ...]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/selectors.py#L58-L65)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/selectors.py#L58-L65)
 
 </div>
 
@@ -169,7 +169,7 @@ Condition directories present, known conditions first in INTERVENTION_CONDITIONS
 axobench.benchmark.selectors.V1DatasetLayout.validate_minimal(*, require_interventions: bool=False) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/selectors.py#L67-L79)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/selectors.py#L67-L79)
 
 </div>
 
@@ -196,7 +196,7 @@ Raise FileNotFoundError unless every ordinary split, and optionally every condit
 axobench.benchmark.selectors.DatasetSelector(root: Path, split: str | None, condition: str, intervention: str | None = None)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/selectors.py#L17-L26)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/selectors.py#L17-L26)
 
 </div>
 
@@ -235,7 +235,7 @@ Constructor fields are retained as read-only attributes.
 axobench.benchmark.selectors.DatasetSelector.load(*, cache_shards: int=1) -> ShardedNeuronIODataset
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/selectors.py#L25-L26)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/selectors.py#L25-L26)
 
 </div>
 
@@ -265,17 +265,17 @@ Open the directory as a dataset.
 
 <dl class="api-attributes">
 <dt id="benchmark-dataset-schema-ordinary-splits"><code>ORDINARY_SPLITS = (&#x27;train&#x27;, &#x27;val&#x27;, &#x27;test&#x27;, &#x27;private-test&#x27;)</code></dt>
-<dd>Ordinary split names of the v1 layout; private-test is not released. <a href="https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L13-L13">Source</a></dd>
+<dd>Ordinary split names of the v1 layout; private-test is not released. <a href="https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L13-L13">Source</a></dd>
 <dt id="benchmark-dataset-schema-intervention-conditions"><code>INTERVENTION_CONDITIONS = (&#x27;event_dropout&#x27;, &#x27;exc_dropout&#x27;, &#x27;inh_dropout&#x27;, &#x27;temporal_jitter&#x27;, &#x27;site_silence&#x27;)</code></dt>
-<dd>Released intervention conditions. <a href="https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L14-L20">Source</a></dd>
+<dd>Released intervention conditions. <a href="https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L14-L20">Source</a></dd>
 <dt id="benchmark-dataset-schema-v1-morphology-count"><code>V1_MORPHOLOGY_COUNT = 5</code></dt>
-<dd>Morphologies in the v1 single-neuron release. <a href="https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L9-L9">Source</a></dd>
+<dd>Morphologies in the v1 single-neuron release. <a href="https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L9-L9">Source</a></dd>
 <dt id="benchmark-dataset-schema-v1-train-traces-per-morphology"><code>V1_TRAIN_TRACES_PER_MORPHOLOGY = 20000</code></dt>
-<dd>Training traces per morphology in v1. <a href="https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L10-L10">Source</a></dd>
+<dd>Training traces per morphology in v1. <a href="https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L10-L10">Source</a></dd>
 <dt id="benchmark-dataset-schema-diagnostic-suites"><code>DIAGNOSTIC_SUITES = (&#x27;teacher-qc&#x27;, &#x27;trace-core&#x27;, &#x27;state-dynamics&#x27;, &#x27;spike-behavior&#x27;, &#x27;feature-fidelity&#x27;, &#x27;mechanistic-response&#x27;, &#x27;morphology-contrast&#x27;, &#x27;intervention-response&#x27;, &#x27;metric-decoupling&#x27;, &#x27;target-view-audit&#x27;, &#x27;robustness-directionality&#x27;, &#x27;protocol-coverage&#x27;, &#x27;adapter-fairness&#x27;, &#x27;paper-summary&#x27;, &#x27;full&#x27;)</code></dt>
-<dd>Suite names accepted by diagnostic contexts. <a href="https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L22-L38">Source</a></dd>
+<dd>Suite names accepted by diagnostic contexts. <a href="https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L22-L38">Source</a></dd>
 <dt id="benchmark-dataset-schema-diagnostic-row-columns"><code>DIAGNOSTIC_ROW_COLUMNS = (&#x27;diagnostic&#x27;, &#x27;suite&#x27;, &#x27;model_id&#x27;, &#x27;teacher_id&#x27;, &#x27;morphology_id&#x27;, &#x27;split&#x27;, &#x27;condition&#x27;, &#x27;intervention&#x27;, &#x27;trace_id&#x27;, &#x27;state&#x27;, &#x27;metric&#x27;, &#x27;value&#x27;, &#x27;unit&#x27;, &#x27;n&#x27;)</code></dt>
-<dd>Columns required in every diagnostic row. <a href="https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L40-L55">Source</a></dd>
+<dd>Columns required in every diagnostic row. <a href="https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L40-L55">Source</a></dd>
 </dl>
 
 </section>
@@ -290,7 +290,7 @@ Open the directory as a dataset.
 axobench.benchmark.dataset_schema.v1_morphologies() -> tuple[MorphologySpec, ...]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L227-L306)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L227-L306)
 
 </div>
 
@@ -315,7 +315,7 @@ The frozen five-morphology v1 registry. Exported from `axobench.benchmark`.
 axobench.benchmark.dataset_schema.MorphologySpec(specimen_id: int, role: str, swc_path: str, line_name: str, reconstruction_type: str, compatibility_score_lower_better: float, extracted_branches: int, routed_branches: int, total_length_ratio_vs_reference: float, routed_length_ratio_vs_reference: float, apical_fraction_delta_vs_reference: float, radial_extent_ratio_vs_reference: float, routing_shape_match: bool, caveat: str = 'Allen metadata marks this reconstruction dendrite-only.')
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L96-L115)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L96-L115)
 
 </div>
 
@@ -370,7 +370,7 @@ Constructor fields are retained as read-only attributes.
 axobench.benchmark.dataset_schema.default_target_views() -> tuple[TargetViewSpec, ...]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L315-L332)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L315-L332)
 
 </div>
 
@@ -395,7 +395,7 @@ Declared target views: neuronio_clipped_normalized for training and historical c
 axobench.benchmark.dataset_schema.TargetViewSpec(name: str, columns: tuple[str, ...], units: str, description: str, default_for_training: bool = False, default_for_historical_comparison: bool = False)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L59-L70)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L59-L70)
 
 </div>
 
@@ -434,7 +434,7 @@ Constructor fields are retained as read-only attributes.
 axobench.benchmark.dataset_schema.build_v1_dataset_manifest_template(*, morphology_count: int=V1_MORPHOLOGY_COUNT, train_traces_per_morphology: int=V1_TRAIN_TRACES_PER_MORPHOLOGY) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L148-L224)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L148-L224)
 
 </div>
 
@@ -468,7 +468,7 @@ The v1 manifest contract as JSON-like data: categories, morphologies, target vie
 axobench.benchmark.dataset_schema.validate_v1_manifest_template(manifest: dict[str, Any]) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L704-L726)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L704-L726)
 
 </div>
 
@@ -493,7 +493,7 @@ Validate a manifest against the v1 contract without reading shards; raises Value
 axobench.benchmark.dataset_schema.build_diagnostic_suite_catalog() -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/dataset_schema.py#L684-L701)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/dataset_schema.py#L684-L701)
 
 </div>
 

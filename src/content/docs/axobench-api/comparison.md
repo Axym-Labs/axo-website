@@ -10,7 +10,7 @@ order: 302
 
 A baseline cache freezes one model's predictions together with the trace selection, target hash, and protocol. Candidates are compared against it on identical traces with a morphology-stratified paired bootstrap; see [compare with a baseline](/axobench/benchmarking/#compare-with-a-baseline).
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="benchmark-iteration-evaluator-modelevaluationcache">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.benchmark.iteration_evaluator.ModelEvaluationCache(model_id: str, report: dict[str, Any], prediction: np.ndarray, trace_ids: tuple[str, ...], target_sha256: str, interventions: tuple[PairedInterventionPredictions, ...], protocol: dict[str, Any], source_path: Path | None = None)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L159-L169)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L172-L182)
 
 </div>
 
@@ -65,7 +65,7 @@ Constructor fields are retained as read-only attributes.
 axobench.benchmark.iteration_evaluator.create_model_evaluation_cache(model_fn: Callable[[np.ndarray], np.ndarray], *, dataset_root: str | Path, model_id: str='baseline', max_samples: int | None=None, batch_size: int=DEFAULT_BATCH_SIZE, max_intervention_samples: int | None=None, max_interventions: int=8, intervention_workers: int=DEFAULT_INTERVENTION_WORKERS, intervention_names: Iterable[str] | None=None, multiple_morphologies: bool=False, morphology_id: str | None=None, validation_sample_start: int=0, cache_shards: int=1, config: EvaluationConfig | None=None) -> ModelEvaluationCache
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L301-L380)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L314-L393)
 
 </div>
 
@@ -123,7 +123,7 @@ Evaluate a baseline once and retain everything needed to compare later candidate
 axobench.benchmark.iteration_evaluator.write_model_evaluation_cache(cache: ModelEvaluationCache, path: str | Path) -> Path
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L488-L537)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L501-L550)
 
 </div>
 
@@ -157,7 +157,7 @@ Write a cache as a compressed, pickle-free NPZ file with JSON metadata. Exported
 axobench.benchmark.iteration_evaluator.load_model_evaluation_cache(path: str | Path) -> ModelEvaluationCache
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L540-L594)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L553-L607)
 
 </div>
 
@@ -189,7 +189,7 @@ Load a cache written by write_model_evaluation_cache, without pickle. Exported f
 axobench.benchmark.iteration_evaluator.evaluate_model_against_cache(candidate_model_fn: Callable[[np.ndarray], np.ndarray], *, baseline_cache: ModelEvaluationCache | str | Path, dataset_root: str | Path, candidate_id: str='candidate', max_samples: int | None=None, batch_size: int=DEFAULT_BATCH_SIZE, max_intervention_samples: int | None=None, max_interventions: int=8, intervention_workers: int=DEFAULT_INTERVENTION_WORKERS, intervention_names: Iterable[str] | None=None, multiple_morphologies: bool=False, morphology_id: str | None=None, validation_sample_start: int=0, cache_shards: int=1, config: EvaluationConfig | None=None, bootstrap_replicates: int=250, bootstrap_seed: int=20260711) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L383-L485)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L396-L498)
 
 </div>
 
@@ -253,7 +253,7 @@ Evaluate a candidate and compare it with a cached baseline. Raises ValueError un
 axobench.benchmark.iteration_evaluator.compare_predictions(candidate_prediction: np.ndarray, baseline_prediction: np.ndarray, target: np.ndarray, *, inputs: np.ndarray | None=None, raw_soma_mv: np.ndarray | None=None, trace_ids: list[str] | None=None, candidate_interventions: Iterable[PairedInterventionPredictions]=(), baseline_interventions: Iterable[PairedInterventionPredictions]=(), config: EvaluationConfig | None=None, candidate_id: str='candidate', baseline_id: str='baseline', baseline_report: dict[str, Any] | None=None, bootstrap_replicates: int=250, seed: int=20260711) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L803-L928)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L846-L969)
 
 </div>
 
@@ -311,7 +311,7 @@ Compare two models on the same traces. Scored traces are resampled within each m
 axobench.benchmark.iteration_evaluator.format_model_comparison(comparison: dict[str, Any]) -> str
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L1104-L1138)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L1145-L1179)
 
 </div>
 
@@ -343,7 +343,7 @@ Render the paired comparison table with candidate, baseline, difference, 95% int
 axobench.benchmark.iteration_evaluator.write_model_comparison(comparison: dict[str, Any], path: str | Path) -> Path
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/iteration_evaluator.py#L1141-L1185)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/iteration_evaluator.py#L1182-L1226)
 
 </div>
 

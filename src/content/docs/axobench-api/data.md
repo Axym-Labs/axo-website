@@ -10,7 +10,7 @@ order: 306
 
 ShardedNeuronIODataset reads a split directory of NPZ shards, or of NPY shards listed in a manifest, as used by every AxoBench release. Inputs are returned as float32 (batch, time, channels) and targets as float32 (batch, time, 2). See [single-neuron traces](/axobench/single-neuron/#download-and-load) for an example.
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="data-shardedneuroniodataset">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.data.ShardedNeuronIODataset(root: str | Path, *, shuffle: bool=False, seed: int=0, shuffle_mode: Literal['sample', 'shard']='sample', cache_shards: int=0)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L28-L185)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L28-L185)
 
 </div>
 
@@ -64,7 +64,7 @@ Deterministic reader for a directory of shards. With a manifest.json, the index 
 axobench.data.ShardedNeuronIODataset.__len__() -> int
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L67-L68)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L67-L68)
 
 </div>
 
@@ -89,7 +89,7 @@ Number of indexed traces.
 axobench.data.ShardedNeuronIODataset.reshuffle(seed: int) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L70-L78)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L70-L78)
 
 </div>
 
@@ -114,7 +114,7 @@ Reshuffle the index with a new seed; no effect unless shuffle=True.
 axobench.data.ShardedNeuronIODataset.__getitem__(index: int) -> NeuronIOSample
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L80-L89)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L80-L89)
 
 </div>
 
@@ -146,7 +146,7 @@ Load one trace.
 axobench.data.ShardedNeuronIODataset.get_batch(indices: range | list[int]) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L91-L99)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L91-L99)
 
 </div>
 
@@ -180,7 +180,7 @@ Load several traces. Consecutive indices from the same shard are read together, 
 axobench.data.ShardedNeuronIODataset.get_sample_ids(indices: range | list[int]) -> list[str]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L101-L102)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L101-L102)
 
 </div>
 
@@ -212,7 +212,7 @@ Sample IDs of the given positions.
 axobench.data.ShardedNeuronIODataset.get_optional_array_batch(name: str, indices: range | list[int]) -> np.ndarray | None
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L104-L116)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L104-L116)
 
 </div>
 
@@ -248,7 +248,7 @@ Load an additional per-trace array, such as soma_mv or context_index, from NPZ s
 axobench.data.NeuronIOSample(sample_id: str, inputs: np.ndarray, targets: np.ndarray)
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L13-L16)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L13-L16)
 
 </div>
 
@@ -281,7 +281,7 @@ Constructor fields are retained as read-only attributes.
 axobench.data.write_demo_shards(root: str | Path, *, shard_count: int=2, samples_per_shard: int=8, time_steps: int=32, input_dim: int=64, seed: int=0) -> None
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L479-L504)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L479-L504)
 
 </div>
 
@@ -316,7 +316,7 @@ Write small deterministic shards with random signed events and a synthetic targe
 axobench.data.repack_shards_as_npy(input_root: str | Path, output_root: str | Path, *, input_dtype: np.dtype | type=np.int8) -> list[Path]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/data.py#L507-L550)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/data.py#L507-L550)
 
 </div>
 

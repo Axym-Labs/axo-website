@@ -35,7 +35,7 @@ Write deterministic synthetic shards for smoke tests.
 <dd>Random seed.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L41)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L41)
 
 ## make-arbor-hetero-data
 
@@ -96,7 +96,7 @@ Simulate heterogeneous Arbor cable cells into shards; requires the sim extra (Ar
 <dd>Optional path for a copy of the generation report.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L49)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L49)
 
 ## convert-neuronio
 
@@ -119,7 +119,7 @@ Convert raw NeuronIO pickles to deterministic shards.
 <dd>First window start when windowing.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L82)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L82)
 
 ## repack-shards
 
@@ -136,7 +136,7 @@ Repack shards as sliceable .npy arrays with a manifest.
 <dd>Storage dtype of the inputs; values must be preserved. Choices: int8, float32.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L90)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L90)
 
 ## benchmark-profile
 
@@ -153,7 +153,7 @@ Print an axis/default profile as JSON.
 <dd>Print only the local capacity estimate.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L95)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L95)
 
 ## dataset-schema
 
@@ -166,7 +166,7 @@ Print the v1 manifest template or the diagnostic suite catalog as JSON.
 <dd>manifest for the template, diagnostics for the suite catalog. Choices: manifest, diagnostics.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L100)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L100)
 
 ## benchmark-rows
 
@@ -209,7 +209,7 @@ Write teacher QC or teacher intervention rows for an evaluation root.
 <dd>Spike threshold recorded with the rows.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L106)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L106)
 
 ## diagnostic-audits
 
@@ -246,7 +246,7 @@ Derive audit rows from saved comparison artifacts.
 <dd>Condition label.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L127)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L127)
 
 ## diagnostic-plots
 
@@ -277,7 +277,30 @@ Write the audit figures and tables from saved audit summaries.
 <dd>Comma-separated figure formats.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L148)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L148)
+
+## error-anatomy
+
+Break a cached prediction's errors down by spike outcome, spike distance, firing rate, frequency band, and morphology; writes error-anatomy.json, the figure, and error-anatomy.tex, and prints the overall skills.
+
+<p class="api-label">Options</p>
+
+<dl class="api-parameters">
+<dt><code>--cache</code> <span class="api-type">str</span> · required</dt>
+<dd>Evaluation cache from write_model_evaluation_cache, or any NPZ with a prediction array.</dd>
+<dt><code>--targets</code> <span class="api-type">str</span> · default=None</dt>
+<dd>NPZ with target and optional raw_soma_mv and trace_ids; defaults to the cache file. Must match the cache&#x27;s target hash and trace IDs when the cache records them.</dd>
+<dt><code>--output</code> <span class="api-type">str</span> · required</dt>
+<dd>Output directory.</dd>
+<dt><code>--ignore-start</code> <span class="api-type">int</span> · default=None</dt>
+<dd>Initial steps excluded; defaults to the cache protocol&#x27;s value, else 500.</dd>
+<dt><code>--calibration-fraction</code> <span class="api-type">float</span> · default=None</dt>
+<dd>Fraction of traces used for threshold calibration; defaults to the cache protocol&#x27;s value, else 0.25.</dd>
+<dt><code>--formats</code> <span class="api-type">str</span> · default=&#x27;pdf,png&#x27;</dt>
+<dd>Comma-separated figure formats.</dd>
+</dl>
+
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L163)
 
 ## benchmark-v1
 
@@ -316,4 +339,4 @@ Run the teacher bundle on an evaluation root: QC, routing, intervention, and mor
 <dd>Write only machine-readable rows and the manifest.</dd>
 </dl>
 
-[Parser source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/cli.py#L163)
+[Parser source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/cli.py#L176)

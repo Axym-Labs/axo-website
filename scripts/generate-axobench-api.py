@@ -30,6 +30,8 @@ PAGES = [
             ("benchmark.iteration_evaluator", "PairedInterventionPredictions"),
             ("benchmark.iteration_evaluator", "evaluate_model"),
             ("benchmark.iteration_evaluator", "evaluate_predictions"),
+            ("benchmark.iteration_evaluator", "calibrate_spike_threshold"),
+            ("benchmark.iteration_evaluator", "sera_reference_voltage"),
             ("benchmark.iteration_evaluator", "default_iteration_sample_limits"),
             ("benchmark.iteration_evaluator", "format_evaluation_report"),
             ("benchmark.iteration_evaluator", "write_evaluation_report"),
@@ -51,11 +53,14 @@ PAGES = [
     },
     {
         "slug": "metrics", "title": "Core metric functions", "group": "Metrics", "order": 303,
-        "overview": "Array-level implementations of Voltage SERA, the subthreshold voltage RMSE, Response SERA, and Dynamics SERA. Predictions and targets are (trace, time, 2) arrays in the AxoBench target coordinate; voltages are converted to millivolts as soma/soma_scale + soma_bias_mv, and raw_soma_mv replaces the reconstructed teacher voltage when supplied. [Core metrics](/axobench/metrics/) gives the definitions.",
+        "overview": "Array-level implementations of Voltage SERA, the subthreshold voltage RMSE, Response SERA, Dynamics SERA, and the SERA skill scores. Predictions and targets are (trace, time, 2) arrays in the AxoBench target coordinate; voltages are converted to millivolts as soma/soma_scale + soma_bias_mv, and raw_soma_mv replaces the reconstructed teacher voltage when supplied. [Core metrics](/axobench/metrics/) gives the definitions.",
         "items": [
             ("metrics", "compute_core_metric_set"),
             ("metrics", "iron_voltage_sera"),
+            ("metrics", "sera_skill_trace_terms"),
+            ("metrics", "sera_skills"),
             ("metrics", "subthreshold_voltage_error"),
+            ("metrics", "subthreshold_voltage_point_terms"),
             ("metrics", "subthreshold_voltage_trace_terms"),
             ("metrics", "ap_window_ends"),
             ("metrics", "ap_window_mask"),
@@ -73,6 +78,7 @@ PAGES = [
             ("metrics", "spike_events"),
             ("metrics", "prevalence_matched_threshold"),
             ("metrics", "event_count_matched_threshold"),
+            ("metrics", "spike_event_matches"),
             ("metrics", "spike_event_confusion"),
             ("metrics", "spike_f1_curve"),
             ("metrics", "coincidence_factor"),
@@ -175,6 +181,17 @@ PAGES = [
             ("benchmark.reports", "write_diagnostic_summary"),
         ],
     },
+    {
+        "slug": "error-anatomy", "title": "Error anatomy", "group": "Diagnostics", "order": 312,
+        "overview": "error_anatomy breaks a prediction's errors down by spike outcome, time from the nearest teacher spike, teacher firing rate, frequency band, and morphology, on the evaluator's scored traces with its threshold, spike events, action-potential windows, and relevance. plot_error_anatomy draws the result and writes a standalone pgfplots version. Import from axobench.benchmark.error_anatomy and axobench.benchmark.plots. [Error anatomy](/axobench/error-anatomy/) explains how to read each part.",
+        "items": [
+            ("benchmark.error_anatomy", "error_anatomy"),
+            ("benchmark.error_anatomy", "reweight_to_rate_distribution"),
+            ("const", "benchmark.error_anatomy", ["HIT_TOLERANCE_STEPS", "STA_LAGS_STEPS"]),
+            ("benchmark.plots", "plot_error_anatomy"),
+            ("benchmark.plots", "apply_paper_plot_style"),
+        ],
+    },
 ]
 
 # Shared parameter descriptions; a symbol-specific entry in DOCS takes precedence.
@@ -268,7 +285,7 @@ DOCS = {
             "interventions": "Per-condition paired predictions for Response SERA and the intervention rows.",
             "model_id": "Model name in the report.",
         },
-        "returns": [("report", "dict[str, Any]", "model_id, samples, calibration_samples, scored_samples, spike_threshold, spike_f1_curve, subthreshold_ap_window, metrics (id, value, unit, meaning, core), diagnostics (24 rows with area, id, attention, value, unit, primary, trigger, basis), and interventions.")],
+        "returns": [("report", "dict[str, Any]", "model_id, samples, calibration_samples, scored_samples, spike_threshold, spike_f1_curve, subthreshold_ap_window, metrics (id, value, unit, meaning, core; seven core and six secondary rows, including the SERA skill rows), diagnostics (24 rows with area, id, attention, value, unit, primary, trigger, basis), and interventions.")],
     },
     "benchmark.iteration_evaluator.default_iteration_sample_limits": {
         "summary": "Default ordinary and per-condition intervention sample limits for a morphology mode.",
@@ -338,7 +355,43 @@ DOCS = {
         "params": {"comparison": "Comparison to write.", "path": "Destination ending in .json or .csv."},
         "returns": [("path", "Path", "The written path.")],
     },
+    "benchmark.iteration_evaluator.calibrate_spike_threshold": {
+        "summary": "Calibration trace count and spike threshold of evaluate_predictions. The first round(calibration_fraction * traces) traces, at least one and leaving at least one to score, set the threshold whose supra-threshold step count over their scored steps matches their teacher spike count.",
+        "params": {"prediction": "Model outputs shaped (trace, time, 2), in calibration-then-scoring order.", "target": "Teacher targets in the same order.", "config": "Evaluation settings; calibration_fraction and ignore_start are used."},
+        "returns": [("result", "tuple[int, float]", "Number of calibration traces and the calibrated threshold.")],
+    },
+    "benchmark.iteration_evaluator.sera_reference_voltage": {
+        "summary": "Constant reference voltage of the SERA skill scores: the mean teacher voltage clipped at -55 mV over the scored steps of the calibration traces, so no scored trace enters it.",
+        "params": {"target": "Teacher targets shaped (trace, time, 2), in calibration-then-scoring order.", "raw_soma_mv": "Optional unclipped teacher voltage (trace, time); otherwise the voltage is reconstructed from the target.", "n_calibration": "Number of leading calibration traces.", "config": "Evaluation settings; ignore_start and the voltage coordinate are used."},
+        "returns": [("reference_mv", "float", "Reference voltage in mV.")],
+    },
     # metrics
+    "metrics.sera_skill_trace_terms": {
+        "summary": "Per-trace IRon SERA areas behind the SERA skill scores. Relevance is fitted once on the pooled scored teacher, as in iron_voltage_sera and iron_dynamics_sera, so sums over any subset of traces give that subset's skills.",
+        "params": {
+            "prediction": "Scored model outputs shaped (trace, time, 2).",
+            "target": "Scored teacher targets of the same shape.",
+            "reference_mv": "Constant reference voltage in mV, usually sera_reference_voltage of the calibration traces.",
+            "raw_soma_mv": "Optional unclipped teacher voltage (trace, time); replaces the voltage reconstructed from the target.",
+        },
+        "returns": [("terms", "dict[str, np.ndarray]", "Per trace: voltage (prediction area), voltage_reference (constant reference), voltage_ceiling (teacher clipped at -55 mV), dynamics and dynamics_reference (dV/dt areas of the prediction and of the constant, whose rate is zero), and teacher_spikes.")],
+    },
+    "metrics.sera_skills": {
+        "summary": "SERA skill scores from sera_skill_trace_terms, pooled over all or selected traces. Each skill is 1 - area / reference area; prediction and reference share relevance and spike count, so this equals 1 - SERA / SERA(reference).",
+        "params": {"terms": "Result of sera_skill_trace_terms.", "indices": "Trace indices to pool; None pools all, and repeated indices count repeatedly as in a bootstrap draw."},
+        "returns": [("skills", "dict[str, float | None]", "voltage_sera_skill, voltage_sera_ceiling_skill (the skill of the teacher clipped at -55 mV, the best prediction without action potentials), voltage_sera_skill_of_ceiling (their ratio), and dynamics_sera_skill; None where a reference area or the ceiling is zero.")],
+    },
+    "metrics.subthreshold_voltage_point_terms": {
+        "summary": "Per-step terms of the subthreshold voltage error on the scored steps, for breaking the error down by time or frequency. Steps in the action-potential windows of teacher or predicted spikes are excluded and both voltages are clipped at -55 mV.",
+        "params": {
+            "prediction": "Model outputs covering the whole trace, (trace, time, 2).",
+            "target": "Teacher targets covering the whole trace.",
+            "predicted_spikes": "Predicted spike events of the scored steps only, (trace, time - ignore_start).",
+            "raw_soma_mv": "Optional unclipped teacher voltage covering the whole trace.",
+            "ap_post_steps": "Per-trace window ends; None computes them with ap_window_ends from the scored teacher steps.",
+        },
+        "returns": [("terms", "dict[str, np.ndarray]", "keep (boolean mask of retained steps), error (clipped prediction minus clipped teacher), and deviation (clipped teacher minus its per-trace mean over retained steps), each (trace, time - ignore_start) and zero where not kept.")],
+    },
     "metrics.compute_core_metric_set": {
         "summary": "Compute the core metrics on aligned arrays without a calibration split. Without spike_threshold, the default policy chooses the threshold on the same traces so that the predicted event count equals the teacher spike count.",
         "params": {
@@ -372,7 +425,7 @@ DOCS = {
         "returns": [("result", "dict[str, Any]", "subthreshold_rmse_mv, subthreshold_skill, null_subthreshold_rmse_mv, and retained_points.")],
     },
     "metrics.subthreshold_voltage_trace_terms": {
-        "summary": "Per-trace sums behind subthreshold_voltage_error, so that subsets of traces can be pooled with fixed windows, as the paired bootstrap does.",
+        "summary": "Per-trace sums behind subthreshold_voltage_error, so that subsets of traces can be pooled with fixed windows, as the paired bootstrap does. Keyword arguments are those of subthreshold_voltage_point_terms.",
         "params": {
             "prediction": "Model outputs covering the whole trace, (trace, time, 2).",
             "target": "Teacher targets covering the whole trace.",
@@ -445,6 +498,11 @@ DOCS = {
         "summary": "Threshold at which spike_events yields positive_count events.",
         "params": {"scores": "Spike scores, (trace, time).", "positive_count": "Target number of events.", "refractory_steps": "Suppression radius; None matches timesteps instead."},
         "returns": [("threshold", "float", "The height of the positive_count-th highest score peak.")],
+    },
+    "metrics.spike_event_matches": {
+        "summary": "One-to-one event matches under a symmetric timing tolerance. Within each trace, events are paired in time order when they lie within the tolerance, and each event is matched at most once.",
+        "params": {"predicted_spikes": "Predicted events, (trace, time).", "target_spikes": "Teacher events of the same shape.", "tolerance_steps": "Non-negative matching tolerance in steps."},
+        "returns": [("matches", "np.ndarray", "Integer (matches, 3) array of trace, predicted step, and teacher step.")],
     },
     "metrics.spike_event_confusion": {
         "summary": "One-to-one event confusion under a symmetric timing tolerance. Within each trace, events are paired in time order when they lie within the tolerance; counts are summed over traces.",
@@ -784,6 +842,36 @@ DOCS = {
         "summary": "Write summarize_diagnostic_rows as Markdown or JSON.",
         "params": {"path": "Destination ending in .md or .json."},
     },
+    # error anatomy
+    "benchmark.error_anatomy.error_anatomy": {
+        "summary": "Break a prediction's errors down on the scored traces of evaluate_predictions, with the same calibration, spike threshold, predicted events, action-potential windows, relevance, and subthreshold masks. Sections: spike events (hits, misses, and false spikes within HIT_TOLERANCE_STEPS, F1 per tolerance, timing errors of matched events), spike-triggered mean voltage of teacher and model around isolated hit, missed, and false spikes, subthreshold error by time since the last and until the next teacher spike (bins 0-5, 5-10, 10-25, 25-50, 50-100, 100+ ms and none), skills by teacher firing rate (0-1, 1-3, 3-6, 6+ Hz) and by morphology, and subthreshold skill by frequency band (0-1, 1-5, 5-10, 10-25, 25-50, 50-100, 100+ Hz).",
+        "params": {
+            "prediction": "Model outputs shaped (trace, time, 2), in calibration-then-scoring order; at least two traces.",
+            "target": "Teacher targets in the same order.",
+        },
+        "returns": [("anatomy", "dict[str, Any]", "JSON-serializable: config, calibration_samples, scored_samples, spike_threshold, overall, spike_events, spike_triggered_average, subthreshold_by_spike_distance, by_teacher_rate, subthreshold_by_frequency, and by_morphology. Times are in steps or ms and voltages in mV.")],
+    },
+    "benchmark.error_anatomy.reweight_to_rate_distribution": {
+        "summary": "Skills of an error anatomy with its traces reweighted to another distribution over teacher firing-rate bins. Each trace is weighted by the reference share of its bin divided by the bin's own share; bins absent from the reference get weight zero, so the comparison covers the common support. Relevance and references stay those of the anatomy's own block.",
+        "params": {
+            "anatomy": "Result of error_anatomy to reweight.",
+            "reference": "Another error_anatomy result, whose scored-trace shares per rate bin are used, or a mapping from bin label ('0-1', '1-3', '3-6', '6+') to share.",
+        },
+        "returns": [("skills", "dict[str, Any]", "voltage_sera_skill, voltage_sera_ceiling_skill, voltage_sera_skill_of_ceiling, subthreshold_skill, mean_f1, and the bins used. Raises ValueError when a weighted bin has no traces or no bin is shared.")],
+    },
+    "benchmark.plots.plot_error_anatomy": {
+        "summary": "Plot an error_anatomy result in four panels: spike-triggered voltage of teacher and model around hit, missed, and false spikes; share of retained steps and of squared subthreshold error by time since the last teacher spike; skill by teacher firing rate; and subthreshold skill by frequency band. Uses apply_paper_plot_style.",
+        "params": {
+            "anatomy": "Result of error_anatomy.",
+            "output": "Output path without suffix; each format is written with its own suffix.",
+            "formats": "File formats passed to Matplotlib, for example ('pdf', 'png') or ('svg',).",
+            "tikz": "Also write a standalone pgfplots .tex file of the same panels.",
+        },
+        "returns": [("paths", "list[str]", "Written figure paths, followed by the .tex path when tikz is set.")],
+    },
+    "benchmark.plots.apply_paper_plot_style": {
+        "summary": "Set the Matplotlib style of AxoBench figures: STIX serif text at 7 to 8 pt, despined axes without grid, the Okabe-Ito palette, white background, text kept as text in PDF and SVG, and 300 dpi PNG. A style file named by the AXOBENCH_PAPER_STYLE environment variable is applied first.",
+    },
 }
 
 CONSTANTS = {
@@ -802,6 +890,8 @@ CONSTANTS = {
     "DIAGNOSTIC_ROW_COLUMNS": "Columns required in every diagnostic row.",
     "DEFECTS": "Defect names and the unit of their dose.",
     "DEFAULT_DOSES": "Doses scored by defect_dose_rows when none are given.",
+    "HIT_TOLERANCE_STEPS": "Timing tolerance in steps within which a predicted spike counts as a hit of a teacher spike.",
+    "STA_LAGS_STEPS": "First and last lag of the spike-triggered averages, in steps; events count as isolated when no other event of the same train falls in this window.",
 }
 
 CLI_HELP = {
@@ -849,6 +939,13 @@ CLI_HELP = {
         "point_rows": "Point metric rows.", "tcn_summary": "TCN preprocessing summary JSON; repeatable.", "morphology_contrast_rows": "Optional morphology contrast rows.",
         "neuronio_intervention_rows": "Optional NeuronIO intervention rows.", "neuronio_intervention_root": "Optional NeuronIO intervention directory.",
         "output_dir": "Output directory.", "formats": "Comma-separated figure formats."}),
+    "error-anatomy": ("Break a cached prediction's errors down by spike outcome, spike distance, firing rate, frequency band, and morphology; writes error-anatomy.json, the figure, and error-anatomy.tex, and prints the overall skills.", {
+        "cache": "Evaluation cache from write_model_evaluation_cache, or any NPZ with a prediction array.",
+        "targets": "NPZ with target and optional raw_soma_mv and trace_ids; defaults to the cache file. Must match the cache's target hash and trace IDs when the cache records them.",
+        "output": "Output directory.",
+        "ignore_start": "Initial steps excluded; defaults to the cache protocol's value, else 500.",
+        "calibration_fraction": "Fraction of traces used for threshold calibration; defaults to the cache protocol's value, else 0.25.",
+        "formats": "Comma-separated figure formats."}),
     "benchmark-v1": ("Run the teacher bundle on an evaluation root: QC, routing, intervention, and morphology-contrast rows.", {
         "dataset_root": "Evaluation root.", "output_dir": "Output directory.", "suite": "Suite profile.",
         "intervention_pair_glob": "Glob of pair files outside the v1 layout; repeatable.", "morphology_id": "Morphology label of the val rows.",

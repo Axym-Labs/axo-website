@@ -10,7 +10,7 @@ order: 310
 
 Controlled defects injected into teacher traces, for testing whether a metric responds to a known error as it should. Spike-timing defects move the action-potential waveform with the spike; voltage defects leave the spike train exact. Import from axobench.benchmark.defect_injection. See [test metric sensitivity](/axobench/diagnostics/#test-metric-sensitivity).
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="benchmark-defect-injection-constants">
 
@@ -18,9 +18,9 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 
 <dl class="api-attributes">
 <dt id="benchmark-defect-injection-defects"><code>DEFECTS = {&#x27;spike_jitter&#x27;, &#x27;spike_deletion&#x27;, &#x27;spike_insertion&#x27;, &#x27;global_lag&#x27;, &#x27;ap_clip&#x27;, &#x27;ap_smoothing&#x27;, &#x27;voltage_lowpass&#x27;, &#x27;voltage_offset&#x27;, &#x27;voltage_gain&#x27;, &#x27;post_spike&#x27;}</code></dt>
-<dd>Defect names and the unit of their dose. <a href="https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/defect_injection.py#L36-L47">Source</a></dd>
+<dd>Defect names and the unit of their dose. <a href="https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/defect_injection.py#L36-L47">Source</a></dd>
 <dt id="benchmark-defect-injection-default-doses"><code>DEFAULT_DOSES = {&#x27;spike_jitter&#x27;, &#x27;spike_deletion&#x27;, &#x27;spike_insertion&#x27;, &#x27;global_lag&#x27;, &#x27;ap_clip&#x27;, &#x27;ap_smoothing&#x27;, &#x27;voltage_lowpass&#x27;, &#x27;voltage_offset&#x27;, &#x27;voltage_gain&#x27;, &#x27;post_spike&#x27;}</code></dt>
-<dd>Doses scored by defect_dose_rows when none are given. <a href="https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/defect_injection.py#L49-L60">Source</a></dd>
+<dd>Doses scored by defect_dose_rows when none are given. <a href="https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/defect_injection.py#L49-L60">Source</a></dd>
 </dl>
 
 </section>
@@ -35,7 +35,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.benchmark.defect_injection.inject_defect(spikes: np.ndarray, soma_mv: np.ndarray, defect: str, dose: float, *, rng: np.random.Generator | None=None) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/defect_injection.py#L63-L110)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/defect_injection.py#L63-L110)
 
 </div>
 
@@ -77,7 +77,7 @@ Corrupt teacher spikes and voltage with one defect at a dose; dose 0 returns cop
 axobench.benchmark.defect_injection.defect_dose_rows(spikes: np.ndarray, soma_mv: np.ndarray, doses: Mapping[str, Iterable[float]] | None=None, *, seed: int=0, ignore_start: int=0) -> list[dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/defect_injection.py#L187-L216)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/defect_injection.py#L187-L216)
 
 </div>
 
@@ -117,7 +117,7 @@ Score every defect at every dose against the uncorrupted teacher with both the h
 axobench.benchmark.defect_injection.axobench_scores(pred_spikes: np.ndarray, pred_soma_mv: np.ndarray, target_spikes: np.ndarray, target_soma_mv: np.ndarray) -> dict[str, Any]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/defect_injection.py#L141-L184)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/defect_injection.py#L141-L184)
 
 </div>
 
@@ -155,7 +155,7 @@ AxoBench scores of a prediction against unclipped teacher voltage and spikes: Vo
 axobench.benchmark.defect_injection.historical_scores(pred_spikes: np.ndarray, pred_soma_mv: np.ndarray, target_spikes: np.ndarray, target_soma_mv: np.ndarray) -> dict[str, float]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/defect_injection.py#L118-L138)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/defect_injection.py#L118-L138)
 
 </div>
 
@@ -193,7 +193,7 @@ NeuronIO-protocol scores: timestep AUC of the Gaussian-smoothed predicted spike 
 axobench.benchmark.defect_injection.smoothed_spike_score(spikes: np.ndarray, sigma_steps: float=1.0) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/defect_injection.py#L113-L115)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/defect_injection.py#L113-L115)
 
 </div>
 

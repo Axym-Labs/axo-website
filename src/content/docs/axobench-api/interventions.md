@@ -10,7 +10,7 @@ order: 308
 
 Input-side constructors for the five intervention conditions and a loader for paired intervention shards. Each constructor returns the edited inputs and a boolean mask of the baseline events it removed or moved. Producing teacher targets for new inputs requires the simulator stack in axobench.generation. [Paired interventions](/axobench/interventions/) describes the released conditions.
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="benchmark-structured-intervention-make-structured-intervention-inputs">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.benchmark.structured_intervention.make_structured_intervention_inputs(inputs: np.ndarray, *, intervention: str, seed: int=0, dropout_probability: float=0.35, jitter_steps: int=2, site_start_fraction: float=0.0, site_fraction: float=0.25) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/structured_intervention.py#L118-L165)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/structured_intervention.py#L118-L165)
 
 </div>
 
@@ -70,7 +70,7 @@ Apply one named condition with the released v1 parameters as defaults. Exported 
 axobench.benchmark.structured_intervention.make_event_dropout_inputs(inputs: np.ndarray, *, dropout_probability: float, seed: int=0) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/structured_intervention.py#L18-L36)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/structured_intervention.py#L18-L36)
 
 </div>
 
@@ -108,7 +108,7 @@ Remove each nonzero event independently with the given probability. Exported fro
 axobench.benchmark.structured_intervention.make_selective_event_dropout_inputs(inputs: np.ndarray, *, dropout_probability: float, event_sign: int, seed: int=0) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/structured_intervention.py#L39-L59)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/structured_intervention.py#L39-L59)
 
 </div>
 
@@ -148,7 +148,7 @@ Remove only excitatory (+1) or only inhibitory (-1) events with the given probab
 axobench.benchmark.structured_intervention.make_temporal_jitter_inputs(inputs: np.ndarray, *, max_jitter_steps: int, seed: int=0) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/structured_intervention.py#L62-L87)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/structured_intervention.py#L62-L87)
 
 </div>
 
@@ -186,7 +186,7 @@ Move every event by an integer shift drawn uniformly from -max_jitter_steps to +
 axobench.benchmark.structured_intervention.make_site_silence_inputs(inputs: np.ndarray, *, start_fraction: float=0.0, site_fraction: float=0.25) -> tuple[np.ndarray, np.ndarray]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/structured_intervention.py#L90-L115)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/structured_intervention.py#L90-L115)
 
 </div>
 
@@ -224,7 +224,7 @@ Remove all events on a contiguous band of sites in both the excitatory and the i
 axobench.benchmark.runner.load_intervention_pair_npz(path: str | Path, *, max_samples: int | None=None) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, list[str]]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/benchmark/runner.py#L38-L61)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/benchmark/runner.py#L38-L61)
 
 </div>
 

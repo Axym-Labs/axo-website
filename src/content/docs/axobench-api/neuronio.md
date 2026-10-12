@@ -10,7 +10,7 @@ order: 309
 
 Parse raw NeuronIO simulation pickles and write deterministic AxoBench shards. Inhibitory channels receive the sign -1, and the soma target is clipped at -55 mV and normalized as (v + 67.7) * 0.1. Converted shards store no unclipped voltage; [NeuronIO compatibility](/axobench/neuronio/) explains the consequences for the metrics. Raw files are Python pickles: parse only trusted files.
 
-Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
+Source revision: `496e0c1a2dfd`. [Export index](/axobench-api/).
 
 <section class="api-symbol" id="neuronio-raw-convert-neuronio-pickles">
 
@@ -22,7 +22,7 @@ Source revision: `22e52ec6c023`. [Export index](/axobench-api/).
 axobench.neuronio_raw.convert_neuronio_pickles(input_path: str | Path, output_dir: str | Path, *, shard_size: int=128, window_size: int | None=None, window_stride: int | None=None, ignore_start: int=0, y_soma_threshold: float=DEFAULT_Y_SOMA_THRESHOLD, y_train_soma_bias: float=DEFAULT_Y_TRAIN_SOMA_BIAS, y_train_soma_scale: float=DEFAULT_Y_TRAIN_SOMA_SCALE) -> list[Path]
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/neuronio_raw.py#L67-L132)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/neuronio_raw.py#L67-L132)
 
 </div>
 
@@ -70,7 +70,7 @@ Convert raw NeuronIO files (*sim__* below input_path, or one file) to shards nam
 axobench.neuronio_raw.parse_neuronio_pickle(path: str | Path) -> RawNeuronIO
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/neuronio_raw.py#L24-L64)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/neuronio_raw.py#L24-L64)
 
 </div>
 
@@ -102,7 +102,7 @@ Parse one raw NeuronIO pickle into dense arrays at 1 ms.
 axobench.neuronio_raw.RawNeuronIO(inputs: np.ndarray, spikes: np.ndarray, soma: np.ndarray, metadata: dict[str, object])
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/neuronio_raw.py#L17-L21)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/neuronio_raw.py#L17-L21)
 
 </div>
 
@@ -137,7 +137,7 @@ Constructor fields are retained as read-only attributes.
 axobench.neuronio_raw.normalize_soma(soma: np.ndarray, threshold: float=DEFAULT_Y_SOMA_THRESHOLD, bias: float=DEFAULT_Y_TRAIN_SOMA_BIAS, scale: float=DEFAULT_Y_TRAIN_SOMA_SCALE) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/neuronio_raw.py#L142-L150)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/neuronio_raw.py#L142-L150)
 
 </div>
 
@@ -175,7 +175,7 @@ Clip at the threshold and normalize: (min(v, threshold) - bias) * scale.
 axobench.neuronio_raw.create_neuronio_input_type(num_input: int) -> np.ndarray
 ```
 
-[Source](https://github.com/Axym-Labs/axobench/blob/22e52ec6c0230edccf608076a9a1cdfd0011d5d8/src/axobench/neuronio_raw.py#L135-L139)
+[Source](https://github.com/Axym-Labs/axobench/blob/496e0c1a2dfd829cf91f4496f47a1bf8796c1bca/src/axobench/neuronio_raw.py#L135-L139)
 
 </div>
 
