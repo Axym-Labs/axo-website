@@ -31,10 +31,10 @@ The optimized runtime evaluated in the report simulates **65,536 neurons with 4,
 AxoBench provides the datasets, metrics, and evaluation protocol for single-neuron fidelity. It accepts any NumPy prediction function and depends only on NumPy, Matplotlib, and Requests.
 
 - **Datasets.** Detailed-teacher simulations in three releases: [single-neuron traces](/axobench/single-neuron/) from five layer-5 pyramidal morphologies, [population contexts](/axobench/population/) whose inputs were recorded in connected AxoSim networks, and [paired interventions](/axobench/interventions/) that change one input sample in a defined way. [NeuronIO](/axobench/neuronio/) simulations convert to the same format.
-- **Metrics.** The [core metrics](/axobench/metrics/) are Voltage SERA, spike Mean F1 over 0–5 ms tolerances, the subthreshold voltage RMSE, and Response SERA.
+- **Metrics.** The [core metrics](/axobench/metrics/) are Voltage SERA, spike Mean F1 over 0–5 ms tolerances, the subthreshold voltage RMSE, and Response SERA. [Skill rows](/axobench/skill/) express SERA against a constant voltage and against the best prediction without action potentials; their ratio and a firing-rate reweighting support comparisons across datasets.
 - **Evaluation.** The [evaluator](/axobench/benchmarking/) calibrates the spike threshold on traces that are not scored and compares a candidate with a cached baseline on identical traces, with paired bootstrap intervals.
-- **Diagnostics.** Every report ends with a fixed 24-row [attention panel](/axobench/diagnostics/#read-the-attention-panel). Controlled defects test how each metric responds, and diagnostic rows export to JSON, JSONL, or CSV.
-- **Plots.** [`axobench diagnostic-plots`](/axobench-api/cli/#diagnostic-plots) writes the diagnostic figures and tables from saved audit summaries as SVG, PDF, and PNG.
+- **Diagnostics.** Every report ends with a fixed 24-row [attention panel](/axobench/diagnostics/#read-the-attention-panel). The [error anatomy](/axobench/error-anatomy/) breaks a model's errors down by spike outcome, time from a spike, firing rate, frequency band, and morphology. Controlled defects test how each metric responds, and diagnostic rows export to JSON, JSONL, or CSV.
+- **Plots.** [`axobench diagnostic-plots`](/axobench-api/cli/#diagnostic-plots) and `axobench error-anatomy` write paper-style figures as SVG, PDF, or PNG; the error-anatomy figure is also exported as a standalone pgfplots file for LaTeX.
 
 Start with [choose a dataset](/datasets/), then [benchmark a model](/axobench/benchmarking/).
 
