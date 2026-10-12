@@ -71,6 +71,42 @@ The two edges from neuron 0 to neuron 1 have separate delays and efficacies desp
 
 Choose the input convention deliberately. With `input_encoding="signed"`, an inhibitory recurrent event has a negative amplitude; with `"channel"`, both roles use nonnegative event counts because channel identity and trained route features encode inhibition. External values already use that convention and receive no additional source sign. When `channel_roles` is supplied, signed values must agree with the channel role; channel-encoded external values must always be nonnegative. Neither convention applies inhibition twice.
 
+## Build graphs from connectivity patterns
+
+The builders in `axosim.connectors` construct an `ExplicitConnectome` from a connectivity rule instead of an edge list: `all_to_all`, `one_to_one`, `fixed_probability` with a constant or a per-pair callable probability, `fixed_indegree`, and `from_list`, plus `concatenate` to join projections between neuron subsets selected with `pre` and `post`. Each edge takes its source neuron's role and a destination channel drawn from the checkpoint channels with that role, so pass the checkpoint's `channel_roles`. This CPU example uses the functional model of the [downloadable example](/examples/connected_population_example.py):
+
+```python
+import torch
+from axosim import concatenate, create_population, fixed_indegree, fixed_probability
+from connected_population_example import build_demo_model, stimulus
+
+roles = torch.ones(10, dtype=torch.long)
+roles[8:] = -1                                   # Neurons 8 and 9 are inhibitory.
+shared = dict(neuron_roles=roles, channel_roles=[1, -1])
+excitatory = fixed_indegree(                     # Three excitatory sources per neuron.
+    10, 3, pre=range(8), seed=0, **shared,
+    delays=lambda s, t, g: torch.randint(4, 8, (len(s),), generator=g),
+)
+inhibitory = fixed_probability(                  # Distance-dependent probability.
+    10, lambda s, t: 0.8 * torch.exp(-(s - t).abs() / 3.0),
+    pre=range(8, 10), efficacies=2.0, seed=1, **shared,
+)
+graph = concatenate(excitatory, inhibitory)
+population = create_population(
+    model=build_demo_model(), n=10, connectome=graph,
+    morphology_indices=[0] * 10, input_encoding="channel",
+    stream_inputs=stimulus, stream_outputs={"spikes": "all"}, spike_threshold=0.5,
+)
+assert len(list(population.run(duration_ms=12))) == 12
+print(excitatory.edge_count, inhibitory.edge_count, population.efficacies.shape)
+```
+
+```text
+30 6 torch.Size([36])
+```
+
+Every neuron receives three excitatory edges from neurons 0–7, with delays drawn from 4 to 7 ms. The inhibitory neurons 8 and 9 connect with a probability that decays with the distance between neuron IDs. Efficacies and delays accept a constant, one value per edge, or a callable that receives the sources, targets, and the seeded generator; delays below 4 ms are rejected. One seed reproduces the exact graph. Edge IDs, as used by `set_efficacies`, follow the returned order, and `concatenate` appends each part's edges after those of the parts before it. The [connectivity builders reference](/api/connectors/) lists every argument.
+
 ## Interpret timestamps and selected signals
 
 One native simulation step is 1 ms. Lite accumulates four input samples, updates its learned state, and forecasts the next four output samples; recurrent delays must therefore be at least 4 ms. Frames at 0–3 ms have `valid=False` and emit no spikes, even with a zero or negative threshold. Exclude these causal-padding outputs from metrics.

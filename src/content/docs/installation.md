@@ -7,32 +7,46 @@ order: 10
 
 ## Install AxoSim
 
-Use Python 3.10 or newer. Source installation currently requires access to the private [Axym-Labs/axosim repository](https://github.com/Axym-Labs/axosim). Authenticate the GitHub CLI with an account granted repository access, then install in a virtual environment:
+Use Python 3.10 or newer. Install the [PyPI package](https://pypi.org/project/axosim/) in a virtual environment:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install axosim
+```
+
+The base installation includes PyTorch, NumPy, and the tools for GRU models, Lite populations, and data conversion. CUDA execution requires a compatible GPU and PyTorch installation; a CPU environment is sufficient for the small population examples.
+
+## Add the Mamba backend and AxoBench
+
+Two extras add optional dependencies:
+
+```bash
+python -m pip install 'axosim[mamba,bench]'
+axosim-setup --skip-install
+axosim list-presets
+```
+
+- `mamba` installs the fused `mamba-ssm` and `causal-conv1d` backend that official Mamba checkpoints require. GRU and Lite work does not need it.
+- `bench` installs [AxoBench](/axobench/benchmarking/#install-axobench), which `axosim-evaluate-model` uses to score checkpoints.
+
+`axosim-setup` creates local project directories. Pass `--skip-install` after a PyPI installation; without it, the command installs the project directory in editable mode, which is the step for a source checkout. Large datasets are downloaded only when you request `--download-data`, so this sequence prepares an environment without initiating a multi-gigabyte transfer. `list-presets` prints the training and evaluation recipe names you will pass to later commands.
+
+The PyTorch Mamba fallback is useful for tests and smoke runs. Its state-dictionary format differs from the fused backend, so load a checkpoint with its recorded backend rather than substituting the fallback. The [model guide](/models/) explains the available profiles and implementation aliases.
+
+## Install from source
+
+The source repository, [Axym-Labs/axosim](https://github.com/Axym-Labs/axosim), currently requires access. With an account granted access, authenticate the GitHub CLI and install the checkout in editable mode with the development tools:
 
 ```bash
 gh repo clone Axym-Labs/axosim
 cd axosim
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -e .
-```
-
-The base installation includes PyTorch, NumPy, and the tools for GRU models, Lite populations, data conversion, and evaluation. CUDA execution requires a compatible GPU and PyTorch installation; a CPU environment is sufficient for the small population examples.
-
-## Match the backend to the checkpoint
-
-Official Mamba checkpoints require the fused `mamba-ssm` and `causal-conv1d` backend. Install these extras when you intend to load such a checkpoint; base GRU and Lite work does not require them. From the source checkout, run:
-
-```bash
-python -m pip install -e '.[mamba]'
+python -m pip install -e '.[dev,mamba,bench]'
 axosim-setup
-axosim list-presets
 ```
 
-The setup command creates local project directories and installs the package unless you pass `--skip-install`. Large datasets are downloaded only when you request `--download-data`, so this sequence prepares an environment without initiating a multi-gigabyte transfer. `list-presets` prints the training and evaluation recipe names you will pass to later commands.
-
-The PyTorch Mamba fallback is useful for tests and smoke runs. Its state-dictionary format differs from the fused backend, so load a checkpoint with its recorded backend rather than substituting the fallback. The [model guide](/models/) explains the available profiles and implementation aliases.
+In a checkout, `axosim-setup` without `--skip-install` reinstalls the checkout in editable mode.
 
 ## Inspect data setup before running it
 
@@ -50,7 +64,7 @@ axosim-setup --help
 axosim-evaluate-model --help
 ```
 
-The [command-line reference](/api/cli/) lists every subcommand and option. For AxoBench core metrics, install [AxoBench 0.2.0 or newer](/axobench/benchmarking/#install-axobench) in the same environment before following [evaluation](/evaluation/). Its source repository also currently requires access.
+The [command-line reference](/api/cli/) lists every subcommand and option. The `bench` extra requires AxoBench 0.2.0 or newer; the [dataset-relative skill rows](/axobench/skill/) and [error anatomy](/axobench/error-anatomy/) need AxoBench 0.2.1, so upgrade with `python -m pip install -U axobench` before following [evaluation](/evaluation/).
 
 ## Next steps
 
