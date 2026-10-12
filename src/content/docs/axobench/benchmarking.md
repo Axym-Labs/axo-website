@@ -1,8 +1,8 @@
 ---
 title: Benchmarking with AxoBench
 description: Evaluate any prediction function under the AxoBench protocol, read the report, and compare models on paired traces.
-section: AxoBench
-order: 140
+section: AxoBench metrics
+order: 145
 ---
 
 ## Install AxoBench

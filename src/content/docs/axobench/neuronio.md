@@ -1,7 +1,7 @@
 ---
 title: NeuronIO compatibility
 description: Convert NeuronIO simulations to AxoBench shards and account for the differences in metrics and channel meaning.
-section: AxoBench
+section: AxoBench datasets
 order: 134
 ---
 

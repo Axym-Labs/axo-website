@@ -1,8 +1,8 @@
 ---
 title: Choose a dataset
 description: Match the single-neuron, population, and intervention releases to training, selection, and evaluation questions.
-section: AxoBench
-order: 130
+section: Get started
+order: 25
 ---
 
 ## Compare the releases

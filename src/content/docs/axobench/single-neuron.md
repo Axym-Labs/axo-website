@@ -1,7 +1,7 @@
 ---
 title: Single-neuron traces
 description: CoreNEURON traces from five layer-5 pyramidal morphologies for training and the ordinary AxoBench evaluation.
-section: AxoBench
+section: AxoBench datasets
 order: 131
 ---
 

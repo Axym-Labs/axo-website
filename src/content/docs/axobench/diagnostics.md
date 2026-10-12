@@ -1,8 +1,8 @@
 ---
 title: Diagnostics
 description: Read the 24-row attention panel, test metric sensitivity with controlled defects, and write teacher and model diagnostic rows.
-section: AxoBench
-order: 142
+section: AxoBench metrics
+order: 146
 ---
 
 ## Read the attention panel

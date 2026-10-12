@@ -1,8 +1,8 @@
 ---
 title: Core metrics
 description: Definitions and rationale for Voltage SERA, spike F1, the subthreshold voltage RMSE, and Response SERA.
-section: AxoBench
-order: 141
+section: AxoBench metrics
+order: 140
 ---
 
 ## Metric set

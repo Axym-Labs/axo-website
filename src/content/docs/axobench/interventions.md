@@ -1,7 +1,7 @@
 ---
 title: Paired interventions
 description: Matched baseline and intervention traces that measure how a model's response changes with its input.
-section: AxoBench
+section: AxoBench datasets
 order: 133
 ---
 

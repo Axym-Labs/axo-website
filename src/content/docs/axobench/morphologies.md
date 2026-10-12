@@ -1,7 +1,7 @@
 ---
 title: Morphologies
 description: The five excitatory teacher morphologies, the inhibitory population teacher, and leave-one-morphology-out partitions.
-section: AxoBench
+section: AxoBench datasets
 order: 135
 ---
 

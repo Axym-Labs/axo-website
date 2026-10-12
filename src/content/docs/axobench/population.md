@@ -1,7 +1,7 @@
 ---
 title: Population contexts
 description: Teacher responses to input histories recorded in connected AxoSim networks, split by network context.
-section: AxoBench
+section: AxoBench datasets
 order: 132
 ---
 
