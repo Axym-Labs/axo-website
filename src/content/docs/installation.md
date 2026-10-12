@@ -40,7 +40,7 @@ The PyTorch Mamba fallback is useful for tests and smoke runs. Its state-diction
 axosim-setup --dry-run --install-kaggle --download-data --convert-raw
 ```
 
-This prints the proposed installation, download, and conversion steps. Downloads from Kaggle require credentials configured through Kaggle; keep credentials outside version control. See [datasets](/datasets/) for the separate population and intervention releases.
+This prints the proposed installation, download, and conversion steps. Downloads from Kaggle require credentials configured through Kaggle; keep credentials outside version control. See [choose a dataset](/datasets/) for the AxoBench single-neuron, population, and intervention releases.
 
 ## Verify the installation
 
@@ -50,7 +50,7 @@ axosim-setup --help
 axosim-evaluate-model --help
 ```
 
-The [command-line reference](/api/cli/) lists every subcommand and option. For AxoBench core metrics, install the [current AxoBench package](https://github.com/Axym-Labs/axobench) in the same environment before following [evaluation](/evaluation/). Its source repository also currently requires access.
+The [command-line reference](/api/cli/) lists every subcommand and option. For AxoBench core metrics, install [AxoBench 0.2.0 or newer](/axobench/benchmarking/#install-axobench) in the same environment before following [evaluation](/evaluation/). Its source repository also currently requires access.
 
 ## Next steps
 

@@ -7,7 +7,15 @@ order: 60
 
 ## Prepare training and validation data
 
-The trainer reads NeuronIO-style shards with input and target arrays. Use a training split for optimization and a separate development split for selecting the recipe. Keep final test data untouched until architecture, hyperparameters, preprocessing, and spike calibration are fixed.
+The trainer reads NeuronIO-style shards with input and target arrays. The [AxoBench single-neuron release](/axobench/single-neuron/) provides such shards for pretraining: 100,000 training traces and 12,500 validation and 12,500 test traces from five layer-5 pyramidal morphologies. Download the two splits used here:
+
+```bash
+hf download Axym-Labs/axobench --repo-type dataset \
+  --include "train/*" --include "val/*" \
+  --local-dir data/axobench
+```
+
+Use the training split for optimization and the validation split for selecting the recipe. Keep the test split untouched until architecture, hyperparameters, preprocessing, and spike calibration are fixed. To test transfer to an unseen morphology, train on a [leave-one-morphology-out partition](/axobench/morphologies/#hold-out-a-morphology) instead.
 
 For a quick command-line smoke test, create synthetic shards:
 
@@ -15,7 +23,7 @@ For a quick command-line smoke test, create synthetic shards:
 axosim make-demo-data --output data/demo --samples 8 --shards 1
 ```
 
-These deterministic synthetic targets test the pipeline; they do not establish biological fidelity. See [datasets](/datasets/) and the [data API](/api/data/) for real trace preparation and windowing contracts.
+These deterministic synthetic targets test the pipeline; they do not establish biological fidelity. See [choose a dataset](/datasets/) and the [data API](/api/data/) for real trace preparation and windowing contracts.
 
 ## Train with a named preset
 
@@ -24,8 +32,8 @@ From the AxoSim checkout, provide real training and validation shard directories
 ```bash
 axosim train \
   --preset axomamba-probe \
-  --data data/full-trace-shards/nmda-train \
-  --val-data data/full-trace-shards/nmda-val \
+  --data data/axobench/train \
+  --val-data data/axobench/val \
   --device cuda \
   --epochs 10 \
   --epoch-samples 80000 \

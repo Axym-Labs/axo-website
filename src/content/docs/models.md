@@ -47,7 +47,7 @@ For single-neuron traces, choose GRU or Mamba and load a trained checkpoint. Bot
 
 ## Choose a capacity and backend
 
-A model profile selects architecture parameters; a checkpoint supplies fitted weights. Compare candidate checkpoints using the [AxoBench metrics](/evaluation/) relevant to your application: spike Mean F1, Voltage SERA, and Dynamics SERA. The [technical report](/report/main.pdf) compares fidelity and inference cost across the trained models.
+A model profile selects architecture parameters; a checkpoint supplies fitted weights. Compare candidate checkpoints using the [AxoBench metrics](/axobench/metrics/) relevant to your application: Voltage SERA, spike Mean F1, the subthreshold voltage RMSE, and Response SERA, evaluated as described in [evaluate models](/evaluation/). The [technical report](/report/main.pdf) compares fidelity and inference cost across the trained models with the earlier SERA definition and Dynamics SERA.
 
 <details class="recipe-details">
 <summary>Architecture recipes</summary>

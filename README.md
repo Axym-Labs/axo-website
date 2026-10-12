@@ -7,9 +7,10 @@ choices persist. Subtle hover transitions follow the reference documentation
 and respect reduced-motion preferences.
 
 Start with installation and the illustrated model catalog, then follow
-simulation, training and adaptation, and evaluation and deployment. The final
-API category has expandable groups for models, populations, training and
-evaluation, data, compatibility, and CLI commands.
+simulation, training and adaptation, and evaluation and deployment. The AxoBench
+category documents the datasets, the benchmarking protocol, the core metrics,
+and the diagnostics. The two API categories, AxoSim and AxoBench, come last and
+have expandable groups.
 
 ## Develop and verify
 
@@ -49,7 +50,7 @@ another server, and `CHROMIUM_PATH` to reuse a local Chromium installation.
 Edit lifecycle guides in `src/content/docs/`. Frontmatter specifies the page
 title, description, navigation category, and explicit order. The navigation,
 previous/next links, table of contents, and sitemap use this metadata. API
-reference is deliberately the final category. Its `apiGroup` field selects
+references are deliberately the final categories. Their `apiGroup` field selects
 the one-level expandable subgroup. The first navigation block has no heading.
 
 API pages are generated from a pinned AxoSim revision. They cover every
@@ -62,7 +63,16 @@ contracts. It parses source without importing PyTorch:
 python scripts/generate-api.py --source ../AxoSim
 ```
 
-The generator's `--help` lists its exact options. The public
+The generator's `--help` lists its exact options.
+
+AxoBench API pages are generated the same way from a pinned AxoBench checkout.
+Signatures, defaults, and source lines come from AST parsing; the `axobench`
+CLI options come from its argparse parser. Every parameter and option needs a
+reviewed description in the generator, which fails on undocumented entries:
+
+```sh
+python scripts/generate-axobench-api.py --source ../AxoBench
+``` The public
 `api-inventory.json` records symbol and CLI coverage. Inherited PyTorch methods
 use PyTorch's normal interface rather than duplicated framework documentation.
 

@@ -7,22 +7,22 @@ order: 90
 
 ## Use the AxoBench metric protocol
 
-[AxoBench](https://github.com/Axym-Labs/axobench) defines the core metrics used by AxoSim: spike Mean F1, Voltage SERA, and Dynamics SERA. SERA uses squared error; Root-SERA is its square-root presentation. The evaluation path also provides calibration, diagnostics, and paired comparisons, while AxoSim supplies the checkpoint loader and prediction adapter.
+AxoBench defines the metric protocol used to evaluate AxoSim checkpoints. Its core metrics in version 0.2.0 are Voltage SERA, spike Mean F1 over 0–5 ms tolerances, the subthreshold voltage RMSE, and Response SERA; SERA is the IRon-default squared error-relevance area per teacher spike, in mV²/spike. Dynamics SERA remains a secondary row. [Core metrics](/axobench/metrics/) gives the definitions and [benchmarking](/axobench/benchmarking/) the protocol. AxoBench owns calibration, diagnostics, and paired comparisons, while AxoSim supplies the checkpoint loader and prediction adapter.
 
-Install the current AxoBench package in the same environment as AxoSim; source installation currently requires access to its private repository. Provide an ordinary AxoBench dataset root and a trusted checkpoint. Population contexts and intervention releases are distinct datasets, as explained in [datasets](/datasets/).
+Install AxoBench 0.2.0 or newer in the same environment as AxoSim, as described in [benchmarking](/axobench/benchmarking/#install-axobench). Provide an evaluation root with the single-neuron `val` split and, optionally, the paired interventions under `interventions/`, as assembled in [choose a dataset](/datasets/#assemble-an-evaluation-root), and a trusted checkpoint.
 
 ## Evaluate and save a cache
 
 ```bash
 axosim-evaluate-model runs/axosim-mamba.pt \
-  --dataset-root data/v1-neuronio-like-gpu-20260611 \
+  --dataset-root data/axobench \
   --multiple-morphologies \
   --device cuda \
   --save-cache runs/axosim-mamba-axobench-cache.npz \
   --output runs/axosim-mamba-axobench.json
 ```
 
-The evaluator prints a formatted report, writes the requested report, and saves a reusable prediction cache. The cache includes trace identities, target hash, metric protocol, and calibration boundary. The exact report fields come from your installed AxoBench version; retain that version or commit with the result.
+The evaluator prints a formatted report, writes the requested report, and saves a reusable prediction cache. The cache includes trace identities, target hash, metric protocol, and calibration boundary. The exact report fields come from your installed AxoBench version; retain that version or commit with the result. [Read the report](/axobench/benchmarking/#read-the-report) lists the metric rows, and [diagnostics](/axobench/diagnostics/#read-the-attention-panel) explains the 24 attention rows.
 
 ## Compare on the same traces
 
@@ -31,7 +31,7 @@ First evaluate the baseline with `--save-cache`, then provide its cache to the c
 ```bash
 axosim-evaluate-model runs/candidate.pt \
   --baseline-cache runs/baseline-axobench-cache.npz \
-  --dataset-root data/v1-neuronio-like-gpu-20260611 \
+  --dataset-root data/axobench \
   --multiple-morphologies \
   --device cuda \
   --output runs/candidate-vs-baseline.json
@@ -41,7 +41,7 @@ A saved baseline cache fixes the reference predictions and avoids rerunning that
 
 ## Calibration and interventions
 
-The evaluator defaults to a 25% calibration fraction, a 500-step initial exclusion, and bootstrap comparisons with 250 replicates. `--multiple-morphologies` balances evaluation over available morphologies; `--morphology-id` chooses one morphology for the default single-morphology path. Use `--interventions` to select names explicitly and preserve their identities in the report.
+The evaluator defaults to 120 validation traces and 40 pairs per intervention condition, a 25% calibration fraction, a 500-step initial exclusion, and bootstrap comparisons with 250 replicates. `--multiple-morphologies` balances evaluation over available morphologies; `--morphology-id` chooses one morphology for the default single-morphology path, which otherwise uses the alphabetically first. Use `--interventions` to select names explicitly and preserve their identities in the report. [Calibration and scoring](/axobench/benchmarking/#calibration-and-scoring) describes how the threshold and scored traces are separated, and [paired interventions](/axobench/interventions/) describes the conditions.
 
 `--save-cache` cannot be combined with a baseline comparison, and `--baseline-cache` and `--baseline-checkpoint` are mutually exclusive. See the [AxoBench CLI reference](/api/axobench-cli/) for all options and the [prediction adapter](/api/axobench/) for voltage and morphology handling.
 

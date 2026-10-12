@@ -14,6 +14,12 @@ AxoSim approximates the response of detailed biological neurons to synaptic inpu
 
 <p class="figure-caption">The axes show (i) inference throughput, counting 1-ms neuron predictions per second; (ii) voltage fidelity from somatic-voltage SERA; (iii) dynamics fidelity from native-time voltage-change SERA; (iv) spike Mean F1, averaged over 0–5 ms matching tolerances; and (v) history throughput, counting input milliseconds processed per second for one supplied 2-second history. CoreNEURON is the ground-truth detailed simulator, and Branch-ELM is the learned-surrogate predecessor of AxoSim. AxoSim–GRU Small and Mamba Medium are compared with three released Branch-ELM sizes; larger radii indicate better performance. Raw measurements, fixed mappings and runtime contracts appear in the appendix of the <a href="/report/main.pdf">technical report</a>.</p>
 
+## Benchmark with AxoBench
+
+AxoBench provides the datasets and the evaluation protocol for single-neuron fidelity. Its detailed-teacher simulations come in three releases: [single-neuron traces](/axobench/single-neuron/) from five layer-5 pyramidal morphologies, [population contexts](/axobench/population/) whose inputs were recorded in connected AxoSim networks, and [paired interventions](/axobench/interventions/) that change one input sample in a defined way. The core metrics are Voltage SERA, spike Mean F1 over 0–5 ms tolerances, the subthreshold voltage RMSE, and Response SERA.
+
+The evaluator accepts any NumPy prediction function. It calibrates the spike threshold on traces that are not scored, reports 24 fixed diagnostic rows alongside the metrics, and compares a candidate with a cached baseline on identical traces with bootstrap intervals. Start with [choose a dataset](/datasets/), then [benchmark a model](/axobench/benchmarking/).
+
 ## Start with a neuron model
 
 Use [model selection](/models/) to choose a temporal architecture and backend, then [load a checkpoint](/inference/) to predict spike logits and somatic voltage. The common single-neuron contract is an input tensor shaped `(batch, time, input channels)` and an output tensor shaped `(batch, time, 2)`.
@@ -32,12 +38,12 @@ The optimized runtime evaluated in the report simulates **65,536 neurons with 4,
 2. [Choose a model](/models/), [run inference](/inference/), and [train on your data](/training/).
 3. [Build a population](/populations/), then use [sparse contact events](/sparse-events/) for sparse inputs.
 4. [Adapt parameter groups](/adaptation/) and [capture repeated CUDA updates](/cuda-graphs/) when shapes are fixed.
-5. [Evaluate on AxoBench](/evaluation/), obtain the [datasets](/datasets/), and preserve [reproducibility records](/reproducibility/).
-6. Use the [API reference](/api/) for exact signatures, defaults, and source links.
+5. [Choose an AxoBench dataset](/datasets/), [evaluate the checkpoint](/evaluation/) with the [AxoBench protocol](/axobench/benchmarking/), and preserve [reproducibility records](/reproducibility/).
+6. Use the [AxoSim API reference](/api/) and the [AxoBench API reference](/axobench-api/) for exact signatures, defaults, and source links.
 
 ## Cite AxoSim
 
-The technical report is by Davide Wiest and Jonathan Schäfer, Axym Labs. AxoBench introduces the core metric set used throughout the report: spike Mean F1, Voltage SERA, and Dynamics SERA. SERA denotes the squared error metric; Root-SERA is its square root.
+The technical report is by Davide Wiest and Jonathan Schäfer, Axym Labs. It evaluates single-neuron fidelity with AxoBench's spike Mean F1, Voltage SERA, and Dynamics SERA under the SERA definition stated in the report. AxoBench 0.2.0 redefines SERA per teacher spike and replaces Dynamics SERA in the core set with the subthreshold voltage RMSE, so its values are not comparable with the report's; see [core metrics](/axobench/metrics/#relation-to-the-technical-report).
 
 ```bibtex
 @techreport{wiest2026axosim,

@@ -13,7 +13,10 @@ interface Props {
 }
 const { entry, entries, headings } = Astro.props;
 const groups = [...new Set(entries.map(item => item.data.section))];
-const apiGroups = ['Models', 'Populations', 'Training and evaluation', 'Data', 'Compatibility', 'CLI'];
+const apiSections: Record<string, { index: string; groups: string[] }> = {
+  'API reference': { index: 'api/index', groups: ['Models', 'Populations', 'Training and evaluation', 'Data', 'Compatibility', 'CLI'] },
+  'AxoBench API': { index: 'axobench-api', groups: ['Evaluation', 'Metrics', 'Data', 'Diagnostics', 'CLI'] },
+};
 const researchUrl = 'https://axym.org/work/axosim-fly-geometry/';
 const demoUrl = 'https://axym.org/work/axosim-connectome-demo/';
 const url = (id: string) => id === 'overview' ? '/' : id === 'api/index' ? '/api/' : `/${id}/`;
@@ -79,12 +82,12 @@ const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 
       <nav class="navigation">
         {groups.map(group => <section class="nav-group" aria-label={group}>
           {group !== 'Get started' && <h2>{group}</h2>}
-          {group === 'API reference' ? <>
-            <a href="/api/" aria-current={entry.id === 'api/index' ? 'page' : undefined}>Overview</a>
-            {apiGroups.map(apiGroup => <details class="api-group" open={entry.data.apiGroup === apiGroup}>
+          {group in apiSections ? <>
+            <a href={url(apiSections[group].index)} aria-current={entry.id === apiSections[group].index ? 'page' : undefined}>Overview</a>
+            {apiSections[group].groups.map(apiGroup => <details class="api-group" open={entry.data.section === group && entry.data.apiGroup === apiGroup}>
               <summary><span>{apiGroup}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></summary>
               <div class="api-children">
-                {entries.filter(item => item.data.apiGroup === apiGroup).map(item => <a href={url(item.id)} aria-current={item.id === entry.id ? 'page' : undefined}>{item.data.title}</a>)}
+                {entries.filter(item => item.data.section === group && item.data.apiGroup === apiGroup).map(item => <a href={url(item.id)} aria-current={item.id === entry.id ? 'page' : undefined}>{item.data.title}</a>)}
               </div>
             </details>)}
           </> : entries.filter(item => item.data.section === group).map(item => (

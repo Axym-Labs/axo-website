@@ -154,7 +154,7 @@ print(inputs.grad.shape, model.readout.weight.grad.shape)
 torch.Size([3, 12, 8]) torch.Size([2, 4])
 ```
 
-Each call starts a fresh history state and returns predictions, rather than a retained streaming state. Splitting the time axis into separate calls therefore does not continue the preceding history. Reuse the existing [streaming state](/inference/#preserve-temporal-state-when-streaming) when later samples continue the same neuron streams. Gradients here describe a model conditioned on supplied inputs; the interface does not add gradients through discrete connected-event generation.
+Each call starts a fresh history state and returns predictions, rather than a retained streaming state. Splitting the time axis into separate calls therefore does not continue the preceding history. Reuse the existing [streaming state](/inference/#preserve-temporal-state-when-streaming) when later samples continue the same neuron streams. Gradients here describe a model conditioned on supplied inputs; the interface does not add gradients through discrete connected-event generation. Gradients measure the model's input sensitivity, not the teacher's. The [paired interventions](/axobench/interventions/) record how the detailed teacher responds to defined input edits, and Response SERA measures whether a model reproduces those responses.
 
 ## Next steps
 

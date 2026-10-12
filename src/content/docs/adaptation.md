@@ -61,11 +61,15 @@ True
 
 The final Boolean tests whether the controlled response discrepancy decreased. It does not identify the teacher's contact efficacies, because behavior and morphology adjustments can compensate for synaptic changes. If contact recovery is the question, enable only `synaptic=True`; enable additional banks when the task requires response or morphology calibration.
 
+A controlled target makes the correct parameter change known. For detailed-teacher responses to known input edits, the [paired interventions](/axobench/interventions/) provide matched baseline and intervention traces for five conditions, including excitatory or inhibitory event removal and silencing of a band of synapse sites. Response SERA measures whether the model reproduces each change; agreement of adapted parameters with an edit is a separate question that the response metric does not answer.
+
 The learning rate and twenty-step budget make this a bounded interface example; select both on development data for a scientific adaptation study. Norm clipping limits unusually large gradients. `enable_adaptation_training` freezes the shared neuron weights, and gradients span the complete temporal horizon unless you explicitly truncate the graph. Use measured targets and a task-appropriate objective for biological or downstream accuracy claims.
 
 ## Validate an adaptation recipe
 
 Select the objective, optimizer, step budget, learning rate, and bank choices on development data, then evaluate once on an untouched final split. Mask Lite's first four causal padding outputs. If independent samples share persistent neuron identities, use `forward_batch` with shape `(batch, population, time, contacts)`.
+
+AxoBench supplies measured targets for two adaptation questions. The [population contexts](/axobench/population/) contain teacher responses to inputs recorded in connected AxoSim networks, split by network context; the technical report's population specialization adapts on training contexts, selects its schedule on held-out training contexts, and evaluates on the 20 validation contexts. For morphology adaptation, a [leave-one-morphology-out partition](/axobench/morphologies/#hold-out-a-morphology) keeps the adapted morphology out of the shared model's training data, so the morphology bank is tested on a cell the model has not seen.
 
 ## Save and resume the adapted population
 
