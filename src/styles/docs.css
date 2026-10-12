@@ -145,6 +145,21 @@ h1 { font-size: 36px; line-height: 1.18; letter-spacing: -.7px; margin: 0 0 15px
 .model-card dd { margin: 0; }
 .model-card dd code { display: inline-block; font-size: 11.5px; margin: 2px 0; }
 .model-card dd a { font-size: 12px; }
+.dataset-catalog { row-gap: 0; }
+.dataset-catalog .model-card { display: grid; grid-template-rows: subgrid; grid-row: span 4; align-content: start; }
+.dataset-catalog .model-card > p { min-height: 0; }
+.prose .dataset-art { background-color: #1d1844; }
+.dataset-art span { font-size: 27px; letter-spacing: -.7px; margin-bottom: 50px; }
+.dataset-art svg { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; }
+.dataset-art .trace { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linejoin: round; opacity: .5; vector-effect: non-scaling-stroke; }
+.dataset-art .trace.thin { stroke-width: 1.2; opacity: .42; }
+.dataset-art .trace.edit { stroke: #ffd89c; opacity: .9; }
+.dataset-art.single { background-image: radial-gradient(ellipse at 92% 4%,#9a86ff 0,transparent 58%),radial-gradient(ellipse at 4% 96%,#3b63d8 0,transparent 58%),linear-gradient(135deg,#1c1450,#4a2ab8); }
+.dataset-art.population { background-image: radial-gradient(ellipse at 96% 6%,#6fd3ea 0,transparent 58%),radial-gradient(ellipse at 6% 94%,#3c62c9 0,transparent 60%),linear-gradient(145deg,#112a52,#13505e 85%); }
+.dataset-art.interventions { background-image: radial-gradient(ellipse at 94% 6%,#ffc27a 0,transparent 58%),radial-gradient(ellipse at 6% 92%,#c4466f 0,transparent 58%),linear-gradient(150deg,#45183c,#7a3326 85%); }
+.data-bar { display: block; margin-top: 7px; color: var(--muted); font-size: 11.5px; }
+.data-bar::before { content: ''; display: block; height: 5px; border-radius: 3px; background: linear-gradient(90deg,var(--primary) var(--share),var(--border) var(--share)); }
+.data-bar > span { display: block; margin-top: 4px; }
 .recipe-details { border: 1px solid var(--border); border-radius: 8px; margin: 24px 0; padding: 12px 17px; }
 .recipe-details > summary { cursor: pointer; font-weight: 500; font-size: 14px; }
 .recipe-details table { margin-bottom: 8px; }
@@ -205,6 +220,8 @@ h1 { font-size: 36px; line-height: 1.18; letter-spacing: -.7px; margin: 0 0 15px
   .model-card > p { min-height: 0; }
   .model-card dl > div { display: grid; grid-template-columns: 82px minmax(0,1fr); gap: 12px; }
   .model-card dt { margin-bottom: 0; }
+  .dataset-catalog { row-gap: 30px; }
+  .dataset-catalog .model-card { display: block; }
   .search-footer { gap: 12px; flex-wrap: wrap; }
   #search-dialog { margin-top: 5vh; }
 }
