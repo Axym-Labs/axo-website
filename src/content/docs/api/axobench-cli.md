@@ -24,27 +24,27 @@ Every command and subcommand accepts `-h` or `--help`. The option reference belo
 <dt><code>checkpoint</code> <span class="api-type">str</span> · required</dt>
 <dd>Upstream baseline checkpoint file.</dd>
 <dt><code>--baseline-checkpoint</code> <span class="api-type">str</span> · default=None</dt>
-<dd>Destination: baseline_checkpoint.</dd>
+<dd>Second checkpoint evaluated on the same traces as the paired baseline.</dd>
 <dt><code>--baseline-cache</code> <span class="api-type">str</span> · default=None</dt>
-<dd>Destination: baseline_cache.</dd>
+<dd>Baseline cache written by --save-cache; its protocol, trace IDs, and target hash must match.</dd>
 <dt><code>--save-cache</code> <span class="api-type">str</span> · default=None</dt>
-<dd>Destination: save_cache.</dd>
+<dd>Write this model&#x27;s predictions and protocol as a reusable .npz baseline cache.</dd>
 <dt><code>--dataset-root</code> <span class="api-type">str</span> · required</dt>
-<dd>Destination: dataset_root.</dd>
+<dd>AxoBench evaluation root containing val/ and optionally interventions/&lt;condition&gt;/.</dd>
 <dt><code>--model-id</code> <span class="api-type">str</span> · default=None</dt>
-<dd>Destination: model_id.</dd>
+<dd>Model name in the report; defaults to the checkpoint file stem.</dd>
 <dt><code>--device</code> <span class="api-type">str</span> · default=&#x27;auto&#x27;</dt>
 <dd>Execution or allocation device.</dd>
 <dt><code>--batch-size</code> <span class="api-type">int</span> · default=128</dt>
 <dd>Examples processed per batch.</dd>
 <dt><code>--max-samples</code> <span class="api-type">int</span> · default=None</dt>
-<dd>Destination: max_samples.</dd>
+<dd>Validation traces to select; AxoBench defaults to 120.</dd>
 <dt><code>--max-intervention-samples</code> <span class="api-type">int</span> · default=None</dt>
-<dd>Destination: max_intervention_samples.</dd>
+<dd>Pairs per intervention condition; AxoBench defaults to 40.</dd>
 <dt><code>--max-interventions</code> <span class="api-type">int</span> · default=8</dt>
-<dd>Destination: max_interventions.</dd>
+<dd>Maximum number of intervention conditions read in sorted order.</dd>
 <dt><code>--intervention-workers</code> <span class="api-type">int</span> · default=4</dt>
-<dd>Destination: intervention_workers.</dd>
+<dd>Parallel CPU loaders for intervention shards.</dd>
 <dt><code>--interventions</code> <span class="api-type">str</span> · default=None</dt>
 <dd>comma-separated intervention names; default discovers all</dd>
 <dt><code>--multiple-morphologies</code> <span class="api-type">flag</span> · default=False</dt>
@@ -54,13 +54,13 @@ Every command and subcommand accepts `-h` or `--help`. The option reference belo
 <dt><code>--ignore-start</code> <span class="api-type">int</span> · default=500</dt>
 <dd>Initial native timesteps excluded by the declared path.</dd>
 <dt><code>--calibration-fraction</code> <span class="api-type">float</span> · default=0.25</dt>
-<dd>Destination: calibration_fraction.</dd>
+<dd>Share of the selected traces used only to calibrate the spike threshold.</dd>
 <dt><code>--default-spike-threshold</code> <span class="api-type">float</span> · default=0.0</dt>
-<dd>Destination: default_spike_threshold.</dd>
+<dd>Uncalibrated threshold checked by the default_threshold_count diagnostic; it does not set the scoring threshold.</dd>
 <dt><code>--bootstrap-replicates</code> <span class="api-type">int</span> · default=250</dt>
-<dd>Destination: bootstrap_replicates.</dd>
+<dd>Replicates of the morphology-stratified paired bootstrap.</dd>
 <dt><code>--bootstrap-seed</code> <span class="api-type">int</span> · default=20260711</dt>
-<dd>Destination: bootstrap_seed.</dd>
+<dd>Random seed of the paired bootstrap.</dd>
 <dt><code>--output</code> <span class="api-type">str</span> · default=None</dt>
 <dd>optional .json or .csv report path</dd>
 <dt><code>--output-json</code> <span class="api-type">str</span> · default=None</dt>

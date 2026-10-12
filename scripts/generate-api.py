@@ -37,7 +37,7 @@ PAGES = [
     ("activity", "Activity and experimental control", ["activity"], "Threshold functions convert model-generated spike logits into events using fixed declared thresholds. Patch-phase layout helpers organize native cadence. HomeostaticThresholdController is an experimental optional code feature; it is not required by the lifecycle guides and is not a contribution presented in the technical report."),
     ("data", "Trace datasets", ["data"], "NeuronIO shards store inputs (samples, time, channels), targets (samples, time, 2), and sample identities. Dataset samples expose one (time, channels) input and one (time, 2) target. get_batch returns batched NumPy arrays. Window datasets preserve sample identity while selecting native time windows; preserve context boundaries when splitting data."),
     ("neuronio", "NeuronIO conversion", ["neuronio_raw"], "The converter reads raw NeuronIO teacher traces and creates deterministic shards. Standard soma normalization clips at -55 mV and applies (v_mV-bias)*scale with bias=-67.7 and scale=0.1. Preserve conversion metadata: normalized targets cannot recover clipped spike peaks."),
-    ("metrics", "Local metrics and dataset evaluation", ["metrics", "evaluate"], "These local utility functions support RMSE, AUC, and dataset evaluation. AxoBench introduces and implements the report's Mean F1, Voltage SERA, and Dynamics SERA protocol; use axosim-evaluate-model for that core metric set. SERA uses squared error; Root-SERA is its square-root presentation."),
+    ("metrics", "Local metrics and dataset evaluation", ["metrics", "evaluate"], "These local utility functions support RMSE, AUC, and dataset evaluation. They do not implement the AxoBench protocol: AxoBench defines Voltage SERA, spike Mean F1, the subthreshold voltage RMSE, and Response SERA, and axosim-evaluate-model applies them to a checkpoint. AxoBench 0.2.0 reports SERA per teacher spike in mV^2/spike, which differs from the technical report's earlier SERA definition."),
     ("training", "Training functions", ["train"], "The trainer fits native spike and soma targets with configurable losses, optimization, windowing, and validation. Model checkpoints store weights and metadata; preserve optimizer, scheduler, random, and data-order states separately when continuing an optimization trajectory."),
     ("inference-benchmark", "Inference benchmarking", ["inference_benchmark"], "The benchmark measures model sequence execution across batch sizes, horizons, and precision choices. It does not include the complete connected population runtime. Preserve the warmup, repetitions, synchronization, compilation mode, device, and shape contract with every reported timing."),
     ("axobench", "AxoBench prediction adapters", ["axobench_iteration"], "Prediction adapters reconstruct checkpoint models, select morphology identities, and return NumPy arrays in AxoBench's expected coordinates. The current AxoBench package is an additional dependency for the CLI evaluator. The source supports native and streaming predictor options in Python; the CLI exposes its declared subset."),
@@ -931,6 +931,23 @@ def cli_inventory(module, tree, presets, command):
     return {"command": command, "source_module": module, "sections": list(sections.values())}
 
 
+CLI_HELP = {
+    ("axosim-evaluate-model", "baseline_checkpoint"): "Second checkpoint evaluated on the same traces as the paired baseline.",
+    ("axosim-evaluate-model", "baseline_cache"): "Baseline cache written by --save-cache; its protocol, trace IDs, and target hash must match.",
+    ("axosim-evaluate-model", "save_cache"): "Write this model's predictions and protocol as a reusable .npz baseline cache.",
+    ("axosim-evaluate-model", "dataset_root"): "AxoBench evaluation root containing val/ and optionally interventions/<condition>/.",
+    ("axosim-evaluate-model", "model_id"): "Model name in the report; defaults to the checkpoint file stem.",
+    ("axosim-evaluate-model", "max_samples"): "Validation traces to select; AxoBench defaults to 120.",
+    ("axosim-evaluate-model", "max_intervention_samples"): "Pairs per intervention condition; AxoBench defaults to 40.",
+    ("axosim-evaluate-model", "max_interventions"): "Maximum number of intervention conditions read in sorted order.",
+    ("axosim-evaluate-model", "intervention_workers"): "Parallel CPU loaders for intervention shards.",
+    ("axosim-evaluate-model", "calibration_fraction"): "Share of the selected traces used only to calibrate the spike threshold.",
+    ("axosim-evaluate-model", "default_spike_threshold"): "Uncalibrated threshold checked by the default_threshold_count diagnostic; it does not set the scoring threshold.",
+    ("axosim-evaluate-model", "bootstrap_replicates"): "Replicates of the morphology-stratified paired bootstrap.",
+    ("axosim-evaluate-model", "bootstrap_seed"): "Random seed of the paired bootstrap.",
+}
+
+
 def cli_document(cli, title, order, repository, commit):
     lines = ["---", f"title: {title}", f"description: Complete options and defaults for {cli['command']}.", "section: API reference", "apiGroup: CLI", f"order: {order}", "---", "", "## Usage", "", "```bash", cli['command']+" --help", "```", "", "Every command and subcommand accepts `-h` or `--help`. The option reference below includes exact parser defaults, choices, required arguments, and compatibility options hidden from ordinary help.", ""]
     if cli["command"] == "axosim":
@@ -952,7 +969,7 @@ def cli_document(cli, title, order, repository, commit):
         for option in section["options"]:
             flags = ", ".join(option["flags"])
             lines.append(f'<dt><code>{escape(flags)}</code> <span class="api-type">{escape(str(option["type"]))}</span> · '+("required" if option["required"] else "default="+escape(repr(option["default"])))+"</dt>")
-            help_text = "Compatibility option hidden from default help." if option["hidden"] else option["help"]
+            help_text = "Compatibility option hidden from default help." if option["hidden"] else (option["help"] or CLI_HELP.get((cli["command"], option["dest"]), ""))
             if not help_text:
                 help_text = FIELD_HELP.get(option["dest"], "")
             if option["action"] == "store_true":

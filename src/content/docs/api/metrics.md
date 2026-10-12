@@ -8,7 +8,7 @@ order: 219
 
 ## Overview
 
-These local utility functions support RMSE, AUC, and dataset evaluation. AxoBench introduces and implements the report's Mean F1, Voltage SERA, and Dynamics SERA protocol; use axosim-evaluate-model for that core metric set. SERA uses squared error; Root-SERA is its square-root presentation.
+These local utility functions support RMSE, AUC, and dataset evaluation. They do not implement the AxoBench protocol: AxoBench defines Voltage SERA, spike Mean F1, the subthreshold voltage RMSE, and Response SERA, and axosim-evaluate-model applies them to a checkpoint. AxoBench 0.2.0 reports SERA per teacher spike in mV^2/spike, which differs from the technical report's earlier SERA definition.
 
 Source revision: `0f546adfd8fc`. [Public export index](/api/).
 
