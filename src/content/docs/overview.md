@@ -8,11 +8,11 @@ order: 0
 AxoSim approximates the response of detailed biological neurons to synaptic input histories. You can load trained GRU and Mamba models, construct populations with explicit dendritic contacts, and adapt neuronal and synaptic parameters through a complete temporal sequence.
 
 <figure class="overview-figure">
-  <img class="figure-light" src="/figures/central-comparison.svg" width="38724" height="18203" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM models and the CoreNEURON reference in gray, compared on inference and history throughput, voltage and dynamics fidelity, and spike Mean F1." fetchpriority="high" />
-  <img class="figure-dark" src="/figures/central-comparison-dark.svg" width="38724" height="18203" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM models and the CoreNEURON reference in gray, compared on inference and history throughput, voltage and dynamics fidelity, and spike Mean F1." fetchpriority="high" />
+  <img class="figure-light" src="/figures/central-comparison.svg" width="47309" height="18203" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM and TCN models and the CoreNEURON reference in gray, compared on inference and history throughput, dataset-relative voltage and subthreshold fidelity, and spike Mean F1." fetchpriority="high" />
+  <img class="figure-dark" src="/figures/central-comparison-dark.svg" width="47309" height="18203" alt="AxoSim-GRU Small and Mamba Medium in color, alongside Branch-ELM and TCN models and the CoreNEURON reference in gray, compared on inference and history throughput, dataset-relative voltage and subthreshold fidelity, and spike Mean F1." fetchpriority="high" />
 </figure>
 
-<p class="figure-caption">The axes show (i) inference throughput, counting 1-ms neuron predictions per second; (ii) voltage fidelity from somatic-voltage SERA; (iii) dynamics fidelity from native-time voltage-change SERA; (iv) spike Mean F1, averaged over 0–5 ms matching tolerances; and (v) history throughput, counting input milliseconds processed per second for one supplied 2-second history. CoreNEURON is the ground-truth detailed simulator, and Branch-ELM is the learned-surrogate predecessor of AxoSim. AxoSim–GRU Small and Mamba Medium are compared with three released Branch-ELM sizes; larger radii indicate better performance. Raw measurements, fixed mappings and runtime contracts appear in the appendix of the <a href="/report/main.pdf">technical report</a>.</p>
+<p class="figure-caption">The axes show (i) inference throughput, counting 1-ms neuron predictions per second; (ii) voltage fidelity, the voltage SERA skill as a fraction of the skill of the teacher voltage clipped below action potentials; (iii) subthreshold fidelity, the RMSE skill of the voltage outside action-potential windows; (iv) spike Mean F1, averaged over 0–5 ms matching tolerances; and (v) history throughput, counting input milliseconds processed per second for one supplied 2-second history. The fidelity axes are dataset-relative: each learned model is scored on held-out traces of its own training data, AxoBench for AxoSim and NeuronIO for Branch-ELM and TCN, with firing rates matched between the datasets. CoreNEURON is the ground-truth detailed simulator; Branch-ELM, the learned-surrogate predecessor of AxoSim, and TCN are released reference models. AxoSim–GRU Small and Mamba Medium are compared with three Branch-ELM sizes and the smallest and largest TCN; larger radii indicate better performance. Raw measurements, fixed mappings and runtime contracts appear in the appendix of the <a href="/report/main.pdf">technical report</a>.</p>
 
 ## Start with a neuron model
 
@@ -49,7 +49,8 @@ Start with [choose a dataset](/datasets/), then [benchmark a model](/axobench/be
 
 ## Cite AxoSim
 
-The technical report is by Davide Wiest and Jonathan Schäfer, Axym Labs. It evaluates single-neuron fidelity with AxoBench's spike Mean F1, Voltage SERA, and Dynamics SERA under the SERA definition stated in the report. AxoBench 0.2.0 redefines SERA per teacher spike and replaces Dynamics SERA in the core set with the subthreshold voltage RMSE, so its values are not comparable with the report's; see [core metrics](/axobench/metrics/#relation-to-the-technical-report).
+<!-- TODO(v2 retraining): once the report's ordinary-AxoBench results are re-evaluated with AxoBench 0.2 metrics, drop the comparability caveat below. -->
+The technical report is by Davide Wiest and Jonathan Schäfer, Axym Labs. Its central figure and dataset-relative comparison use AxoBench 0.2 metrics: SERA per teacher spike, the subthreshold voltage error, and spike Mean F1. Its ordinary-AxoBench results still use the earlier SERA definition and Dynamics SERA, so those values are not comparable with AxoBench 0.2's; see [core metrics](/axobench/metrics/#relation-to-the-technical-report).
 
 ```bibtex
 @techreport{wiest2026axosim,

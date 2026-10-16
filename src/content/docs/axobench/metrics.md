@@ -62,7 +62,8 @@ Dynamics SERA applies the Voltage SERA construction to the one-step voltage chan
 
 ## Relation to the technical report
 
-The AxoSim [technical report](/report/main.pdf) uses an earlier definition: SERA as a support-normalized integral over 101 relevance thresholds, in mV², with Dynamics SERA in the core set. Since version 0.2.0, AxoBench values are per teacher spike and use the IRon-default relevance, so they are not comparable with the report's SERA values. Report the AxoBench version with every value.
+<!-- TODO(v2 retraining): once the report's ordinary-AxoBench results use AxoBench 0.2 metrics, shorten this section. -->
+The AxoSim [technical report](/report/main.pdf) uses these metrics for its central figure and its dataset-relative comparison: SERA per teacher spike with IRon-default relevance, the subthreshold voltage error, and spike Mean F1. Its ordinary-AxoBench results still use an earlier definition, SERA as a support-normalized integral over 101 relevance thresholds in mV², with Dynamics SERA in the core set; those values are not comparable with AxoBench 0.2's. Report the AxoBench version with every value.
 
 ## Compute metrics on arrays
 

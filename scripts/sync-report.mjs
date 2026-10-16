@@ -43,6 +43,34 @@ assert(coreHistory.contract.input_sha256 === history.contract.input_sha256 &&
     row.nonzero_final_inhibitory_B_states > 0 && row.spike_labels_identical_to_first),
   'CoreNEURON input, execution or replay verification failed');
 const historyRows = new Map(history.results.map(row => [row.model_id, row]));
+// Fidelity axes are dataset-relative: rate-matched scores on each model's own training data.
+const relativeEvidence = join(report, 'reproducibility/evidence/dataset-relative/home-dataset-adjustments-cell-windows.json');
+const relative = JSON.parse(readFileSync(relativeEvidence, 'utf8')).results;
+const tcnHistoryEvidence = join(report, 'reproducibility/evidence/history-throughput/tcn-throughput.json');
+const tcnBenchmarkEvidence = join(publicEvidence, 'released-tcn-baseline/benchmark.json');
+const tcnHistory = JSON.parse(readFileSync(tcnHistoryEvidence, 'utf8'));
+const tcnBenchmark = JSON.parse(readFileSync(tcnBenchmarkEvidence, 'utf8'));
+assert(tcnHistory.contracts.history.batch_size === 1 && tcnHistory.contracts.history.history_steps === 2000 &&
+  tcnHistory.contracts.history.input_contacts === 1278 && tcnHistory.contracts.history.timing_repeats === 40 &&
+  tcnHistory.contracts.history.input_sha256 === history.contract.input_sha256,
+  'TCN history timing contract differs from the learned-model contract');
+for (const [id, row] of Object.entries(tcnHistory.checkpoints)) {
+  const bench = tcnBenchmark[id.replace(/^tcn-/, '')];
+  assert(bench && bench.contract.batch_size === 32 && bench.contract.window_steps === 500 &&
+    bench.contract.dtype === 'float32', `${id}: TCN inference contract changed`);
+  assert.equal(row.inference_rate_neuron_steps_per_s, bench.inference.neuron_steps_per_second,
+    `${id}: TCN inference rate disagrees with its benchmark record`);
+  assert(Math.abs(row.history_single_full_pass_rate_input_ms_per_s -
+    2000000/row.history_single_full_pass_latency_median_ms) < 1e-6, `${id}: TCN history rate disagrees with latency`);
+  assert(row.windowed_vs_full_max_abs_diff < 1e-5, `${id}: single pass must reproduce the released windowed outputs`);
+}
+const relativeKey = id => id.startsWith('branch-elm-memory-') ? `branch-elm-m${id.split('-').pop()}` : id;
+const fidelity = id => {
+  const scores = relative[relativeKey(id)]?.rate_matched;
+  assert(scores, `No dataset-relative evidence for ${id}`);
+  return {voltage_fidelity:scores.voltage_skill_of_ceiling, subthreshold_fidelity:scores.sub_skill,
+    mean_f1_0_5ms:scores.mean_f1};
+};
 assert.equal(historyRows.size,7,'Seven distinct learned history timings are required');
 for (const row of [...history.results,coreHistory]) {
   const samples = [...row.latency_samples_ms].sort((a,b) => a-b);
@@ -59,29 +87,34 @@ for (const row of [...axosim.results,...branch.results]) {
   if (measured) assert.equal(measured.checkpoint_sha256,row.checkpoint_sha256,
     'History throughput must use the existing plotted checkpoint');
 }
-const values = row => ({
-  inference_neuron_steps_per_second:row.benchmark.inference.neuron_steps_per_second,
-  voltage_sera_mv2:row.metrics.voltage_sera_mv2,
-  dynamics_sera_mv2_per_ms2:row.metrics.dynamics_sera_mv2_per_ms2,
-  mean_f1_0_5ms:row.metrics.spike_mean_f1_0_5ms,
-  ...(historyRows.has(row.profile_id || row.candidate_id) ? {
-    history_input_ms_per_second:historyRows.get(row.profile_id || row.candidate_id).history_steps_per_second,
-  } : {}),
-});
+const values = row => {
+  const id = row.profile_id || row.candidate_id;
+  return {
+    inference_neuron_steps_per_second:row.benchmark.inference.neuron_steps_per_second,
+    ...(relative[relativeKey(id)] ? fidelity(id) : {}),
+    ...(historyRows.has(id) ? {history_input_ms_per_second:historyRows.get(id).history_steps_per_second} : {}),
+  };
+};
 const raw = Object.fromEntries([
   ...axosim.results.map(row => [row.profile_id, values(row)]),
   ...branch.results.map(row => [row.candidate_id, values(row)]),
+  ...Object.entries(tcnHistory.checkpoints).map(([id, row]) => [id, {
+    inference_neuron_steps_per_second:row.inference_rate_neuron_steps_per_s, ...fidelity(id),
+    // A single causal pass reproduces the released sliding-window outputs.
+    history_input_ms_per_second:row.history_single_full_pass_rate_input_ms_per_s,
+  }]),
   ['coreneuron', {
-    inference_neuron_steps_per_second:coreRate, voltage_sera_mv2:0,
-    dynamics_sera_mv2_per_ms2:0, mean_f1_0_5ms:1,
+    inference_neuron_steps_per_second:coreRate, voltage_fidelity:1,
+    subthreshold_fidelity:1, mean_f1_0_5ms:1,
     history_input_ms_per_second:coreHistory.history_steps_per_second,
   }],
 ]);
+const unit = value => Math.min(Math.max(value, 0), 1);
 const mapped = value => [
   1-Math.exp(-value.inference_neuron_steps_per_second/1e7),
-  Math.exp(-value.voltage_sera_mv2/350),
-  Math.exp(-value.dynamics_sera_mv2_per_ms2/450),
-  value.mean_f1_0_5ms,
+  unit(value.voltage_fidelity),
+  unit(value.subthreshold_fidelity),
+  unit(value.mean_f1_0_5ms),
   1-Math.exp(-value.history_input_ms_per_second/1e6),
 ];
 // Fail closed on stale or invented coordinates before rendering either theme.
@@ -102,6 +135,7 @@ for (const match of figureSource.matchAll(/% series: (\S+)\s+\\RadarPolygon[^\n]
 assert.deepEqual([...plotted].sort(), [
   'axosim-gru-small','axosim-mamba-medium','branch-elm-memory-1',
   'branch-elm-memory-30','branch-elm-memory-100','coreneuron',
+  'tcn-8_224_217','tcn-7_292_169',
 ].sort(), 'Comparison figure series coverage changed');
 const learnedRows = [...axosim.results,...branch.results];
 assert(learnedRows.every(row => row.benchmark.contract.batch_size === 32 &&
@@ -153,23 +187,28 @@ for (const [theme,palette] of Object.entries(themes)) {
   let vector = readFileSync(svg,'utf8');
   const dimensions = vector.match(/viewBox="([^"]+)"/)[1].split(/\s+/).map(Number);
   // Cairo outlines the actual Inter glyphs. No page-sized background is drawn.
-  vector = vector.replace(/(<svg\b[^>]*>)/, `$1\n<title>AxoSim and baseline comparison (${theme} theme)</title>\n<desc>GRU Small and Mamba Medium, three released Branch-ELM sizes, and CoreNEURON; axes show inference throughput, voltage and dynamics fidelity, Mean F1 0–5 ms, and history throughput. Axis mappings and measurements are documented in the technical report appendix.</desc>`);
+  vector = vector.replace(/(<svg\b[^>]*>)/, `$1\n<title>AxoSim and baseline comparison (${theme} theme)</title>\n<desc>GRU Small and Mamba Medium, three released Branch-ELM sizes, two released TCNs, and CoreNEURON; axes show inference throughput, dataset-relative voltage and subthreshold fidelity and Mean F1 0–5 ms, and history throughput. Axis mappings and measurements are documented in the technical report appendix.</desc>`);
   writeFileSync(svg,vector);
   variants[theme] = {svg:`/figures/${stem}.svg`,png:`/figures/${stem}.png`,svg_sha256:hash(svg),png_sha256:hash(png),viewBox:dimensions};
 }
 copyFileSync(join(report,'main.pdf'),join(root,'public/report/main.pdf'));
 const data = {
-  axis_order:['Inference throughput','Voltage fidelity','Dynamics fidelity','Mean F1 0–5 ms','History throughput'],
-  mappings:['1-exp(-rate/10000000)','exp(-Voltage SERA/350)','exp(-Dynamics SERA/450)','identity','1-exp(-history rate/1000000)'],
+  axis_order:['Inference throughput','Voltage fidelity','Subthreshold fidelity','Mean F1 0–5 ms','History throughput'],
+  mappings:['1-exp(-rate/10000000)','identity on [0,1]: voltage SERA skill / clipped-teacher skill, rate-matched on own training data',
+    'identity on [0,1]: subthreshold RMSE skill, rate-matched on own training data','identity on [0,1]: Mean F1, rate-matched on own training data',
+    '1-exp(-history rate/1000000)'],
   plotted_series:plotted,
   raw_values:raw,
-  history_timing_contracts:{learned:history.contract,coreneuron:coreHistory.contract},
+  history_timing_contracts:{learned:history.contract,coreneuron:coreHistory.contract,tcn:tcnHistory.contracts.history},
   evidence:[
     {path:axosimEvidence.slice(report.length+1),sha256:hash(axosimEvidence)},
     {path:branchEvidence.slice(report.length+1),sha256:hash(branchEvidence)},
     {path:coreCsv.slice(report.length+1),sha256:hash(coreCsv)},
     {path:historyEvidence.slice(report.length+1),sha256:hash(historyEvidence)},
     {path:coreHistoryEvidence.slice(report.length+1),sha256:hash(coreHistoryEvidence)},
+    {path:relativeEvidence.slice(report.length+1),sha256:hash(relativeEvidence)},
+    {path:tcnHistoryEvidence.slice(report.length+1),sha256:hash(tcnHistoryEvidence)},
+    {path:tcnBenchmarkEvidence.slice(report.length+1),sha256:hash(tcnBenchmarkEvidence)},
   ],
 };
 writeFileSync(join(root,'public/report/central-figure-values.json'),JSON.stringify(data,null,2)+'\n');

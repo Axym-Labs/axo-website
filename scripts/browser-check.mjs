@@ -101,7 +101,7 @@ try {
   assert(page.url().startsWith(base));
   results.push('Search: content/API results, Ctrl K, arrow-key focus, Enter navigation.');
 
-  const routes = [...new Set((await page.locator('.navigation a').evaluateAll(links=>links.map(link=>link.getAttribute('href')).filter(href=>href?.startsWith('/')))))];
+  const routes = [...new Set((await page.locator('.navigation a').evaluateAll(links=>links.map(link=>link.getAttribute('href')).filter(href=>href?.startsWith('/') && !href.endsWith('.pdf')))))];
   for (const viewport of [{width:1440,height:1000},{width:768,height:1024},{width:390,height:844}]) {
     await page.setViewportSize(viewport);
     for (const route of routes) {
