@@ -1,15 +1,15 @@
 {
-  "report_sha256": "4d1dcd96bc0ed71e1973dcbd8eded760cad4beac1bcf4d0ea14082807422fea4",
-  "report_source_sha256": "fae076406f1fb133a71e745eada9a1b03bba39aa30822f92c6b7dbe9ded5a712",
-  "central_figure_source_sha256": "87523f8662569ab6a1dc0e730ba9578e3733cf7cde0032da389d0d01ddc5e991",
-  "svg_sha256": "3ffb3c3b64b3bb511ac37143ec30298e6bd7acf054a02d4ad30d053be8d8899f",
-  "svg_dark_sha256": "f7cfea0c82d72bc90dbfb8dfb0cdfd3f69bc5cb14ded69c0bba0dc19d72a3f71",
+  "report_sha256": "592453bdbf6a131daa842cdf875441d2f2db5b4349561c0e0aafec9dd5114a44",
+  "report_source_sha256": "f3ae27d1ac6e805e80454b6c5db78208910a7c20a5d96d4cb7475530d96b15ef",
+  "central_figure_source_sha256": "bab1c91ed5c323101e26125b56c3e23204987c4b3609b676ff37ae1b4d8874c4",
+  "svg_sha256": "138710c64c208afeb10335c3ba3be644f3e95f1fb6039359a66be228a231cee7",
+  "svg_dark_sha256": "d2763708529d1037b0c68690380e4a118638f84b57d38987a50f03855a09864a",
   "variants": {
     "light": {
       "svg": "/figures/central-comparison.svg",
       "png": "/figures/central-comparison.png",
-      "svg_sha256": "3ffb3c3b64b3bb511ac37143ec30298e6bd7acf054a02d4ad30d053be8d8899f",
-      "png_sha256": "397b4473c0cccfbd87f48f840e0100315ecb7dc75dd3e1901b81d00ca5b19a64",
+      "svg_sha256": "138710c64c208afeb10335c3ba3be644f3e95f1fb6039359a66be228a231cee7",
+      "png_sha256": "170332deab2e71c4ac5dccdc2b15e4c1a2fbe8035bf19051aaeeb1d462ae7a57",
       "viewBox": [
         0,
         0,
@@ -20,8 +20,8 @@
     "dark": {
       "svg": "/figures/central-comparison-dark.svg",
       "png": "/figures/central-comparison-dark.png",
-      "svg_sha256": "f7cfea0c82d72bc90dbfb8dfb0cdfd3f69bc5cb14ded69c0bba0dc19d72a3f71",
-      "png_sha256": "64f559576607e647e31b2c9d318eefd6606c7779dfa7f1c2a127169002dec0aa",
+      "svg_sha256": "d2763708529d1037b0c68690380e4a118638f84b57d38987a50f03855a09864a",
+      "png_sha256": "bf1206d02f4da9935c2ae26fc5203dba9d5752e54024754c3af43a25b1d24d56",
       "viewBox": [
         0,
         0,
@@ -30,7 +30,7 @@
       ]
     }
   },
-  "figure_values_sha256": "5187d7f07f1a53d70fa5bd5c6bb9cb127408688b7b1a42589a77721f267967dd",
+  "figure_values_sha256": "666d8b4c208d8285d070175937ef8800fef2c3a45f6938c44aa8f4acad13679e",
   "font": {
     "family": "Inter",
     "source": "@fontsource-variable/inter 5.3.0 (latin wght normal)",

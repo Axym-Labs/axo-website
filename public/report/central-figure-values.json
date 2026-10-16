@@ -14,7 +14,7 @@
     "1-exp(-history rate/1000000)"
   ],
   "plotted_series": [
-    "axosim-gru-small",
+    "axosim-gru-medium",
     "axosim-mamba-medium",
     "branch-elm-memory-1",
     "branch-elm-memory-100",
@@ -29,13 +29,14 @@
       "voltage_fidelity": 0.9360086687198794,
       "subthreshold_fidelity": 0.6897801409340609,
       "mean_f1_0_5ms": 0.5720677532758068,
-      "history_input_ms_per_second": 3893717.0727733593
+      "history_input_ms_per_second": 4215567.321569999
     },
     "axosim-gru-medium": {
       "inference_neuron_steps_per_second": 16809548.115202837,
       "voltage_fidelity": 0.936978582778274,
       "subthreshold_fidelity": 0.705478698379822,
-      "mean_f1_0_5ms": 0.6066441983630235
+      "mean_f1_0_5ms": 0.6066441983630235,
+      "history_input_ms_per_second": 2010680.7274682722
     },
     "axosim-mamba-small": {
       "inference_neuron_steps_per_second": 18859383.924793877,
@@ -48,42 +49,42 @@
       "voltage_fidelity": 0.9084389846537179,
       "subthreshold_fidelity": 0.718010945157472,
       "mean_f1_0_5ms": 0.5976035946080879,
-      "history_input_ms_per_second": 2004554.3073899709
+      "history_input_ms_per_second": 2053118.3222236368
     },
     "branch-elm-memory-1": {
       "inference_neuron_steps_per_second": 788195.9579227073,
       "voltage_fidelity": 0.7530793242143912,
       "subthreshold_fidelity": 0.5521841411400727,
       "mean_f1_0_5ms": 0.20610163777279109,
-      "history_input_ms_per_second": 28781.907310804723
+      "history_input_ms_per_second": 28914.850407034228
     },
     "branch-elm-memory-10": {
       "inference_neuron_steps_per_second": 716868.9828880873,
       "voltage_fidelity": 0.8770016209416959,
       "subthreshold_fidelity": 0.7392144186140621,
       "mean_f1_0_5ms": 0.31231156425245155,
-      "history_input_ms_per_second": 31861.55082705193
+      "history_input_ms_per_second": 31196.3178101076
     },
     "branch-elm-memory-30": {
       "inference_neuron_steps_per_second": 741780.8604078535,
       "voltage_fidelity": 0.9011339556191298,
       "subthreshold_fidelity": 0.7731917986291398,
       "mean_f1_0_5ms": 0.42127046065454965,
-      "history_input_ms_per_second": 31294.273449627377
+      "history_input_ms_per_second": 29619.308321628647
     },
     "branch-elm-memory-50": {
       "inference_neuron_steps_per_second": 734514.2382812842,
       "voltage_fidelity": 0.9076425860863786,
       "subthreshold_fidelity": 0.7791615727298133,
       "mean_f1_0_5ms": 0.444480964925926,
-      "history_input_ms_per_second": 31627.409846773666
+      "history_input_ms_per_second": 31858.432783837226
     },
     "branch-elm-memory-100": {
       "inference_neuron_steps_per_second": 711974.8494525923,
       "voltage_fidelity": 0.9090243458628492,
       "subthreshold_fidelity": 0.7756880617741665,
       "mean_f1_0_5ms": 0.4474923078777366,
-      "history_input_ms_per_second": 31281.742813022156
+      "history_input_ms_per_second": 31479.96950281885
     },
     "tcn-7_128_153": {
       "inference_neuron_steps_per_second": 2955449.554122966,
@@ -203,7 +204,7 @@
     },
     {
       "path": "reproducibility/evidence/history-throughput/learned-model-timings.json",
-      "sha256": "c16d0c3af7f846a7ba9b3f1d28bcbc00fea47f74c026585b6db40ba4c091e123"
+      "sha256": "d610c597a53c87080940fe9d74686fe0cd857b7ee9c3a61619611749b7430745"
     },
     {
       "path": "reproducibility/evidence/history-throughput/coreneuron-timing.json",

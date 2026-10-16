@@ -71,7 +71,7 @@ const fidelity = id => {
   return {voltage_fidelity:scores.voltage_skill_of_ceiling, subthreshold_fidelity:scores.sub_skill,
     mean_f1_0_5ms:scores.mean_f1};
 };
-assert.equal(historyRows.size,7,'Seven distinct learned history timings are required');
+assert.equal(historyRows.size,8,'Eight distinct learned history timings are required');
 for (const row of [...history.results,coreHistory]) {
   const samples = [...row.latency_samples_ms].sort((a,b) => a-b);
   assert(samples.length >= 3 && samples.every(value => Number.isFinite(value) && value > 0),
@@ -133,7 +133,7 @@ for (const match of figureSource.matchAll(/% series: (\S+)\s+\\RadarPolygon[^\n]
   plotted.push(id);
 }
 assert.deepEqual([...plotted].sort(), [
-  'axosim-gru-small','axosim-mamba-medium','branch-elm-memory-1',
+  'axosim-gru-medium','axosim-mamba-medium','branch-elm-memory-1',
   'branch-elm-memory-30','branch-elm-memory-100','coreneuron',
   'tcn-8_224_217','tcn-7_292_169',
 ].sort(), 'Comparison figure series coverage changed');
@@ -187,7 +187,7 @@ for (const [theme,palette] of Object.entries(themes)) {
   let vector = readFileSync(svg,'utf8');
   const dimensions = vector.match(/viewBox="([^"]+)"/)[1].split(/\s+/).map(Number);
   // Cairo outlines the actual Inter glyphs. No page-sized background is drawn.
-  vector = vector.replace(/(<svg\b[^>]*>)/, `$1\n<title>AxoSim and baseline comparison (${theme} theme)</title>\n<desc>GRU Small and Mamba Medium, three released Branch-ELM sizes, two released TCNs, and CoreNEURON; axes show inference throughput, dataset-relative voltage and subthreshold fidelity and Mean F1 0–5 ms, and history throughput. Axis mappings and measurements are documented in the technical report appendix.</desc>`);
+  vector = vector.replace(/(<svg\b[^>]*>)/, `$1\n<title>AxoSim and baseline comparison (${theme} theme)</title>\n<desc>GRU Medium and Mamba Medium, three released Branch-ELM sizes, two released TCNs, and CoreNEURON; axes show inference throughput, dataset-relative voltage and subthreshold fidelity and Mean F1 0–5 ms, and history throughput. Axis mappings and measurements are documented in the technical report appendix.</desc>`);
   writeFileSync(svg,vector);
   variants[theme] = {svg:`/figures/${stem}.svg`,png:`/figures/${stem}.png`,svg_sha256:hash(svg),png_sha256:hash(png),viewBox:dimensions};
 }
