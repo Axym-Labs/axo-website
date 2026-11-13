@@ -39,7 +39,7 @@ The shards also carry `target_population_index`, `context_iteration`, `context_s
 
 ## Split by context
 
-Traces from one context share its network and its activity history. Keep every partition at context granularity. The comparison in the [technical report](/report/main.pdf) uses 64 of the 80 training contexts for fitting, the remaining 16 for selecting one learning-rate schedule per architecture family, and the 20 validation contexts only for the final evaluation, with a fixed budget of 30,000 presentations per model. This partitions the training split by context:
+Traces from one context share its network and its activity history. Keep every partition at context granularity. The comparison in the technical report uses 64 of the 80 training contexts for fitting, the remaining 16 for selecting one learning-rate schedule per architecture family, and the 20 validation contexts only for the final evaluation, with a fixed budget of 30,000 presentations per model. This partitions the training split by context:
 
 ```python
 import numpy as np
@@ -71,7 +71,7 @@ The validation split has the directory layout that the [AxoBench evaluator](/axo
 
 ## Trace fidelity is not recurrent validity
 
-In the [technical report](/report/main.pdf), training on all 50,000 traces improved held-out Voltage SERA, Dynamics SERA, and spike F1, yet the connected model missed the morphology-conditioned firing-rate criterion on all three unseen connectomes. Use population-context metrics to select a model for this input distribution, and connected-population measurements to decide whether it behaves correctly in recurrent simulation.
+In the technical report, training on all 50,000 traces improved held-out Voltage SERA, Dynamics SERA, and spike F1, yet the connected model missed the morphology-conditioned firing-rate criterion on all three unseen connectomes. Use population-context metrics to select a model for this input distribution, and connected-population measurements to decide whether it behaves correctly in recurrent simulation.
 
 ## Next steps
 

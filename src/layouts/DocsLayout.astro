@@ -94,7 +94,8 @@ const toc = headings.filter(heading => heading.depth === 2 || heading.depth === 
               <a href={url(item.id)} aria-current={item.id === entry.id ? 'page' : undefined}>{item.data.title}</a>
             ))}
           {group === 'Get started' && <>
-            <a class="report-link" href="/report/main.pdf">Technical report</a>
+            <span class="paper-link" aria-disabled="true">Preprint <span class="paper-pending">soon</span></span>
+            <span class="paper-link" aria-disabled="true">Technical report <span class="paper-pending">soon</span></span>
             <a class="demo-link" href={researchUrl}>Connectome update <span aria-hidden="true">↗</span></a>
             <a class="demo-link interactive-demo-link" href={demoUrl}>Connectome demo <span aria-hidden="true">↗</span></a>
           </>}

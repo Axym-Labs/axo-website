@@ -44,6 +44,8 @@ kbd { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size:
 .nav-group a { display: block; border-radius: 6px; padding: 5px 10px; margin: 1px 0; font-size: 14.5px; line-height: 1.55; color: var(--muted); overflow-wrap: anywhere; }
 .nav-group a:hover { color: var(--text); background: var(--soft); }
 .nav-group a[aria-current='page'] { background: var(--active); color: var(--primary); }
+.nav-group .paper-link { display: block; padding: 5px 10px; margin: 1px 0; font-size: 14.5px; line-height: 1.55; color: var(--muted); opacity: .6; cursor: default; }
+.nav-group .paper-pending { margin-left: 4px; padding: 1px 6px; border-radius: 999px; background: var(--soft); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
 .api-group { margin: 1px 0; }
 .api-group summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 10px; border-radius: 6px; color: var(--muted); list-style: none; cursor: pointer; font-size: 14px; line-height: 1.5; }
 .api-group summary::-webkit-details-marker { display: none; }

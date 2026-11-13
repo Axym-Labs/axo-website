@@ -12,7 +12,7 @@ const required = ['/', '/installation/', '/models/', '/connected-populations/', 
 for (const path of required) assert(existsSync(join(dist, path, 'index.html')), `Missing page: ${path}`);
 assert.equal(readFileSync(join(dist, 'CNAME'), 'utf8').trim(), 'axo.axym.org');
 assert(existsSync(join(dist, 'pagefind/pagefind.js')), 'Search index missing');
-assert(statSync(join(dist, 'report/main.pdf')).size > 100000, 'Report missing or empty');
+assert(!existsSync(join(dist, 'report/main.pdf')), 'The report PDF must not be self-hosted');
 assert(existsSync(join(dist, 'figures/central-comparison.svg')), 'Comparison figure missing');
 assert(readFileSync(join(dist, 'sitemap.xml'), 'utf8').includes('https://axo.axym.org/api/'), 'API omitted from sitemap');
 const inventory = JSON.parse(readFileSync(join(dist, 'api-inventory.json'), 'utf8'));
@@ -40,7 +40,6 @@ assert.deepEqual(inventory.cli.map(item=>item.command).sort(), ['axosim','axosim
 const provenance = JSON.parse(readFileSync(join(dist, 'report/provenance.json'), 'utf8'));
 const { createHash } = await import('node:crypto');
 const digest = file => createHash('sha256').update(readFileSync(file)).digest('hex');
-assert.equal(digest(join(dist,'report/main.pdf')),provenance.report_sha256,'Report provenance mismatch');
 assert.equal(digest(join(dist,'figures/central-comparison.svg')),provenance.svg_sha256,'Figure provenance mismatch');
 assert.equal(digest(join(dist,'figures/central-comparison-dark.svg')),provenance.svg_dark_sha256,'Dark figure provenance mismatch');
 assert.equal(digest(join(dist,'report/central-figure-values.json')),provenance.figure_values_sha256,'Figure measurement manifest mismatch');

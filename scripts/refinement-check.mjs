@@ -26,7 +26,8 @@ try {
   const firstGroup = page.locator('.nav-group').first();
   assert.equal(await firstGroup.locator('h2').count(), 0, 'Getting-started links should not have a category heading');
   assert(await firstGroup.locator('a[href="/models/"]').isVisible());
-  assert.equal(await firstGroup.locator('a.report-link').getAttribute('href'), '/report/main.pdf');
+  assert.equal(await firstGroup.locator('a.report-link').count(), 0, 'Paper links stay non-clickable until the papers are hosted');
+  assert.equal(await firstGroup.locator('.paper-link').count(), 2);
   assert.equal(await firstGroup.locator('a.demo-link').first().getAttribute('href'), 'https://axym.org/work/axosim-fly-geometry/');
   assert.equal(await firstGroup.locator('a.interactive-demo-link').getAttribute('href'), 'https://axym.org/work/axosim-connectome-demo/');
   assert.equal(await page.locator('.resource-links a').count(), 0, 'Landing buttons must not duplicate sidebar or navbar links');

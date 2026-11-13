@@ -37,7 +37,7 @@ AxoSim models that condition on morphology need the same identity as an index in
 
 ## Hold out a morphology
 
-No released split withholds a morphology: `train`, `val`, and `test` each contain all five. To test transfer, build a leave-one-morphology-out partition. The [technical report](/report/main.pdf) uses five such comparisons: each source model is trained on the other four morphologies, and target adaptation and evaluation use separate traces of the omitted one.
+No released split withholds a morphology: `train`, `val`, and `test` each contain all five. To test transfer, build a leave-one-morphology-out partition. The technical report uses five such comparisons: each source model is trained on the other four morphologies, and target adaptation and evaluation use separate traces of the omitted one.
 
 Every shard contains a single morphology, so a source directory can link the shards of four morphologies together with the original manifest. AxoBench and the AxoSim trainer read only the manifest entries whose shards are present:
 

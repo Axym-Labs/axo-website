@@ -191,7 +191,6 @@ for (const [theme,palette] of Object.entries(themes)) {
   writeFileSync(svg,vector);
   variants[theme] = {svg:`/figures/${stem}.svg`,png:`/figures/${stem}.png`,svg_sha256:hash(svg),png_sha256:hash(png),viewBox:dimensions};
 }
-copyFileSync(join(report,'main.pdf'),join(root,'public/report/main.pdf'));
 const data = {
   axis_order:['Inference throughput','Voltage fidelity','Subthreshold fidelity','Mean F1 0–5 ms','History throughput'],
   mappings:['1-exp(-rate/10000000)','identity on [0,1]: voltage SERA skill / clipped-teacher skill, rate-matched on own training data',
@@ -224,4 +223,4 @@ writeFileSync(join(root,'public/report/provenance.json'), JSON.stringify({
   report_authors:['Davide Wiest','Jonathan Schäfer'],
   report_repository:'https://github.com/Axym-Labs/AxoSim-paper',
 },null,2)+'\n');
-console.log(`Synced report PDF and light/dark Inter vectors; verified ${plotted.length} plotted series against frozen measurements.`);
+console.log(`Synced light/dark Inter vectors; verified ${plotted.length} plotted series against frozen measurements.`);

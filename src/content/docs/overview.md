@@ -12,7 +12,7 @@ AxoSim approximates the response of detailed biological neurons to synaptic inpu
   <img class="figure-dark" src="/figures/central-comparison-dark.svg" width="47309" height="18203" alt="AxoSim-GRU Medium and Mamba Medium in color, alongside Branch-ELM and TCN models and the CoreNEURON reference in gray, compared on inference and history throughput, dataset-relative voltage and subthreshold fidelity, and spike Mean F1." fetchpriority="high" />
 </figure>
 
-<p class="figure-caption">The axes show (i) inference throughput, counting 1-ms neuron predictions per second; (ii) voltage fidelity, the voltage SERA skill as a fraction of the skill of the teacher voltage clipped below action potentials; (iii) subthreshold fidelity, the RMSE skill of the voltage outside action-potential windows; (iv) spike Mean F1, averaged over 0–5 ms matching tolerances; and (v) history throughput, counting input milliseconds processed per second for one supplied 2-second history. The fidelity axes are dataset-relative: each learned model is scored on held-out traces of its own training data, AxoBench for AxoSim and NeuronIO for Branch-ELM and TCN, with firing rates matched between the datasets. CoreNEURON is the ground-truth detailed simulator; Branch-ELM, the learned-surrogate predecessor of AxoSim, and TCN are released reference models. AxoSim–GRU Medium and Mamba Medium are compared with three Branch-ELM sizes and the smallest and largest TCN; larger radii indicate better performance. Raw measurements, fixed mappings and runtime contracts appear in the appendix of the <a href="/report/main.pdf">technical report</a>.</p>
+<p class="figure-caption">The axes show (i) inference throughput, counting 1-ms neuron predictions per second; (ii) voltage fidelity, the voltage SERA skill as a fraction of the skill of the teacher voltage clipped below action potentials; (iii) subthreshold fidelity, the RMSE skill of the voltage outside action-potential windows; (iv) spike Mean F1, averaged over 0–5 ms matching tolerances; and (v) history throughput, counting input milliseconds processed per second for one supplied 2-second history. The fidelity axes are dataset-relative: each learned model is scored on held-out traces of its own training data, AxoBench for AxoSim and NeuronIO for Branch-ELM and TCN, with firing rates matched between the datasets. CoreNEURON is the ground-truth detailed simulator; Branch-ELM, the learned-surrogate predecessor of AxoSim, and TCN are released reference models. AxoSim–GRU Medium and Mamba Medium are compared with three Branch-ELM sizes and the smallest and largest TCN; larger radii indicate better performance. Raw measurements, fixed mappings and runtime contracts appear in the appendix of the technical report.</p>
 
 ## Start with a neuron model
 
@@ -57,7 +57,6 @@ The technical report is by Davide Wiest and Jonathan Schäfer, Axym Labs. Its ce
   title = {AxoSim: Learned Neuron Models for Population Simulation at Scale},
   author = {Wiest, Davide and Schäfer, Jonathan},
   institution = {Axym Labs},
-  year = {2026},
-  url = {https://axo.axym.org/report/main.pdf}
+  year = {2026}
 }
 ```
