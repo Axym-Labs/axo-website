@@ -154,7 +154,7 @@
       "input_contacts": 1278,
       "input_sha256": "1aef729db0d2a0f5a9054e4d16f6328e5b581f581b0ff4504c2a1ba5d536fb2e",
       "input_exactly_matches_learned_history": true,
-      "input_reference": "/home/davwis/main/workspace/AxoSim-paper-internal/technical-contribution-integration/artifacts/history-speed/learned-model-timings.json",
+      "input_reference": "AxoSim-paper-internal/technical-contribution-integration/artifacts/history-speed/learned-model-timings.json",
       "input_reference_sha256": "c16d0c3af7f846a7ba9b3f1d28bcbc00fea47f74c026585b6db40ba4c091e123",
       "synapse_policy": "DetAMPANMDA/DetGABA; historical deterministic Use=1 Dep=0 Fac=0 subset",
       "exc_gmax_scale": 0.925,

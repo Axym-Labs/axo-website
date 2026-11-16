@@ -11,6 +11,9 @@ const figure = join(report, 'figures/central-comparison.tex');
 const temp = mkdtempSync(join(tmpdir(), 'axo-docs-figure-'));
 const deterministicEnv = { ...process.env, SOURCE_DATE_EPOCH:'1788134400' };
 const hash = path => createHash('sha256').update(readFileSync(path)).digest('hex');
+// Published JSON names evidence by workspace-relative path, never by a local absolute one.
+const workspace = resolve(report, '..') + '/';
+const relativePaths = (_key, value) => typeof value === 'string' && value.startsWith(workspace) ? value.slice(workspace.length) : value;
 const figureSource = readFileSync(figure, 'utf8');
 const fontDir = join(report, 'assets/fonts');
 const publicEvidence = join(report, 'reproducibility/evidence/population-platform-publication/runs');
@@ -210,7 +213,7 @@ const data = {
     {path:tcnBenchmarkEvidence.slice(report.length+1),sha256:hash(tcnBenchmarkEvidence)},
   ],
 };
-writeFileSync(join(root,'public/report/central-figure-values.json'),JSON.stringify(data,null,2)+'\n');
+writeFileSync(join(root,'public/report/central-figure-values.json'),JSON.stringify(data,relativePaths,2)+'\n');
 writeFileSync(join(root,'public/report/provenance.json'), JSON.stringify({
   report_sha256:hash(join(report,'main.pdf')),
   report_source_sha256:hash(join(report,'main.tex')),
