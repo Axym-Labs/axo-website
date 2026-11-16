@@ -13,7 +13,7 @@ A model forward pass, a forward-plus-backward pass, a complete optimizer update,
 
 ## Regenerate the numerical bundle
 
-The [technical-report repository](https://github.com/Axym-Labs/AxoSim-paper) contains a portable reproducer. From that checkout, run:
+A portable reproducer ships with the technical-report sources, which are available on request from [dw@axym.org](mailto:dw@axym.org). From the root of those sources, run:
 
 ```bash
 python reproducibility/reproduce_headline_claims.py \
